@@ -1,0 +1,10 @@
+-- Role: admin_escalade
+-- DROP ROLE admin_escalade;
+
+CREATE ROLE admin_escalade WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
