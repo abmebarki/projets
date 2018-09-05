@@ -1,10 +1,10 @@
--- Role: admin_escalade
--- DROP ROLE admin_escalade;
+-- User: admin_escalade
+-- DROP USER admin_escalade;
 
-CREATE ROLE admin_escalade WITH
-  NOLOGIN
-  NOSUPERUSER
+CREATE USER admin_escalade WITH
+  LOGIN
+  SUPERUSER
   INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION;
+  CREATEDB
+  CREATEROLE
+  REPLICATION;
