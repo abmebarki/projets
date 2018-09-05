@@ -20,7 +20,7 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="8253366d-acaa-40b4-ab5f-d31ac5d58be4" dbcs-ref="DS2" name="PlayPen Database" physicalName="New Connection" >
+  <database id="DB0" populated="true" UUID="8253366d-acaa-40b4-ab5f-d31ac5d58be4" dbcs-ref="DS2" name="PlayPen Database" physicalName="New Connection" sql-exception="ca.sqlpower.sqlobject.SQLObjectException: Couldn&apos;t connect to database: FATAL: la base de donn�es � escalade � n&apos;existe pas" >
    <catalog id="CAT1" populated="true" UUID="4c972276-1382-46b1-937a-657614897c69" name="escalade" nativeTerm="database" physicalName="escalade" >
     <schema id="SCH2" populated="false" UUID="da8ebbf3-792a-435e-940b-6b944784d9a0" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -325,7 +325,7 @@
   <table id="TAB87" populated="true" UUID="32effa9d-47ad-4fda-b843-c40c2783c077" name="commentaire_topo" objectType="TABLE" physicalName="commentaire_topo" >
    <remarks></remarks>
    <folder id="FOLTAB871" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL88" populated="true" UUID="e45d2ad9-17ac-4a7a-8e2d-343f8102ae86" autoIncrement="true" autoIncrementSequenceName="commentaire_site_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL88" populated="true" UUID="e45d2ad9-17ac-4a7a-8e2d-343f8102ae86" autoIncrement="true" autoIncrementSequenceName="commentaire_topo_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL89" populated="true" UUID="9c0bd76e-492c-412b-8008-dcc215612931" autoIncrement="false" autoIncrementSequenceName="commentaire_site_objet_seq" defaultValue="" name="objet" nullable="0" physicalName="objet" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
@@ -385,10 +385,10 @@
    <relationship id="REL106" populated="true" UUID="23a2d809-e7fb-4a46-9952-0dc7d3bf6b66" deferrability="7" deleteRule="3" fk-table-ref="TAB58" fkCardinality="7" identifying="false" name="site_commentaire_site_fk" physicalName="site_commentaire_site_fk" pk-table-ref="TAB7" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP107" populated="true" UUID="09244cfd-933e-4a77-aaf5-f69b4bb0398f" fk-column-ref="COL64" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL8" />
    </relationship>
-   <relationship id="REL108" populated="true" UUID="3829f93b-5b6f-4bb2-879d-5e4ff43fa809" deferrability="7" deleteRule="3" fk-table-ref="TAB27" fkCardinality="7" identifying="false" name="secteur_Voie_fk" physicalName="secteur_Voie_fk" pk-table-ref="TAB16" pkCardinality="2" updateRule="3" >
+   <relationship id="REL108" populated="true" UUID="3829f93b-5b6f-4bb2-879d-5e4ff43fa809" deferrability="7" deleteRule="3" fk-table-ref="TAB27" fkCardinality="7" identifying="false" name="secteur_Voie_fk" physicalName="secteur_voie_fk" pk-table-ref="TAB16" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP109" populated="true" UUID="503d46bf-2727-41ba-833d-a84b9ad6563a" fk-column-ref="COL31" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL17" />
    </relationship>
-   <relationship id="REL110" populated="true" UUID="4019a457-3841-4a03-a16f-20488eeb1d01" deferrability="7" deleteRule="3" fk-table-ref="TAB34" fkCardinality="7" identifying="false" name="Voie_longueur_fk" physicalName="Voie_longueur_fk" pk-table-ref="TAB27" pkCardinality="2" updateRule="3" >
+   <relationship id="REL110" populated="true" UUID="4019a457-3841-4a03-a16f-20488eeb1d01" deferrability="7" deleteRule="3" fk-table-ref="TAB34" fkCardinality="7" identifying="false" name="Voie_longueur_fk" physicalName="voie_longueur_fk" pk-table-ref="TAB27" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP111" populated="true" UUID="0195d043-73db-4b72-8014-616ef1a86bb7" fk-column-ref="COL40" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL28" />
    </relationship>
    <relationship id="REL112" populated="true" UUID="b4703e2a-e5ba-4f1f-989f-b477e22fca78" deferrability="7" deleteRule="3" fk-table-ref="TAB81" fkCardinality="7" identifying="true" name="topo_topo_site_fk" physicalName="topo_topo_site_fk" pk-table-ref="TAB49" pkCardinality="2" updateRule="3" >
@@ -423,7 +423,7 @@
    </relationship>
   </relationships>
  </target-database>
- <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="1.189207115002721" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
