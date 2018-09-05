@@ -14,7 +14,6 @@ public class Voie {
 	private Integer id;
 	private String nom;
 	private Integer nbLongueurs;
-	private Secteur secteur;
 	private List<Longueur> longueurs;
 	
     // ==================== Constructeurs ====================
@@ -56,14 +55,6 @@ public class Voie {
 
 	public void setNbLongueurs(Integer nbLongueurs) {
 		this.nbLongueurs = nbLongueurs;
-	}
-
-	public Secteur getSecteur() {
-		return secteur;
-	}
-
-	public void setSecteur(Secteur secteur) {
-		this.secteur = secteur;
 	}
 
 	public List<Longueur> getLongueurs() {

@@ -14,7 +14,6 @@ public class Longueur {
 	private String cotation;
 	private Integer nbPoints;
 	private boolean equipee;
-	private Voie voie;
 	
     // ==================== Constructeurs ====================
 	 /**
@@ -63,12 +62,6 @@ public class Longueur {
 	}
 	public void setEquipee(boolean equipee) {
 		this.equipee = equipee;
-	}
-	public Voie getVoie() {
-		return voie;
-	}
-	public void setVoie(Voie voie) {
-		this.voie = voie;
 	}
 	
 	

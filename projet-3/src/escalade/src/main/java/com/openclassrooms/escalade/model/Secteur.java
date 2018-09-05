@@ -18,7 +18,6 @@ public class Secteur {
 	private String orientation;
 	private String coordonnees;
 	private Integer hauteurMax;
-	private Site site;
 	private List<Voie> voies;
 	
 	
@@ -93,14 +92,6 @@ public class Secteur {
 
 	public void setHauteurMax(Integer hauteurMax) {
 		this.hauteurMax = hauteurMax;
-	}
-
-	public Site getSite() {
-		return site;
-	}
-
-	public void setSite(Site site) {
-		this.site = site;
 	}
 
 	public List<Voie> getVoies() {

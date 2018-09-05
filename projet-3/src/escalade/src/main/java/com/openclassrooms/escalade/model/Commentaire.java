@@ -16,8 +16,6 @@ public class Commentaire {
 	private String contenu;
 	private Date date;
 	private Grimpeur auteur;
-	private Topo topoCommente;
-	private Site siteCommente;
 	
     // ==================== Constructeurs ====================
 	 /**
@@ -76,21 +74,6 @@ public class Commentaire {
 		this.auteur = auteur;
 	}
 
-	public Topo getTopoCommente() {
-		return topoCommente;
-	}
-
-	public void setTopoCommente(Topo topoCommente) {
-		this.topoCommente = topoCommente;
-	}
-
-	public Site getSiteCommente() {
-		return siteCommente;
-	}
-
-	public void setSiteCommente(Site siteCommente) {
-		this.siteCommente = siteCommente;
-	}
 	
 	
 	

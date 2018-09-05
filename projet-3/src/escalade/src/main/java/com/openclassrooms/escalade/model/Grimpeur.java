@@ -1,7 +1,5 @@
 package com.openclassrooms.escalade.model;
 
-import java.util.List;
-
 /**
  * Objet m�tier repr�sentant un grimpeur
  *
@@ -14,12 +12,6 @@ public class Grimpeur {
 	private Integer id;
 	private String nom;
 	private String email;
-	private List<Site> sitesCrees;
-	private List<Site> sitesCommentes;
-	private List<Topo> toposCrees;
-	private List<Topo> toposProprietes;
-	private List<Topo> toposCommentes;
-	private List<Pret> toposEmpruntes;
 	
 	// ==================== Constructeurs ====================
 	 /**
@@ -62,54 +54,6 @@ public class Grimpeur {
 		this.email = email;
 	}
 
-	public List<Site> getSitesCrees() {
-		return sitesCrees;
-	}
-
-	public void setSitesCrees(List<Site> sitesCrees) {
-		this.sitesCrees = sitesCrees;
-	}
-
-	public List<Topo> getToposCrees() {
-		return toposCrees;
-	}
-
-	public void setToposCrees(List<Topo> toposCrees) {
-		this.toposCrees = toposCrees;
-	}
-
-	public List<Topo> getToposProprietes() {
-		return toposProprietes;
-	}
-
-	public void setToposProprietes(List<Topo> toposProprietes) {
-		this.toposProprietes = toposProprietes;
-	}
-
-	public List<Topo> getToposCommentes() {
-		return toposCommentes;
-	}
-
-	public void setToposCommentes(List<Topo> toposCommentes) {
-		this.toposCommentes = toposCommentes;
-	}
-
-	public List<Site> getSitesCommentes() {
-		return sitesCommentes;
-	}
-
-	public void setSitesCommentes(List<Site> sitesCommentes) {
-		this.sitesCommentes = sitesCommentes;
-	}
-
-	public List<Pret> getToposEmpruntes() {
-		return toposEmpruntes;
-	}
-
-	public void setToposEmpruntes(List<Pret> toposEmpruntes) {
-		this.toposEmpruntes = toposEmpruntes;
-	}
-	
 	
 	
 }
