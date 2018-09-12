@@ -35,8 +35,8 @@ public class SiteServiceImpl implements SiteService {
 	@Autowired
 	private LongueurDao longueurDao;
 	
-	@Autowired
-	private GrimpeurDao grimpeurDao;
+	//@Autowired
+	//private GrimpeurDao grimpeurDao;
 	
 	@Autowired
 	private TopoDao topoDao;

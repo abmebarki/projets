@@ -14,6 +14,7 @@ public interface CommentaireDao {
 	public Commentaire getCommentaire(int id);
 	public List<Commentaire> getAllCommentaire();
 	public List<Commentaire> getCommentairesSite(int siteID);
+	public List<Commentaire> getCommentairesTopo(int topoID);
 	public int addCommentaire(Commentaire commentaire);
 	public int updateCommentaire(Commentaire commentaire);
 	public int deleteCommentaire(int id);

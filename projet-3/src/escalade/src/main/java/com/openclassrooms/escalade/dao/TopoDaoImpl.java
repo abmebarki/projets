@@ -25,8 +25,8 @@ public class TopoDaoImpl implements TopoDao {
         
         @Transactional
 	public Topo getTopo(int id) {
-		Topo topo = (Topo) jdbcTemplate.queryForObject("select * from topo where id = ?",
-				new Object[] { id }, new TopoRowMapper());
+		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gc on t.createur_id = gc.id and t.id = ?  left join grimpeur_topo_proprietaire gtp on t.id = gtp.topo_id left join grimpeur gp on gp.id = gtp.proprietaire_id",
+				new Object[] { id }, new TopoCreateurProprietaireRowMapper());
 		return topo;
 	}
 
@@ -39,9 +39,9 @@ public class TopoDaoImpl implements TopoDao {
         
     @Transactional
 	public List<Topo> getTopos(int siteID) {
-		List<Topo> topo = (List<Topo>) jdbcTemplate.query("select * from topo t, topo_site_descipteur tsd where t.id = tsd.topo_id and tsd.site_id = ?",
+		List<Topo> topos = (List<Topo>) jdbcTemplate.query("select * from topo t, topo_site_descipteur tsd where t.id = tsd.topo_id and tsd.site_id = ?",
 				new Object[] { siteID }, new TopoRowMapper());
-		return topo;
+		return topos;
 	}        
 
 	@Transactional

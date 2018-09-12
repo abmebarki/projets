@@ -91,4 +91,38 @@ select cs.* from commentaire_site cs, grimpeur g where cs.auteur_id = g.id and c
 
 select * from commentaire_site cs
 
-select * from site s, grimpeur g where s.createur_id = g.id and s.id = 3		
+select * from site s, grimpeur g where s.createur_id = g.id and s.id = 3
+
+select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire  from topo t, grimpeur gc,grimpeur gp, grimpeur_topo_proprietaire gtp where t.createur_id = gc.id and t.id = gtp.topo_id and gtp.proprietaire_id = gp.id and t.id=2
+
+select s.id, s.description, s.nb_secteurs, s.ville, s.nom as nom_site, s.createur_id, g.nom as nom_createur, g.email from site s, grimpeur g where s.createur_id = g.id and s.id = ?
+
+select * from topo where id=3 
+
+select * from grimpeur
+
+insert into grimpeur(nom, email) values('Toto', 'toto@gmail.com')
+
+update grimpeur_topo_proprietaire set proprietaire_id=3 
+
+
+select * from site s, topo_site_descipteur tsd where s.id = tsd.site_id and tsd.topo_id = 2
+
+
+select * from commentaire_topo
+
+
+select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire  from topo t, grimpeur gc,grimpeur gp, grimpeur_topo_proprietaire gtp where t.createur_id = gc.id and t.id = gtp.topo_id and gtp.proprietaire_id = gp.id and t.id = 3
+
+
+select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire  
+from topo t join grimpeur gc on t.createur_id = gc.id left join grimpeur_topo_proprietaire gtp on gtp.proprietaire_id = gp.id 
+,grimpeur gp  left join g on t.id = gtp.topo_id  gtp where  and  and gtp.proprietaire_id = gp.id and t.id = 3
+
+select * from grimpeur_topo_proprietaire
+
+select * from topo t join grimpeur g on t.createur_id = g.id and t.id=3  left join grimpeur_topo_proprietaire gtp on t.id = gtp.topo_id left join grimpeur gp on gp.id = gtp.proprietaire_id
+
+
+select * from site s, topo_site_descipteur tsd where s.id = tsd.site_id and tsd.topo_id=2
+		

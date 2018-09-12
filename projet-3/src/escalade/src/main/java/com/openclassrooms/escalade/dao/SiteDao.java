@@ -12,6 +12,7 @@ public interface SiteDao {
 	
 	public Site getSite(int id);
 	public List<Site> getAllSite();
+	public List<Site> getSites(int topoID);
 	public int addSite(Site site);
 	public int updateSite(Site site);
 	public int deleteSite(int id);

@@ -44,7 +44,13 @@ public class CommentaireDaoImpl implements CommentaireDao {
 				new Object[] { siteID }, new CommentaireRowMapper());
 		return commentaire;
 	}        
-        
+
+    @Transactional
+   	public List<Commentaire> getCommentairesTopo(int topoID) {
+   		List<Commentaire> commentaire = (List<Commentaire>) jdbcTemplate.query("select * from commentaire_topo ct, grimpeur g where ct.auteur_id = g.id and ct.topo_commente_id = ?",
+   				new Object[] { topoID }, new CommentaireRowMapper());
+   		return commentaire;
+   	} 
 
 	@Transactional
 	public int addCommentaire(Commentaire commentaire) {

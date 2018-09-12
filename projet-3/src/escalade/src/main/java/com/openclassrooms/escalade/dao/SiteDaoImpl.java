@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.model.Site;
+import com.openclassrooms.escalade.model.Topo;
 
 /**
  * Classe d'impl�mentation de {@link SiteDao}.
@@ -34,6 +35,13 @@ public class SiteDaoImpl implements SiteDao {
 		List<Site> site = (List<Site>) jdbcTemplate.query("select * from site", new SiteRowMapper());
 		return site;
 	}
+	
+	@Transactional
+		public List<Site> getSites(int topoID) {
+			List<Site> sites = (List<Site>) jdbcTemplate.query("select * from site s, topo_site_descipteur tsd where s.id = tsd.site_id and tsd.topo_id = ?",
+					new Object[] { topoID }, new SiteRowMapper());
+			return sites;
+	}  
 
 	@Transactional
 	public int addSite(Site site) {
