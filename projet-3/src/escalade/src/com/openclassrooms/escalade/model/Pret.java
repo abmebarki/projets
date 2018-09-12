@@ -40,7 +40,7 @@ public class Pret {
 		return topoPrete;
 	}
 
-	
+
 	public void setTopoPrete(Topo topoPrete) {
 		this.topoPrete = topoPrete;
 	}

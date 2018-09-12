@@ -99,10 +99,10 @@ CREATE TABLE public.commentaire_site (
 
 ALTER SEQUENCE public.commentaire_site_id_seq OWNED BY public.commentaire_site.id;
 
-CREATE TABLE public.topo_site_descipteur (
+CREATE TABLE public.topo_site_descripteur (
                 site_id INTEGER NOT NULL,
                 topo_id INTEGER NOT NULL,
-                CONSTRAINT topo_site_descipteur_pk PRIMARY KEY (site_id, topo_id)
+                CONSTRAINT topo_site_descripteur_pk PRIMARY KEY (site_id, topo_id)
 );
 
 
@@ -154,104 +154,104 @@ ALTER SEQUENCE public.longueur_id_seq OWNED BY public.longueur.id;
 ALTER TABLE public.pret ADD CONSTRAINT grimpeur_pret_fk
 FOREIGN KEY (emprunteur_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.commentaire_site ADD CONSTRAINT grimpeur_commentaire_fk
 FOREIGN KEY (auteur_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.commentaire_topo ADD CONSTRAINT grimpeur_commentaire_topo_fk
 FOREIGN KEY (auteur_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.grimpeur_topo_proprietaire ADD CONSTRAINT grimpeur_grimpeur_topo_possession_fk
 FOREIGN KEY (proprietaire_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.site ADD CONSTRAINT grimpeur_site_fk
 FOREIGN KEY (createur_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.topo ADD CONSTRAINT grimpeur_topo_fk
 FOREIGN KEY (createur_id)
 REFERENCES public.grimpeur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-ALTER TABLE public.topo_site_descipteur ADD CONSTRAINT topo_topo_site_fk
+ALTER TABLE public.topo_site_descripteur ADD CONSTRAINT topo_topo_site_fk
 FOREIGN KEY (topo_id)
 REFERENCES public.topo (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.pret ADD CONSTRAINT topo_pret_fk
 FOREIGN KEY (topo_id)
 REFERENCES public.topo (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.commentaire_topo ADD CONSTRAINT topo_commentaire_topo_fk
 FOREIGN KEY (topo_commente_id)
 REFERENCES public.topo (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.grimpeur_topo_proprietaire ADD CONSTRAINT topo_grimpeur_topo_possession_fk
 FOREIGN KEY (topo_id)
 REFERENCES public.topo (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.secteur ADD CONSTRAINT site_secteur_fk
 FOREIGN KEY (site_id)
 REFERENCES public.site (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-ALTER TABLE public.topo_site_descipteur ADD CONSTRAINT site_topo_site_fk
+ALTER TABLE public.topo_site_descripteur ADD CONSTRAINT site_topo_site_fk
 FOREIGN KEY (site_id)
 REFERENCES public.site (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.commentaire_site ADD CONSTRAINT site_commentaire_site_fk
 FOREIGN KEY (site_commente_id)
 REFERENCES public.site (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.Voie ADD CONSTRAINT secteur_voie_fk
 FOREIGN KEY (secteur_id)
 REFERENCES public.secteur (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.longueur ADD CONSTRAINT voie_longueur_fk
 FOREIGN KEY (voie_id)
 REFERENCES public.Voie (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON DELETE CASCADE
+ON UPDATE CASCADE
 NOT DEFERRABLE;

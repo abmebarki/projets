@@ -29,15 +29,8 @@ public class Grimpeur {
 		this.id = gId;
 	}
 
-	
-    public Grimpeur(Integer id, String nom, String email) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.email = email;
-	}
 
-	// ==================== Getters/Setters ====================
+    // ==================== Getters/Setters ====================
 	public Integer getId() {
 		return id;
 	}

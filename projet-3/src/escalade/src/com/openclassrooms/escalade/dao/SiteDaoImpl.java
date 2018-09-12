@@ -1,5 +1,6 @@
 package com.openclassrooms.escalade.dao;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,26 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.model.Site;
 
+
 /**
- * Classe d'implï¿½mentation de {@link SiteDao}.
+ * Classe d'implémentation de {@link SiteDao}.
  */
 @Repository
 public class SiteDaoImpl implements SiteDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
-	@Transactional
+        
+        @Transactional
 	public Site getSite(int id) {
-		Site site = (Site) jdbcTemplate.queryForObject(
-				"select s.id, s.description, s.nb_secteurs, s.ville, s.nom as nom_site, s.createur_id, g.nom as nom_createur, g.email from site s, grimpeur g where s.createur_id = g.id and s.id = ?",
-				new Object[] { id }, new SiteCreateurRowMapper());
+		Site site = (Site) jdbcTemplate.queryForObject("select * from site where id = ?",
+				new Object[] { id }, new SiteRowMapper());
 		return site;
 	}
 
-	@Transactional
+        @Transactional
 	public List<Site> getAllSite() {
-		List<Site> site = (List<Site>) jdbcTemplate.query("select * from site", new SiteRowMapper());
+		List<Site> site = (List<Site>) jdbcTemplate.query("select * from site",
+				new SiteRowMapper());
 		return site;
 	}
 
@@ -52,7 +54,7 @@ public class SiteDaoImpl implements SiteDao {
 	@Transactional
 	public int updateSite(Site site) {
 		String sql = "update site set nom = ?, description = ?, nb_secteurs = ?, ville = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { site.getNom(), site.getDescription(), site.getNbSecteurs(),
+		int resp = jdbcTemplate.update(sql, new Object[] { site.getNom(), site.getDescription(), site.getNbSecteurs(), 
 				site.getVille(), site.getId() });
 		return resp;
 	}
