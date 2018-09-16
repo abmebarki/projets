@@ -25,47 +25,47 @@ public class VoieDaoImpl implements VoieDao {
 	private JdbcTemplate jdbcTemplate;
         
         @Transactional
-	public Voie getVoie(int id) {
+	public Voie findById(int id) {
 		Voie voie = (Voie) jdbcTemplate.queryForObject("select * from voie where id = ?",
 				new Object[] { id }, new VoieRowMapper());
 		return voie;
 	}
 
         @Transactional
-	public List<Voie> getAllVoie() {
+	public List<Voie> findAll() {
 		List<Voie> voie = (List<Voie>) jdbcTemplate.query("select * from voie",
 				new VoieRowMapper());
 		return voie;
 	}
         
     @Transactional
-	public List<Voie> getVoies(int secteurID) {
+	public List<Voie> findBySecteurId(int secteurId) {
 		List<Voie> voies = (List<Voie>) jdbcTemplate.query("select * from voie where secteur_id = ?",
-				new Object[] { secteurID }, new VoieRowMapper());
+				new Object[] { secteurId }, new VoieRowMapper());
 		return voies;
 	}          
 
 	@Transactional
-	public int addVoie(Voie voie) {
+	public int save(Voie voie, int secteurId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("voie").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("nom", voie.getNom());
 		parameters.put("nb_longueur", voie.getNbLongueurs());
-		parameters.put("secteur_id", 1);
+		parameters.put("secteur_id", secteurId);
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}
 
 	@Transactional
-	public int updateVoie(Voie voie) {
+	public int update(Voie voie) {
 		String sql = "update voie set nom = ?, nb_longueur = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { voie.getNom(), voie.getNbLongueurs(), voie.getId() });
 		return resp;
 	}
 
 	@Transactional
-	public int deleteVoie(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from voie where id = ?", id);
 		return resp;
 	}

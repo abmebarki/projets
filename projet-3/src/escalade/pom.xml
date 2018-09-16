@@ -12,6 +12,7 @@
 		<org.springframework-version>4.3.18.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<struts.version>2.5.14.1</struts.version>
 	</properties>
 	<dependencies>
 		
@@ -121,8 +122,21 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+	 <!-- Framework Apache Struts -->
+		 <dependency>
+	    <groupId>org.apache.struts</groupId>
+	    <artifactId>struts2-spring-plugin</artifactId>
+	    <version>${struts.version}</version>
+	</dependency>
 	
-		<!-- Test -->
+	<!-- Framework Apache Struts -->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>${struts.version}</version>
+        </dependency>
+	
+     	<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

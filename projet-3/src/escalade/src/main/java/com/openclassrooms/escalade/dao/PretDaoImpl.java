@@ -24,21 +24,21 @@ public class PretDaoImpl implements PretDao {
 	private JdbcTemplate jdbcTemplate;
         
         @Transactional
-	public Pret getPret(int id) {
+	public Pret findById(int id) {
 		Pret pret = (Pret) jdbcTemplate.queryForObject("select * from pret where id = ?",
 				new Object[] { id }, new PretRowMapper());
 		return pret;
 	}
 
         @Transactional
-	public List<Pret> getAllPret() {
+	public List<Pret> findAll() {
 		List<Pret> pret = (List<Pret>) jdbcTemplate.query("select * from pret",
 				new PretRowMapper());
 		return pret;
 	}
 
 	@Transactional
-	public int addPret(Pret pret) {
+	public int save(Pret pret) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		//simpleJdbcInsert.withTableName("pret").usingGeneratedKeyColumns("id");
 		simpleJdbcInsert.withTableName("pret");
@@ -52,7 +52,7 @@ public class PretDaoImpl implements PretDao {
 	}
 
 	@Transactional
-	public int updatePret(Pret pret) {
+	public int update(Pret pret) {
 		String sql = "update pret set date_debut = ?, date_fin = ? where emprunteur_id = ? and topo_id =?";
 		int resp = jdbcTemplate.update(sql, new Object[] { pret.getDateDebut(), pret.getDateFin(), pret.getEmprunteur().getId(), 
 				pret.getTopoPrete().getId() });
@@ -60,7 +60,7 @@ public class PretDaoImpl implements PretDao {
 	}
 
 	@Transactional
-	public int deletePret(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from pret where id = ?", id);
 		return resp;
 	}

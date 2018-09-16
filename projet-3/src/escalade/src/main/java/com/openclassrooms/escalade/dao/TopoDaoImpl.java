@@ -23,29 +23,45 @@ public class TopoDaoImpl implements TopoDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
         
-        @Transactional
-	public Topo getTopo(int id) {
+        /* (non-Javadoc)
+		 * @see com.openclassrooms.escalade.dao.TopoDao#findById(int)
+		 */
+        @Override
+		@Transactional
+	public Topo findById(int id) {
 		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gc on t.createur_id = gc.id and t.id = ?  left join grimpeur_topo_proprietaire gtp on t.id = gtp.topo_id left join grimpeur gp on gp.id = gtp.proprietaire_id",
 				new Object[] { id }, new TopoCreateurProprietaireRowMapper());
 		return topo;
 	}
 
-        @Transactional
-	public List<Topo> getAllTopo() {
+        /* (non-Javadoc)
+		 * @see com.openclassrooms.escalade.dao.TopoDao#findAll()
+		 */
+        @Override
+		@Transactional
+	public List<Topo> findAll() {
 		List<Topo> topo = (List<Topo>) jdbcTemplate.query("select * from topo",
 				new TopoRowMapper());
 		return topo;
 	}
         
-    @Transactional
-	public List<Topo> getTopos(int siteID) {
-		List<Topo> topos = (List<Topo>) jdbcTemplate.query("select * from topo t, topo_site_descipteur tsd where t.id = tsd.topo_id and tsd.site_id = ?",
-				new Object[] { siteID }, new TopoRowMapper());
+    /* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#findBySiteId(int)
+	 */
+    @Override
+	@Transactional
+	public List<Topo> findBySiteId(int siteId) {
+		List<Topo> topos = (List<Topo>) jdbcTemplate.query("select * from topo t join topo_site_descipteur tsd on t.id = tsd.topo_id where tsd.site_id = ?",
+				new Object[] { siteId }, new TopoRowMapper());
 		return topos;
 	}        
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#save(com.openclassrooms.escalade.model.Topo)
+	 */
+	@Override
 	@Transactional
-	public int addTopo(Topo topo) {
+	public int save(Topo topo) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("topo").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -58,16 +74,24 @@ public class TopoDaoImpl implements TopoDao {
 		return insertedId.intValue();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#update(com.openclassrooms.escalade.model.Topo)
+	 */
+	@Override
 	@Transactional
-	public int updateTopo(Topo topo) {
+	public int update(Topo topo) {
 		String sql = "update topo set nom = ?, nb_pages = ?, auteur = ?, date = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { topo.getNom(), topo.getNbPages(), topo.getAuteur(), 
 				topo.getDate(), topo.getId() });
 		return resp;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#delete(int)
+	 */
+	@Override
 	@Transactional
-	public int deleteTopo(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from topo where id = ?", id);
 		return resp;
 	}

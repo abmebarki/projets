@@ -14,31 +14,27 @@ public class PretServiceImpl implements PretService {
 	@Autowired
 	private PretDao PretDao;
 
-	public Pret getPret(int id) {
-		return PretDao.getPret(id);
+	public Pret findById(int pretId) {
+		return PretDao.findById(pretId);
 	}
 
-	public List<Pret> getAllPret() {
-		return PretDao.getAllPret();
-	}
-
-	@Override
-	public int addPret(Pret userDetails) {
-		return PretDao.addPret(userDetails);
+	public List<Pret> findAll() {
+		return PretDao.findAll();
 	}
 
 	@Override
-	public int updatePret(Pret userDetails) {
-		return PretDao.updatePret(userDetails);
+	public int save(Pret pret) {
+		return PretDao.save(pret);
 	}
 
 	@Override
-	public int deletePret(int id) {
-		return PretDao.deletePret(id);
+	public int update(Pret pret) {
+		return PretDao.update(pret);
 	}
 
-	public PretDao getPretDao() {
-		return PretDao;
+	@Override
+	public int delete(int pretId) {
+		return PretDao.delete(pretId);
 	}
-
+	
 }

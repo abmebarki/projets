@@ -5,10 +5,10 @@ import com.openclassrooms.escalade.model.Pret;
 
 public interface PretService {
 
-	public Pret getPret(int id);
-	public List<Pret> getAllPret();
-	public int addPret(Pret pret);
-	public int updatePret(Pret pret);
-	public int deletePret(int id);
+	public Pret findById(int id);
+	public List<Pret> findAll();
+	public int save(Pret pret);
+	public int update(Pret pret);
+	public int delete(int id);
 	
 }

@@ -24,21 +24,21 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 	private JdbcTemplate jdbcTemplate;
         
         @Transactional
-	public Grimpeur getGrimpeur(int id) {
+	public Grimpeur findById(int id) {
 		Grimpeur grimpeur = (Grimpeur) jdbcTemplate.queryForObject("select * from grimpeur where id = ?",
 				new Object[] { id }, new GrimpeurRowMapper());
 		return grimpeur;
 	}
 
         @Transactional
-	public List<Grimpeur> getAllGrimpeur() {
+	public List<Grimpeur> findAll() {
 		List<Grimpeur> grimpeur = (List<Grimpeur>) jdbcTemplate.query("select * from grimpeur",
 				new GrimpeurRowMapper());
 		return grimpeur;
 	}
 
 	@Transactional
-	public int addGrimpeur(Grimpeur grimpeur) {
+	public int save(Grimpeur grimpeur) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("grimpeur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -49,14 +49,14 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 	}
 
 	@Transactional
-	public int updateGrimpeur(Grimpeur grimpeur) {
+	public int update(Grimpeur grimpeur) {
 		String sql = "update grimpeur set nom = ?, email = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { grimpeur.getNom(), grimpeur.getEmail(), grimpeur.getId() });
 		return resp;
 	}
 
 	@Transactional
-	public int deleteGrimpeur(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from grimpeur where id = ?", id);
 		return resp;
 	}

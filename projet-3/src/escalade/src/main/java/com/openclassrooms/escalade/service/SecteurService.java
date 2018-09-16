@@ -1,15 +1,10 @@
-package com.openclassrooms.escalade.dao;
+package com.openclassrooms.escalade.service;
 
 import java.util.List;
-
 import com.openclassrooms.escalade.model.Secteur;
 
-/**
- * Interface DAO de la classe SECTEUR
- */
+public interface SecteurService {
 
-public interface SecteurDao {
-	
 	public Secteur findById(int id);
 	public List<Secteur> findAll();
 	public List<Secteur> findBySiteId(int siteId);

@@ -24,28 +24,28 @@ public class SecteurDaoImpl implements SecteurDao {
 	private JdbcTemplate jdbcTemplate;
         
         @Transactional
-	public Secteur getSecteur(int id) {
+	public Secteur findById(int id) {
 		Secteur secteur = (Secteur) jdbcTemplate.queryForObject("select * from secteur where id = ?",
 				new Object[] { id }, new SecteurRowMapper());
 		return secteur;
 	}
 
         @Transactional
-	public List<Secteur> getAllSecteur() {
+	public List<Secteur> findAll() {
 		List<Secteur> secteurs = (List<Secteur>) jdbcTemplate.query("select * from secteur",
 				new SecteurRowMapper());
 		return secteurs;
 	}
         
     @Transactional
-	public List<Secteur> getSecteurs(int siteID) {
+	public List<Secteur> findBySiteId(int siteId) {
 		List<Secteur> secteurs = (List<Secteur>) jdbcTemplate.query("select * from secteur where site_id = ?",
-				new Object[] { siteID }, new SecteurRowMapper());
+				new Object[] { siteId }, new SecteurRowMapper());
 		return secteurs;
 	}    
 
 	@Transactional
-	public int addSecteur(Secteur secteur) {
+	public int save(Secteur secteur, int siteId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("secteur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -55,6 +55,7 @@ public class SecteurDaoImpl implements SecteurDao {
 		parameters.put("coordonnees", secteur.getCoordonnees());
 		parameters.put("nb_voies", secteur.getNbVoies());
 		parameters.put("orientation", secteur.getOrientation());
+		parameters.put("site_id", siteId);
 		//parameters.put(key,)
 		
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
@@ -62,7 +63,7 @@ public class SecteurDaoImpl implements SecteurDao {
 	}
 
 	@Transactional
-	public int updateSecteur(Secteur secteur) {
+	public int update(Secteur secteur) {
 		String sql = "update secteur set nom = ?, description = ?, hauteur_max = ?, coordonnees = ?, nb_voies = ?, orientation = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { secteur.getNom(), secteur.getDescription(), secteur.getHauteurMax(), secteur.getCoordonnees(), secteur.getNbVoies(), 
 				secteur.getOrientation(), secteur.getId() });
@@ -70,7 +71,7 @@ public class SecteurDaoImpl implements SecteurDao {
 	}
 
 	@Transactional
-	public int deleteSecteur(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from secteur where id = ?", id);
 		return resp;
 	}

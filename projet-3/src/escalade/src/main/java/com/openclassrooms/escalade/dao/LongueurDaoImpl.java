@@ -25,28 +25,28 @@ public class LongueurDaoImpl implements LongueurDao {
 	private JdbcTemplate jdbcTemplate;
         
         @Transactional
-	public Longueur getLongueur(int id) {
+	public Longueur findById(int id) {
 		Longueur longueur = (Longueur) jdbcTemplate.queryForObject("select * from longueur where id = ?",
 				new Object[] { id }, new LongueurRowMapper());
 		return longueur;
 	}
 
         @Transactional
-	public List<Longueur> getAllLongueur() {
+	public List<Longueur> findAll() {
 		List<Longueur> longueur = (List<Longueur>) jdbcTemplate.query("select * from longueur",
 				new LongueurRowMapper());
 		return longueur;
 	}
     
     @Transactional
-	public List<Longueur> getLongueurs(int voieID) {
+	public List<Longueur> findByVoieId(int voieId) {
 		List<Longueur> longueurs = (List<Longueur>) jdbcTemplate.query("select * from longueur where voie_id = ?",
-				new Object[] { voieID }, new LongueurRowMapper());
+				new Object[] { voieId }, new LongueurRowMapper());
 		return longueurs;
 	}          
 
 	@Transactional
-	public int addLongueur(Longueur longueur) {
+	public int save(Longueur longueur, int voieId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("longueur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -54,13 +54,13 @@ public class LongueurDaoImpl implements LongueurDao {
 		parameters.put("hauteur", longueur.getHauteur());
 		parameters.put("nb_points", longueur.getNbPoints());
 		parameters.put("equipee", longueur.isEquipee());
-		parameters.put("voie_id", 1);
+		parameters.put("voie_id", voieId);
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}
 
 	@Transactional
-	public int updateLongueur(Longueur longueur) {
+	public int update(Longueur longueur) {
 		String sql = "update longueur set cotation = ?, hauteur = ?, nb_points = ?, equipee = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { longueur.getCotation(), longueur.getHauteur(), longueur.getNbPoints(), 
 				longueur.isEquipee(), longueur.getId() });
@@ -68,7 +68,7 @@ public class LongueurDaoImpl implements LongueurDao {
 	}
 
 	@Transactional
-	public int deleteLongueur(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from longueur where id = ?", id);
 		return resp;
 	}

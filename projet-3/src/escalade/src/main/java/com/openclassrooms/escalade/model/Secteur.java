@@ -94,7 +94,7 @@ public class Secteur {
 		this.hauteurMax = hauteurMax;
 	}
 
-	public List<Voie> getVoies() {
+	public List<Voie> findBySecteurId() {
 		return voies;
 	}
 

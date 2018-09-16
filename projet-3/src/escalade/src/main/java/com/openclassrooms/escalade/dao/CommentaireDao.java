@@ -11,12 +11,12 @@ import com.openclassrooms.escalade.model.Topo;
 
 public interface CommentaireDao {
 	
-	public Commentaire getCommentaire(int id);
-	public List<Commentaire> getAllCommentaire();
-	public List<Commentaire> getCommentairesSite(int siteID);
-	public List<Commentaire> getCommentairesTopo(int topoID);
-	public int addCommentaire(Commentaire commentaire);
-	public int updateCommentaire(Commentaire commentaire);
-	public int deleteCommentaire(int id);
+	public Commentaire findById(int id);
+	public List<Commentaire> findAll();
+	public List<Commentaire> findBySiteId(int siteId);
+	public List<Commentaire> findByTopoId(int topoId);
+	public int save(Commentaire commentaire, int auteurId);
+	public int update(Commentaire commentaire);
+	public int delete(int id);
 	
 }

@@ -1,15 +1,10 @@
-package com.openclassrooms.escalade.dao;
+package com.openclassrooms.escalade.service;
 
 import java.util.List;
-
 import com.openclassrooms.escalade.model.Grimpeur;
 
-/**
- * Interface DAO de la classe GRIMPEUR
- */
+public interface GrimpeurService {
 
-public interface GrimpeurDao {
-	
 	public Grimpeur findById(int id);
 	public List<Grimpeur> findAll();
 	public int save(Grimpeur grimpeur);

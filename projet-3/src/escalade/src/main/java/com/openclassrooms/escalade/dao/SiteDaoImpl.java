@@ -22,29 +22,43 @@ public class SiteDaoImpl implements SiteDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#findById(int)
+	 */
+	@Override
 	@Transactional
-	public Site getSite(int id) {
-		Site site = (Site) jdbcTemplate.queryForObject(
-				"select s.id, s.description, s.nb_secteurs, s.ville, s.nom as nom_site, s.createur_id, g.nom as nom_createur, g.email from site s, grimpeur g where s.createur_id = g.id and s.id = ?",
-				new Object[] { id }, new SiteCreateurRowMapper());
+	public Site findById(int id) {
+		Site site = (Site) jdbcTemplate.queryForObject("select * from site where id = ?", new Object[] { id }, new SiteRowMapper());
 		return site;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#findAll()
+	 */
+	@Override
 	@Transactional
-	public List<Site> getAllSite() {
+	public List<Site> findAll() {
 		List<Site> site = (List<Site>) jdbcTemplate.query("select * from site", new SiteRowMapper());
 		return site;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#findByTopoId(int)
+	 */
+	@Override
 	@Transactional
-		public List<Site> getSites(int topoID) {
-			List<Site> sites = (List<Site>) jdbcTemplate.query("select * from site s, topo_site_descipteur tsd where s.id = tsd.site_id and tsd.topo_id = ?",
-					new Object[] { topoID }, new SiteRowMapper());
+		public List<Site> findByTopoId(int topoId) {
+			List<Site> sites = (List<Site>) jdbcTemplate.query("select * from site s join topo_site_descipteur tsd on s.id = tsd.site_id and tsd.topo_id = ?",
+					new Object[] { topoId }, new SiteRowMapper());
 			return sites;
 	}  
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#save(com.openclassrooms.escalade.model.Site)
+	 */
+	@Override
 	@Transactional
-	public int addSite(Site site) {
+	public int save(Site site) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("site").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -57,16 +71,24 @@ public class SiteDaoImpl implements SiteDao {
 		return insertedId.intValue();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#update(com.openclassrooms.escalade.model.Site)
+	 */
+	@Override
 	@Transactional
-	public int updateSite(Site site) {
+	public int update(Site site) {
 		String sql = "update site set nom = ?, description = ?, nb_secteurs = ?, ville = ? where id = ?";
 		int resp = jdbcTemplate.update(sql, new Object[] { site.getNom(), site.getDescription(), site.getNbSecteurs(),
 				site.getVille(), site.getId() });
 		return resp;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#delete(int)
+	 */
+	@Override
 	@Transactional
-	public int deleteSite(int id) {
+	public int delete(int id) {
 		int resp = jdbcTemplate.update("delete from site where id = ?", id);
 		return resp;
 	}

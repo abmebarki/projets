@@ -2,19 +2,17 @@ package com.openclassrooms.escalade.dao;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.openclassrooms.escalade.model.Topo;
 
-/**
- * Interface DAO de la classe TOPO
- */
-
 public interface TopoDao {
-	
-	public Topo getTopo(int id);
-	public List<Topo> getAllTopo();
-	public List<Topo> getTopos(int siteID);
-	public int addTopo(Topo topo);
-	public int updateTopo(Topo topo);
-	public int deleteTopo(int id);
-	
+
+	public Topo findById(int id);
+	public List<Topo> findAll();
+	public List<Topo> findBySiteId(int siteId);
+	public int save(Topo topo);
+	public int update(Topo topo);
+	public int delete(int id);
+
 }

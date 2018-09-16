@@ -14,31 +14,37 @@ public class CommentaireServiceImpl implements CommentaireService {
 	@Autowired
 	private CommentaireDao CommentaireDao;
 
-	public Commentaire getCommentaire(int id) {
-		return CommentaireDao.getCommentaire(id);
-	}
-
-	public List<Commentaire> getAllCommentaire() {
-		return CommentaireDao.getAllCommentaire();
+	public Commentaire findById(int id) {
+		return CommentaireDao.findById(id);
 	}
 
 	@Override
-	public int addCommentaire(Commentaire userDetails) {
-		return CommentaireDao.addCommentaire(userDetails);
+	public List<Commentaire> findAll() {
+		return CommentaireDao.findAll();
+	}
+	
+	@Override
+	public List<Commentaire> findBySiteId(int siteId) {
+		return CommentaireDao.findBySiteId(siteId);
+	}
+	
+	@Override
+	public List<Commentaire> findByTopoId(int topoId) {
+		return CommentaireDao.findByTopoId(topoId);
 	}
 
 	@Override
-	public int updateCommentaire(Commentaire userDetails) {
-		return CommentaireDao.updateCommentaire(userDetails);
+	public int save(Commentaire commentaire, int auteurId) {
+		return CommentaireDao.save(commentaire, auteurId);
 	}
 
 	@Override
-	public int deleteCommentaire(int id) {
-		return CommentaireDao.deleteCommentaire(id);
+	public int update(Commentaire commentaire) {
+		return CommentaireDao.update(commentaire);
 	}
 
-	public CommentaireDao getCommentaireDao() {
-		return CommentaireDao;
+	@Override
+	public int delete(int commentaireId) {
+		return CommentaireDao.delete(commentaireId);
 	}
-
 }
