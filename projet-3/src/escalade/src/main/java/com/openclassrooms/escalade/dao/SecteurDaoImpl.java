@@ -15,7 +15,7 @@ import com.openclassrooms.escalade.model.Secteur;
 
 
 /**
- * Classe d'impl�mentation de {@link SecteurDao}.
+ * Classe d'implémentation de {@link SecteurDao}.
  */
 @Repository
 public class SecteurDaoImpl implements SecteurDao {
@@ -45,7 +45,7 @@ public class SecteurDaoImpl implements SecteurDao {
 	}    
 
 	@Transactional
-	public int save(Secteur secteur, int siteId) {
+	public int create(Secteur secteur, int siteId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("secteur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -56,16 +56,15 @@ public class SecteurDaoImpl implements SecteurDao {
 		parameters.put("nb_voies", secteur.getNbVoies());
 		parameters.put("orientation", secteur.getOrientation());
 		parameters.put("site_id", siteId);
-		//parameters.put(key,)
-		
+				
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}
 
 	@Transactional
 	public int update(Secteur secteur) {
-		String sql = "update secteur set nom = ?, description = ?, hauteur_max = ?, coordonnees = ?, nb_voies = ?, orientation = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { secteur.getNom(), secteur.getDescription(), secteur.getHauteurMax(), secteur.getCoordonnees(), secteur.getNbVoies(), 
+		String sql = "update secteur set nom = ?, description = ?, hauteur_max = ?, coordonnees = ?, orientation = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { secteur.getNom(), secteur.getDescription(), secteur.getHauteurMax(), secteur.getCoordonnees(), 
 				secteur.getOrientation(), secteur.getId() });
 		return resp;
 	}

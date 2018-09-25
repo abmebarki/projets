@@ -1,0 +1,13 @@
+table td {
+	width: 230px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+table th {
+    width: 230px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+

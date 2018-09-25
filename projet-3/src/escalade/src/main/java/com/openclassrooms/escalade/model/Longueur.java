@@ -1,7 +1,7 @@
 package com.openclassrooms.escalade.model;
 
 /**
- * Objet m�tier repr�sentant une longueur dans une voie
+ * Objet métier représentant une longueur dans une voie
  *
  * @author amebarki
  */
@@ -17,7 +17,7 @@ public class Longueur {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Longueur() {
 	}

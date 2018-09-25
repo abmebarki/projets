@@ -11,7 +11,7 @@ public interface TopoDao {
 	public Topo findById(int id);
 	public List<Topo> findAll();
 	public List<Topo> findBySiteId(int siteId);
-	public int save(Topo topo);
+	public int create(Topo topo);
 	public int update(Topo topo);
 	public int delete(int id);
 

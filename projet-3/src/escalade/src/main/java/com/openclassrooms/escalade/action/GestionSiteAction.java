@@ -22,10 +22,10 @@ public class GestionSiteAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 
 	// ==================== Attributs ====================
-    // ----- Param�tres en entr�e
+    // ----- Paramètres en entrée
     private Integer id;
 
-    // ----- El�ments en sortie
+    // ----- Eléments en sortie
     private List<Site> listSite;
     private Site site;
     
@@ -50,7 +50,7 @@ public class GestionSiteAction extends ActionSupport {
     public void setSite(Site site) {
 		this.site = site;
 	}
-	// ==================== M�thodes ====================
+	// ==================== Méthodes ====================
     /**
      * Action listant les {@link Site}
      * @return success
@@ -62,7 +62,7 @@ public class GestionSiteAction extends ActionSupport {
 
 
     /**
-     * Action affichant les d�tails d'un {@link Site}
+     * Action affichant les détails d'un {@link Site}
      * @return success / error
      */
     public String doDetail() {
@@ -99,14 +99,14 @@ public class GestionSiteAction extends ActionSupport {
     }
     
     /**
-     * Action permettant de cr�er un nouveau {@link Site}
+     * Action permettant de créer un nouveau {@link Site}
      * @return input / success / error
      */
     public String doCreate() {
         // Si (this.site == null) c'est que l'on entre dans l'ajout de site
         // Sinon, c'est que l'on vient de valider le formulaire d'ajout
 
-        // Par d�faut, le result est "input"
+        // Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
 
         // ===== Validation de l'ajout de site (site != null)
@@ -115,10 +115,10 @@ public class GestionSiteAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	id = siteService.save(this.site);
-                	// Si ajout avec succ�s -> Result "success"
+                	 id = siteService.create(this.site);
+                	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
-                    this.addActionMessage("Site ajout� avec succ�s");
+                    this.addActionMessage("Site ajouté avec succés");
 
                 } catch (Exception sEx) {
                     // Sur erreur fonctionnelle on reste sur la page de saisie
@@ -129,6 +129,46 @@ public class GestionSiteAction extends ActionSupport {
             }
         }
         
+        return vResult;
+    }
+    
+    /**
+     * Action permettant de mettre à jour un {@link Site}
+     * @return input / success / error
+     */
+    public String doUpdate() {
+    	
+    	// Par défaut, le result est "input"
+        String vResult = ActionSupport.INPUT;
+        if (id == null) {
+        	if (this.site == null) {
+        		this.addActionError("Vous devez indiquer un id de site");
+        	} else {
+       		 // Si pas d'erreur, mise à jour du site...
+                if (!this.hasErrors()) {
+                    try {
+                    	siteService.update(this.site);
+                    	// Si mise à jour avec succés -> Result "success"
+                        vResult = ActionSupport.SUCCESS;
+                        this.addActionMessage("Site mis à jour avec succés");
+
+                    } catch (Exception sEx) {
+                        // Sur erreur fonctionnelle on reste sur la page de saisie
+                        // et on affiche un message d'erreur
+                        this.addActionError(sEx.getMessage());
+                    } 
+                } 
+       	 	}
+
+         } else {
+        	 	 try {
+	                 site = siteService.findById(id);
+	             } catch (Exception sE) {
+	            	 vResult = ActionSupport.ERROR;
+	                 this.addActionError(getText("error.site.notfound", Collections.singletonList(id)));
+	             }
+         }
+
         return vResult;
     }
 }

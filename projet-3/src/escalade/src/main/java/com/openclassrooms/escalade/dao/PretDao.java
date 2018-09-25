@@ -12,7 +12,7 @@ public interface PretDao {
 	
 	public Pret findById(int id);
 	public List<Pret> findAll();
-	public int save(Pret pret);
+	public int create(Pret pret);
 	public int update(Pret pret);
 	public int delete(int id);
 	

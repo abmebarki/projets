@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Objet m�tier repr�sentant un topo d'escalade
+ * Objet métier représentant un topo d'escalade
  *
  * @author amebarki
  */
@@ -26,7 +26,7 @@ public class Topo {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Topo() {
 	}

@@ -3,7 +3,7 @@ package com.openclassrooms.escalade.model;
 import java.util.List;
 
 /**
- * Objet m�tier repr�sentant une voie dans une secteur
+ * Objet métier représentant une voie dans une secteur
  *
  * @author amebarki
  */
@@ -18,7 +18,7 @@ public class Voie {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Voie() {
 	}

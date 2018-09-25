@@ -16,7 +16,7 @@ import com.openclassrooms.escalade.model.Voie;
 
 
 /**
- * Classe d'impl�mentation de {@link VoieDao}.
+ * Classe d'implémentation de {@link VoieDao}.
  */
 @Repository
 public class VoieDaoImpl implements VoieDao {
@@ -46,12 +46,12 @@ public class VoieDaoImpl implements VoieDao {
 	}          
 
 	@Transactional
-	public int save(Voie voie, int secteurId) {
+	public int create(Voie voie, int secteurId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("voie").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("nom", voie.getNom());
-		parameters.put("nb_longueur", voie.getNbLongueurs());
+		parameters.put("nb_longueurs", voie.getNbLongueurs());
 		parameters.put("secteur_id", secteurId);
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
@@ -59,8 +59,8 @@ public class VoieDaoImpl implements VoieDao {
 
 	@Transactional
 	public int update(Voie voie) {
-		String sql = "update voie set nom = ?, nb_longueur = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { voie.getNom(), voie.getNbLongueurs(), voie.getId() });
+		String sql = "update voie set nom = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { voie.getNom(), voie.getId() });
 		return resp;
 	}
 

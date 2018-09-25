@@ -16,7 +16,7 @@ import com.openclassrooms.escalade.model.Voie;
 
 
 /**
- * Classe d'impl�mentation de {@link LongueurDao}.
+ * Classe d'implémentation de {@link LongueurDao}.
  */
 @Repository
 public class LongueurDaoImpl implements LongueurDao {
@@ -46,7 +46,7 @@ public class LongueurDaoImpl implements LongueurDao {
 	}          
 
 	@Transactional
-	public int save(Longueur longueur, int voieId) {
+	public int create(Longueur longueur, int voieId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("longueur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);

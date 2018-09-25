@@ -3,7 +3,7 @@ package com.openclassrooms.escalade.model;
 import java.util.List;
 
 /**
- * Objet m�tier repr�sentant un site d'escalade
+ * Objet métier représentant un site d'escalade
  *
  * @author amebarki
  */
@@ -23,7 +23,7 @@ public class Site {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Site() {
 	}

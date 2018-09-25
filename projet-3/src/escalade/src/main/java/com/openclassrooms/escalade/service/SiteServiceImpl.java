@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.SiteDao;
 import com.openclassrooms.escalade.model.Commentaire;
@@ -34,6 +35,7 @@ public class SiteServiceImpl implements SiteService{
 	 * @see com.openclassrooms.escalade.service.SiteService#findById(int)
 	 */
 	@Override
+	@Transactional
 	public Site findById(int siteId) {
 		Site site = siteDao.findById(siteId);
 		Grimpeur createur = grimpeurService.findById(site.getCreateur().getId()) ; 
@@ -56,6 +58,7 @@ public class SiteServiceImpl implements SiteService{
 	 * @see com.openclassrooms.escalade.service.SiteService#findAll()
 	 */
 	@Override
+	@Transactional
 	public List<Site> findAll() {
 		List<Site> sites = siteDao.findAll();
 		return sites;
@@ -65,20 +68,36 @@ public class SiteServiceImpl implements SiteService{
 	 * @see com.openclassrooms.escalade.service.SiteService#findByTopoId(int)
 	 */
 	@Override
+	@Transactional
 	public List<Site> findByTopoId(int topoId) {
 		List<Site> sites = siteDao.findByTopoId(topoId);
 		return sites;
 	}
 
 	/* (non-Javadoc)
-	 * @see com.openclassrooms.escalade.service.SiteService#save(com.openclassrooms.escalade.model.Site)
+	 * @see com.openclassrooms.escalade.service.SiteService#create(com.openclassrooms.escalade.model.Site)
 	 */
 	@Override
-	public int save(Site site) {
-		int siteId = siteDao.save(site);
+	@Transactional
+	public int create(Site site) {
+		
+		// Création du créateur
+		int createurId = grimpeurService.create(site.getCreateur());
+		
+		// Mettre à jour le site par le créateur Id
+		site.getCreateur().setId(createurId);
+		
+		// Création du site
+		int siteId = siteDao.create(site);
+		
+		// Mettre à jour le site par son identifiant id
+		site.setId(siteId);
+		
+		// Création des secteurs
 		for(int i = 0; i < site.getSecteurs().size(); i++) {
-			secteurService.save(site.getSecteurs().get(i), siteId);
+			secteurService.create(site.getSecteurs().get(i), siteId);
 		}
+		
 		return siteId;
 	}
 
@@ -86,14 +105,25 @@ public class SiteServiceImpl implements SiteService{
 	 * @see com.openclassrooms.escalade.service.SiteService#update(com.openclassrooms.escalade.model.Site)
 	 */
 	@Override
+	@Transactional
 	public int update(Site site) {
-		return siteDao.update(site);
+		int id = siteDao.update(site);
+		
+		// mise jour des secteurs
+		for(int i = 0; i < site.getSecteurs().size(); i++) {
+			secteurService.update(site.getSecteurs().get(i));
+		}
+		// mise à jour du créateur
+		grimpeurService.update(site.getCreateur());
+		return id;
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.SiteService#delete(int)
 	 */
 	@Override
+	@Transactional
 	public int delete(int siteId) {
 		return siteDao.delete(siteId);
 	}

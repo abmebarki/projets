@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
-<title></title>
-<body>
+<head>
+<%@ include file="../_include/header.jsp"%>
+</head>
+<body><%@ include file="../_include/menu.jsp"%>
 
 <s:actionmessage />
 
@@ -22,10 +23,10 @@
 	<s:property value="site.nbSecteurs" />
 	<br /> Ville :
 	<s:property value="site.ville" />
-	<br /> Créateur :
+	<br /> CrÃ©ateur :
 	<s:property value="site.createur.nom" />
 
-	<h3>Liste des Secteurs</h3>
+	<h4>Liste des Secteurs</h4>
 	<s:iterator value="site.secteurs" status="loop">
 		<h4>
 			Secteur
@@ -54,8 +55,8 @@
 					<td><s:property value="hauteurMax" /></td>
 				</tr>
 				<tr>
-					<td colspan="5">
-						<h3>Liste des voies</h3> <s:iterator value="voies" status="loop">
+					<td colspan="7">
+						<h4>Liste des voies</h4> <s:iterator value="voies" status="loop">
 							<h4>Voie ${loop.index + 1}</h4>
 							<table cellpadding="5" cellspacing="5">
 								<thead>
@@ -72,8 +73,8 @@
 										<td><s:property value="nbLongueurs" /></td>
 									</tr>
 									<tr>
-										<td colspan="5">
-											<h3>Liste des Longueurs</h3> <s:iterator value="longueurs"
+										<td colspan="3">
+											<h4>Liste des Longueurs</h4> <s:iterator value="longueurs"
 												status="loop">
 												<h4>Longueur ${loop.index + 1}</h4>
 												<table cellpadding="5" cellspacing="5">
@@ -83,7 +84,7 @@
 															<th>Hauteur</th>
 															<th>Cotation</th>
 															<th>Nb Points</th>
-															<th>Equipée</th>
+															<th>EquipÃ©e</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -108,7 +109,7 @@
 		</table>
 	</s:iterator>
 
-	<h3>Liste des Topos</h3>
+	<h4>Liste des Topos&nbsp;<s:a action="topo_new">Ajouter topo</s:a></h4>
 	<s:iterator value="site.descripteurs" status="loop">
 		<h4>Topo ${loop.index + 1}</h4>
 		<table cellpadding="5" cellspacing="5">
@@ -133,7 +134,7 @@
 		</table>
 	</s:iterator>
 
-	<h3>Liste des Commentaires</h3>
+	<h4>Liste des Commentaires&nbsp;<s:a action="commentaire_site_new"><s:param name="siteId" value="site.id" />Ajouter commentaire</s:a></h4>
 	<s:iterator value="site.commentaires" status="loop">
 		<h4>Commentaire ${loop.index + 1}</h4>
 		<table cellpadding="5" cellspacing="5">
@@ -155,6 +156,10 @@
 					<td><s:date name="date" /></td>
 					<td><s:property value="auteur.nom" /></td>
 					<td><s:property value="auteur.email" /></td>
+					<td>
+					<s:a action="commentaire_site_update"><s:param name="id" value="id" /><s:param name="siteId" value="site.id" />Mettre Ã  jour</s:a>&nbsp;
+					<s:a action="commentaire_site_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" /><s:param name="siteId" value="site.id" />Supprimer</s:a>&nbsp;
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.CommentaireDao;
 import com.openclassrooms.escalade.model.Commentaire;
@@ -13,38 +14,79 @@ public class CommentaireServiceImpl implements CommentaireService {
 
 	@Autowired
 	private CommentaireDao CommentaireDao;
+	
+	@Autowired
+	private GrimpeurService grimpeurService;
 
-	public Commentaire findById(int id) {
-		return CommentaireDao.findById(id);
+	@Override
+	@Transactional
+	public Commentaire findByIdForSite(int id) {
+		return CommentaireDao.findByIdForSite(id);
 	}
 
 	@Override
-	public List<Commentaire> findAll() {
-		return CommentaireDao.findAll();
+	@Transactional
+	public Commentaire findByIdForTopo(int id) {
+		return CommentaireDao.findByIdForTopo(id);
 	}
 	
 	@Override
+	@Transactional
 	public List<Commentaire> findBySiteId(int siteId) {
 		return CommentaireDao.findBySiteId(siteId);
 	}
 	
 	@Override
+	@Transactional
 	public List<Commentaire> findByTopoId(int topoId) {
 		return CommentaireDao.findByTopoId(topoId);
 	}
 
 	@Override
-	public int save(Commentaire commentaire, int auteurId) {
-		return CommentaireDao.save(commentaire, auteurId);
+	@Transactional
+	public int createBySite(Commentaire commentaire, int siteId) {
+		// Création de l'auteur du commentaire
+		int auteurId = grimpeurService.create(commentaire.getAuteur());
+		
+		// Mettre à jour le commentaire par l'auteur Id
+		commentaire.getAuteur().setId(auteurId);
+		
+		return CommentaireDao.createBySite(commentaire, siteId);
 	}
 
 	@Override
-	public int update(Commentaire commentaire) {
-		return CommentaireDao.update(commentaire);
+	@Transactional
+	public int updateBySite(Commentaire commentaire) {
+		return CommentaireDao.updateBySite(commentaire);
 	}
 
 	@Override
-	public int delete(int commentaireId) {
-		return CommentaireDao.delete(commentaireId);
+	@Transactional
+	public int deleteBySite(int commentaireId) {
+		return CommentaireDao.deleteBySite(commentaireId);
+	}
+	
+	@Override
+	@Transactional
+	public int createByTopo(Commentaire commentaire, int topoId) {
+		// Création de l'auteur du commentaire
+		int auteurId = grimpeurService.create(commentaire.getAuteur());
+		
+		// Mettre à jour le commentaire par l'auteur Id
+		commentaire.getAuteur().setId(auteurId);
+		
+		return CommentaireDao.createByTopo(commentaire, topoId);
+	}
+
+	@Override
+	@Transactional
+	public int updateByTopo(Commentaire commentaire) {
+		return CommentaireDao.updateByTopo(commentaire);
+	}
+
+	@Override
+	@Transactional
+	public int deleteByTopo(int commentaireId) {
+		return CommentaireDao.deleteByTopo(commentaireId);
 	}
 }

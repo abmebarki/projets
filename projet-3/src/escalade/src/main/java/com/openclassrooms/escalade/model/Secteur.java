@@ -3,7 +3,7 @@ package com.openclassrooms.escalade.model;
 import java.util.List;
 
 /**
- * Objet m�tier repr�sentant un secteur dans un site d'escalade
+ * Objet métier représentant un secteur dans un site d'escalade
  *
  * @author amebarki
  */
@@ -23,7 +23,7 @@ public class Secteur {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Secteur() {
 	}
@@ -94,7 +94,7 @@ public class Secteur {
 		this.hauteurMax = hauteurMax;
 	}
 
-	public List<Voie> findBySecteurId() {
+	public List<Voie> getVoies() {
 		return voies;
 	}
 

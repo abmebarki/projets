@@ -1,7 +1,7 @@
 package com.openclassrooms.escalade.model;
 
 /**
- * Objet m�tier repr�sentant un grimpeur
+ * Objet métier représentant un grimpeur
  *
  * @author amebarki
  */
@@ -15,7 +15,7 @@ public class Grimpeur {
 	
 	// ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Grimpeur() {
 	}

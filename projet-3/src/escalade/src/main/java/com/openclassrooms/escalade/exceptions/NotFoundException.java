@@ -1,14 +1,14 @@
 package com.openclassrooms.escalade.exceptions;
 
 /**
- * Classe d'exception levée quand l'objet métier demandé n'a pas été trouvé
+ * Classe d'exception levÃ©e quand l'objet mÃ©tier demandÃ© n'a pas Ã©tÃ© trouvÃ©
  *
  * @author amebarki
  */
 public class NotFoundException extends Exception {
 
     /**
-     * Constructeur par défaut.
+     * Constructeur par dÃ©faut.
      */
     public NotFoundException() {
     }

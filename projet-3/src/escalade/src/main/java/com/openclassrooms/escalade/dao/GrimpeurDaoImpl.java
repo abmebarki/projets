@@ -15,7 +15,7 @@ import com.openclassrooms.escalade.model.Grimpeur;
 
 
 /**
- * Classe d'impl�mentation de {@link GrimpeurDao}.
+ * Classe d'implémentation de {@link GrimpeurDao}.
  */
 @Repository
 public class GrimpeurDaoImpl implements GrimpeurDao {
@@ -23,22 +23,31 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
         
-        @Transactional
+    @Transactional
 	public Grimpeur findById(int id) {
 		Grimpeur grimpeur = (Grimpeur) jdbcTemplate.queryForObject("select * from grimpeur where id = ?",
 				new Object[] { id }, new GrimpeurRowMapper());
 		return grimpeur;
 	}
+    
+    @Transactional
+	public Grimpeur findByNameEmail(String name, String email) {
+		Grimpeur grimpeur = (Grimpeur) jdbcTemplate.queryForObject("select * from grimpeur where upper(nom) = ? and upper(email)= ? limit 1",
+				new Object[] { name.toUpperCase(), email.toUpperCase() }, new GrimpeurRowMapper());
+		return grimpeur;
+	}
 
+        
+        
+        
         @Transactional
 	public List<Grimpeur> findAll() {
-		List<Grimpeur> grimpeur = (List<Grimpeur>) jdbcTemplate.query("select * from grimpeur",
-				new GrimpeurRowMapper());
+		List<Grimpeur> grimpeur = (List<Grimpeur>) jdbcTemplate.query("select * from grimpeur",	new GrimpeurRowMapper());
 		return grimpeur;
 	}
 
 	@Transactional
-	public int save(Grimpeur grimpeur) {
+	public int create(Grimpeur grimpeur) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("grimpeur").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);

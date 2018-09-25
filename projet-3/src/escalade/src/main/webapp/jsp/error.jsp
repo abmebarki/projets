@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="_include/head.jsp"%>
+    <%@ include file="_include/header.jsp"%>
 </head>
 
-<body>
+<body><%@ include file="_include/menu.jsp"%>
 <h2><s:text name="error.title" /></h2>
 
 <s:actionerror />

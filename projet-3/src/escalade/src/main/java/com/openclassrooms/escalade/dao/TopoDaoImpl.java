@@ -15,7 +15,7 @@ import com.openclassrooms.escalade.model.Topo;
 
 
 /**
- * Classe d'impl�mentation de {@link TopoDao}.
+ * Classe d'implémentation de {@link TopoDao}.
  */
 @Repository
 public class TopoDaoImpl implements TopoDao {
@@ -57,11 +57,11 @@ public class TopoDaoImpl implements TopoDao {
 	}        
 
 	/* (non-Javadoc)
-	 * @see com.openclassrooms.escalade.dao.TopoDao#save(com.openclassrooms.escalade.model.Topo)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#create(com.openclassrooms.escalade.model.Topo)
 	 */
 	@Override
 	@Transactional
-	public int save(Topo topo) {
+	public int create(Topo topo) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("topo").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -69,7 +69,7 @@ public class TopoDaoImpl implements TopoDao {
 		parameters.put("nb_pages", topo.getNbPages());
 		parameters.put("auteur", topo.getAuteur());
 		parameters.put("date", topo.getDate());
-		parameters.put("createur_id", 1);
+		parameters.put("createur_id", topo.getCreateur().getId());
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}

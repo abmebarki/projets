@@ -14,7 +14,7 @@ import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
 
 /**
- * Classe d'impl�mentation de {@link SiteDao}.
+ * Classe d'implémentation de {@link SiteDao}.
  */
 @Repository
 public class SiteDaoImpl implements SiteDao {
@@ -54,11 +54,11 @@ public class SiteDaoImpl implements SiteDao {
 	}  
 
 	/* (non-Javadoc)
-	 * @see com.openclassrooms.escalade.dao.SiteDao#save(com.openclassrooms.escalade.model.Site)
+	 * @see com.openclassrooms.escalade.dao.SiteDao#create(com.openclassrooms.escalade.model.Site)
 	 */
 	@Override
 	@Transactional
-	public int save(Site site) {
+	public int create(Site site) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("site").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
@@ -66,7 +66,7 @@ public class SiteDaoImpl implements SiteDao {
 		parameters.put("description", site.getDescription());
 		parameters.put("nb_secteurs", site.getNbSecteurs());
 		parameters.put("ville", site.getVille());
-		parameters.put("createur_id", 1);
+		parameters.put("createur_id", site.getCreateur().getId());
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}
@@ -77,8 +77,8 @@ public class SiteDaoImpl implements SiteDao {
 	@Override
 	@Transactional
 	public int update(Site site) {
-		String sql = "update site set nom = ?, description = ?, nb_secteurs = ?, ville = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { site.getNom(), site.getDescription(), site.getNbSecteurs(),
+		String sql = "update site set nom = ?, description = ?, ville = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { site.getNom(), site.getDescription(),
 				site.getVille(), site.getId() });
 		return resp;
 	}

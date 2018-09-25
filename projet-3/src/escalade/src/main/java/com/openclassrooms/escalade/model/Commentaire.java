@@ -3,7 +3,7 @@ package com.openclassrooms.escalade.model;
 import java.util.Date;
 
 /**
- * Objet m�tier repr�sentant un commentaire d'un topo ou un site d'escalade
+ * Objet métier représentant un commentaire d'un topo ou un site d'escalade
  *
  * @author amebarki
  */
@@ -19,7 +19,7 @@ public class Commentaire {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Commentaire() {
 	}

@@ -15,7 +15,7 @@ import com.openclassrooms.escalade.model.Pret;
 
 
 /**
- * Classe d'impl�mentation de {@link PretDao}.
+ * Classe d'implémentation de {@link PretDao}.
  */
 @Repository
 public class PretDaoImpl implements PretDao {
@@ -32,22 +32,20 @@ public class PretDaoImpl implements PretDao {
 
         @Transactional
 	public List<Pret> findAll() {
-		List<Pret> pret = (List<Pret>) jdbcTemplate.query("select * from pret",
-				new PretRowMapper());
+		List<Pret> pret = (List<Pret>) jdbcTemplate.query("select * from pret",	new PretRowMapper());
 		return pret;
 	}
 
 	@Transactional
-	public int save(Pret pret) {
+	public int create(Pret pret) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-		//simpleJdbcInsert.withTableName("pret").usingGeneratedKeyColumns("id");
 		simpleJdbcInsert.withTableName("pret");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
-		parameters.put("emprunteur_id", 1);
-		parameters.put("topo_id", 1);
+		parameters.put("emprunteur_id", 16);
+		parameters.put("topo_id", 10);
 		parameters.put("date_debut", pret.getDateDebut());
 		parameters.put("date_fin", pret.getDateFin());
-		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
+		Number insertedId = simpleJdbcInsert.execute(parameters);
 		return insertedId.intValue();
 	}
 
@@ -55,7 +53,7 @@ public class PretDaoImpl implements PretDao {
 	public int update(Pret pret) {
 		String sql = "update pret set date_debut = ?, date_fin = ? where emprunteur_id = ? and topo_id =?";
 		int resp = jdbcTemplate.update(sql, new Object[] { pret.getDateDebut(), pret.getDateFin(), pret.getEmprunteur().getId(), 
-				pret.getTopoPrete().getId() });
+				pret.getTopoEmprunte().getId() });
 		return resp;
 	}
 

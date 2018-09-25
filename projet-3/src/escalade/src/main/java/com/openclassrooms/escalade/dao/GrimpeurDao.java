@@ -11,8 +11,9 @@ import com.openclassrooms.escalade.model.Grimpeur;
 public interface GrimpeurDao {
 	
 	public Grimpeur findById(int id);
+	public Grimpeur findByNameEmail(String name, String email);
 	public List<Grimpeur> findAll();
-	public int save(Grimpeur grimpeur);
+	public int create(Grimpeur grimpeur);
 	public int update(Grimpeur grimpeur);
 	public int delete(int id);
 	

@@ -3,7 +3,7 @@ package com.openclassrooms.escalade.model;
 import java.util.Date;
 
 /**
- * Objet m�tier repr�sentant un pr�t d'un topo
+ * Objet métier représentant un prét d'un topo
  *
  * @author amebarki
  */
@@ -12,14 +12,14 @@ public class Pret {
 	
 	// ==================== Attributs ====================
 	private Grimpeur emprunteur;
-	private Topo topoPrete;
+	private Topo topoEmprunte;
 	private Date dateDebut;
 	private Date dateFin;
 	
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Pret() {
 	}
@@ -35,14 +35,13 @@ public class Pret {
 		this.emprunteur = emprunteur;
 	}
 
-
-	public Topo getTopoPrete() {
-		return topoPrete;
+	public Topo getTopoEmprunte() {
+		return topoEmprunte;
 	}
 
-	
-	public void setTopoPrete(Topo topoPrete) {
-		this.topoPrete = topoPrete;
+
+	public void setTopoEmprunte(Topo topoEmprunte) {
+		this.topoEmprunte = topoEmprunte;
 	}
 
 

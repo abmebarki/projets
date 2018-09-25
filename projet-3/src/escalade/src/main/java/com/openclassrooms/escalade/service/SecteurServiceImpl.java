@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.SecteurDao;
 import com.openclassrooms.escalade.dao.VoieDao;
@@ -34,38 +35,45 @@ public class SecteurServiceImpl implements SecteurService {
 	}
 
 	@Override
+	@Transactional
 	public List<Secteur> findAll() {
 		List<Secteur> secteurs = secteurDao.findAll();
 		return secteurs;
 	}
 	
 	@Override
+	@Transactional
 	public List<Secteur> findBySiteId(int siteId) {
 		List<Secteur> secteurs = secteurDao.findBySiteId(siteId);
+		for(int i = 0; i < secteurs.size(); i++) {
+			secteurs.get(i).setVoies(voieService.findBySecteurId(secteurs.get(i).getId()));
+		}
 		return secteurs;
 	}
 
 	@Override
-	public int save(Secteur secteur, int siteId) {
-		int id = secteurDao.save(secteur, siteId);
-		for(int i = 0; i < secteur.findBySecteurId().size(); i++) {
-			voieService.save(secteur.findBySecteurId().get(i) , id);
+	@Transactional
+	public int create(Secteur secteur, int siteId) {
+		int id = secteurDao.create(secteur, siteId);
+		for(int i = 0; i < secteur.getVoies().size(); i++) {
+			voieService.create(secteur.getVoies().get(i) , id);
 		}
 		return id;
 	}
 
 	@Override
+	@Transactional
 	public int update(Secteur secteur) {
-		return secteurDao.update(secteur);
+		int id = secteurDao.update(secteur);
+		for(int i = 0; i < secteur.getVoies().size(); i++) {
+			voieService.update(secteur.getVoies().get(i));
+		}
+		return id;
 	}
 
 	@Override
+	@Transactional
 	public int delete(int secteurId) {
 		return secteurDao.delete(secteurId);
 	}
-
-	public SecteurDao findByIdDao() {
-		return secteurDao;
-	}
-
 }

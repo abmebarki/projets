@@ -7,7 +7,7 @@ public interface GrimpeurService {
 
 	public Grimpeur findById(int id);
 	public List<Grimpeur> findAll();
-	public int save(Grimpeur grimpeur);
+	public int create(Grimpeur grimpeur);
 	public int update(Grimpeur grimpeur);
 	public int delete(int id);
 	

@@ -5,12 +5,15 @@ import com.openclassrooms.escalade.model.Commentaire;
 
 public interface CommentaireService {
 
-	public Commentaire findById(int id);
-	public List<Commentaire> findAll();
+	public Commentaire findByIdForSite(int id);
+	public Commentaire findByIdForTopo(int id);
 	public List<Commentaire> findBySiteId(int siteId);
 	public List<Commentaire> findByTopoId(int topoId);
-	public int save(Commentaire commentaire, int auteurId);
-	public int update(Commentaire commentaire);
-	public int delete(int id);
+	public int createBySite(Commentaire commentaire, int siteId);
+	public int updateBySite(Commentaire commentaire);
+	public int deleteBySite(int id);
+	public int createByTopo(Commentaire commentaire, int topoId);
+	public int updateByTopo(Commentaire commentaire);
+	public int deleteByTopo(int id);
 	
 }

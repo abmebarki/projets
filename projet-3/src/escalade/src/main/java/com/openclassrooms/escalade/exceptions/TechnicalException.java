@@ -1,7 +1,7 @@
 package com.openclassrooms.escalade.exceptions;
 
 /**
- * Classe d'exception levée quand une erreur technique est survenue
+ * Classe d'exception levÃ©e quand une erreur technique est survenue
  *
  * @author amebarki
  */

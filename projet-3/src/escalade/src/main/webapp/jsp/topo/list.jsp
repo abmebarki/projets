@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
-<title></title>
-<body>
+<head>
+<%@ include file="../_include/header.jsp"%>
+</head>
+<body><%@ include file="../_include/menu.jsp"%>
 	<h2></h2>
 <!--	<c:if test="${not empty msg}">
         ${msg}
@@ -11,10 +13,10 @@
 -->    
     <br />
     <br />
-    <s:a action="topo_add">Ajouter topo</s:a>
+    <s:a action="topo_new">Ajouter topo</s:a>
     
 	<s:if test="%{listTopo != null}">
-			<h3>Liste des Topos</h3>
+			<h4>Liste des Topos</h4>
 			<table cellpadding="5" cellspacing="5">
 				<thead>
 					<tr>

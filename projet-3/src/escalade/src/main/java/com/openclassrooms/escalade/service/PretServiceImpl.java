@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.PretDao;
 import com.openclassrooms.escalade.model.Pret;
@@ -18,21 +19,26 @@ public class PretServiceImpl implements PretService {
 		return PretDao.findById(pretId);
 	}
 
+	@Override
+	@Transactional
 	public List<Pret> findAll() {
 		return PretDao.findAll();
 	}
 
 	@Override
-	public int save(Pret pret) {
-		return PretDao.save(pret);
+	@Transactional
+	public int create(Pret pret) {
+		return PretDao.create(pret);
 	}
 
 	@Override
+	@Transactional
 	public int update(Pret pret) {
 		return PretDao.update(pret);
 	}
 
 	@Override
+	@Transactional
 	public int delete(int pretId) {
 		return PretDao.delete(pretId);
 	}

@@ -14,7 +14,7 @@ public interface LongueurDao {
 	public Longueur findById(int id);
 	public List<Longueur> findAll();
 	public List<Longueur> findByVoieId(int voieId);
-	public int save(Longueur longueur, int voieId);
+	public int create(Longueur longueur, int voieId);
 	public int update(Longueur longueur);
 	public int delete(int id);
 	

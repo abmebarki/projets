@@ -1,7 +1,7 @@
 package com.openclassrooms.escalade.model;
 
 /**
- * Objet m�tier repr�sentant un administrateur de l'application
+ * Objet métier représentant un administrateur de l'application
  *
  * @author amebarki
  */
@@ -15,7 +15,7 @@ public class Administrateur {
 	
     // ==================== Constructeurs ====================
 	 /**
-     * Constructeur par d�faut.
+     * Constructeur par défaut.
      */
 	public Administrateur() {
 	}

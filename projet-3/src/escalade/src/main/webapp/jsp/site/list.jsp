@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
-<title></title>
-<body>
+<head>
+<%@ include file="../_include/header.jsp"%>
+</head>
+
+<body><%@ include file="../_include/menu.jsp"%>
 	<h2></h2>
 <!-- <s:if test="%{msg!=''}">
         %{msg}
@@ -12,9 +14,9 @@
 	<br />
 	<br />
 	
-	<s:a action="site_new">Ajouter site</s:a>
+	<s:a action="site_new"><h4>Ajouter site</h4></s:a>
 	<s:if test="%{listSite != null}">
-	<h3>Liste des Sites</h3>
+	<h4>Liste des Sites</h4>
 	<table cellpadding="5" cellspacing="5">
 		<thead>
 			<tr>
@@ -57,5 +59,6 @@
 	<s:else>
 		Aucun Site trouvé
 	</s:else>
+	<%@ include file="../_include/footer.jsp"%>
 </body>
 </html>

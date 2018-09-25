@@ -4,20 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="_include/head.jsp"%>
+<%@ include file="_include/header.jsp"%>
 </head>
-
 <body>
-<h2><s:text name="home.welcome" /></h2>
 
-<nav>
-    <s:a action="site_list">
-        <s:text name="nav.listSite" />
-    </s:a>
-    <br/>
-    <s:a action="topo_list">
-        <s:text name="nav.listTopo" />
-    </s:a>
-</nav>
+<%@ include file="_include/menu.jsp"%>
+<div class="container">
+     <h1><s:text name="home.welcome" /></h1>
+</div><!-- /.container -->
 </body>
 </html>
