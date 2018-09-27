@@ -1,12 +1,13 @@
 package com.openclassrooms.escalade.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openclassrooms.escalade.dao.CommentaireDao;
+import com.openclassrooms.escalade.dao.CommentaireSiteDao;
 import com.openclassrooms.escalade.dao.SiteDao;
 import com.openclassrooms.escalade.dao.TopoDao;
 import com.openclassrooms.escalade.model.Commentaire;
@@ -23,13 +24,16 @@ public class TopoServiceImpl implements TopoService {
 	private SiteService siteService;
 	
 	@Autowired
-	private CommentaireService commentaireService;
+	private CommentaireTopoService commentaireTopoService;
 	
 	@Autowired
 	private GrimpeurService grimpeurService;
 	
 	@Autowired
 	private GrimpeurTopoProprietaireService grimpeurTopoProprietaireService;
+	
+	@Autowired
+	private TopoSiteDescripteurService topoSiteDescripteurService ;
 
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.topoService#findById(int)
@@ -43,7 +47,7 @@ public class TopoServiceImpl implements TopoService {
 		topo.setDescriptibles(descriptibles);
 		
 		// List des commentaires
-		List<Commentaire> commentaires = commentaireService.findByTopoId(topoId);
+		List<Commentaire> commentaires = commentaireTopoService.findByTopoId(topoId);
 		topo.setCommentaires(commentaires);
 		return topo;
 	}
@@ -72,7 +76,7 @@ public class TopoServiceImpl implements TopoService {
 	 */
 	@Override
 	@Transactional
-	public int create(Topo topo) {
+	public int create(Topo topo, String selectedSites) {
 		
 		// Création du créateur
 		int createurId = grimpeurService.create(topo.getCreateur());
@@ -98,6 +102,12 @@ public class TopoServiceImpl implements TopoService {
 		// Création du topo proprietaire
 		if(topo.getProprietaire() != null) {
 			grimpeurTopoProprietaireService.create(topo);
+		}
+		
+		// Ajout des topos
+		List<String> sites = Arrays.asList(selectedSites.split(","));
+		for(int i = 0; i < sites.size(); i++) {
+			topoSiteDescripteurService.create(Integer.valueOf(sites.get(i).trim()), topo.getId());
 		}
 		
 		return topoId;

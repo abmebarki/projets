@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Commentaire;
-import com.openclassrooms.escalade.service.CommentaireService;
+import com.openclassrooms.escalade.service.CommentaireSiteService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
@@ -32,7 +32,7 @@ public class GestionCommentaireSiteAction extends ActionSupport {
     private Commentaire commentaire;
     
     @Autowired
-	private CommentaireService commentaireService;
+	private CommentaireSiteService commentaireSiteService;
 
 
     // ==================== Getters/Setters ====================
@@ -68,8 +68,8 @@ public class GestionCommentaireSiteAction extends ActionSupport {
             this.addActionError("Vous devez indiquer un id de commentaire");
         } else {
             try {
-                id = commentaireService.deleteBySite(id);
-                //listCommentaire = commentaireService.findAll();
+                id = commentaireSiteService.delete(id);
+                //listCommentaire = commentaireSiteService.findAll();
             } catch (Exception sE) {
                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));
             }
@@ -95,7 +95,7 @@ public class GestionCommentaireSiteAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = commentaireService.createBySite(this.commentaire, siteId);
+                	 id = commentaireSiteService.create(this.commentaire, siteId);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Commentaire ajouté avec succés");
@@ -127,7 +127,7 @@ public class GestionCommentaireSiteAction extends ActionSupport {
        		 // Si pas d'erreur, mise à jour du commentaire...
                 if (!this.hasErrors()) {
                     try {
-                    	commentaireService.updateBySite(this.commentaire);
+                    	commentaireSiteService.update(this.commentaire);
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Commentaire mis à jour avec succés");
@@ -142,7 +142,7 @@ public class GestionCommentaireSiteAction extends ActionSupport {
 
          } else {
         	 	 try {
-	                 commentaire = commentaireService.findByIdForSite(id);
+	                 commentaire = commentaireSiteService.findById(id);
 	             } catch (Exception sE) {
 	            	 vResult = ActionSupport.ERROR;
 	                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));

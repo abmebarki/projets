@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
+import com.openclassrooms.escalade.service.SiteService;
 import com.openclassrooms.escalade.service.TopoService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -28,8 +29,16 @@ public class GestionTopoAction extends ActionSupport {
     private List<Topo> listTopo;
     private Topo topo;
     
+    private List<Site> listSite;
+    private Site site;
+    
+    private String selectedSites;
+    
     @Autowired
 	private TopoService topoService;
+    
+    @Autowired
+	private SiteService siteService;
 
 
     // ==================== Getters/Setters ====================
@@ -47,6 +56,27 @@ public class GestionTopoAction extends ActionSupport {
     }
     public void setTopo(Topo topo) {
 		this.topo = topo;
+	}
+        
+	public List<Site> getListSite() {
+		return listSite;
+	}
+	public void setListSite(List<Site> listSite) {
+		this.listSite = listSite;
+	}
+	public Site getSite() {
+		return site;
+	}
+	public void setSite(Site site) {
+		this.site = site;
+	}
+	
+	
+	public String getSelectedSites() {
+		return selectedSites;
+	}
+	public void setSelectedSites(String selectedSites) {
+		this.selectedSites = selectedSites;
 	}
 	// ==================== Méthodes ====================
     /**
@@ -106,6 +136,7 @@ public class GestionTopoAction extends ActionSupport {
 
         // Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        listSite = siteService.findAll();
 
         // ===== Validation de l'ajout de topo (topo != null)
         if (this.topo != null) {
@@ -113,7 +144,7 @@ public class GestionTopoAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = topoService.create(this.topo);
+                	 id = topoService.create(this.topo , selectedSites);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Topo ajouté avec succés");

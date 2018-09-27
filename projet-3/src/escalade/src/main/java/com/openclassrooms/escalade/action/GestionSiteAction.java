@@ -10,7 +10,9 @@ import com.openclassrooms.escalade.exceptions.FunctionalException;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.exceptions.TechnicalException;
 import com.openclassrooms.escalade.model.Site;
+import com.openclassrooms.escalade.model.Topo;
 import com.openclassrooms.escalade.service.SiteService;
+import com.openclassrooms.escalade.service.TopoService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
@@ -29,8 +31,16 @@ public class GestionSiteAction extends ActionSupport {
     private List<Site> listSite;
     private Site site;
     
+    private List<Topo> listTopo;
+    private Topo topo;
+    
+    private String selectedTopos;
+    
     @Autowired
 	private SiteService siteService;
+    
+    @Autowired
+	private TopoService topoService;
     
     // ==================== Getters/Setters ====================
     public Integer getId() {
@@ -49,6 +59,26 @@ public class GestionSiteAction extends ActionSupport {
     
     public void setSite(Site site) {
 		this.site = site;
+	}
+    
+ 	public List<Topo> getListTopo() {
+		return listTopo;
+	}
+	public void setListTopo(List<Topo> listTopo) {
+		this.listTopo = listTopo;
+	}
+	public Topo getTopo() {
+		return topo;
+	}
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+	
+	public String getSelectedTopos() {
+		return selectedTopos;
+	}
+	public void setSelectedTopos(String selectedTopos) {
+		this.selectedTopos = selectedTopos;
 	}
 	// ==================== Méthodes ====================
     /**
@@ -108,6 +138,7 @@ public class GestionSiteAction extends ActionSupport {
 
         // Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        listTopo = topoService.findAll();
 
         // ===== Validation de l'ajout de site (site != null)
         if (this.site != null) {
@@ -115,8 +146,8 @@ public class GestionSiteAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = siteService.create(this.site);
-                	// Si ajout avec succés -> Result "success"
+                	 id = siteService.create(this.site, selectedTopos);
+                	 // Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Site ajouté avec succés");
 
@@ -127,7 +158,7 @@ public class GestionSiteAction extends ActionSupport {
 
                 } 
             }
-        }
+        } 
         
         return vResult;
     }

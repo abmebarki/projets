@@ -31,6 +31,18 @@
 			<tr><td><s:textfield name="topo.proprietaire.nom" label="Nom" requiredLabel="true" /></td></tr>
 			<tr><td><s:textfield name="topo.proprietaire.email" label="Email" requiredLabel="true" /></td></tr>
 			
+			<tr>
+				<td><s:if test="%{listSite != null}">
+						<table cellpadding="5" cellspacing="5">
+								<tr>
+									<td>
+									 	<s:select name="selectedSites" multiple="true" list="listSite" listKey="id"  listValue="nom" label="Selectionner un site"/>
+									</td>
+								</tr>
+						</table>
+					</s:if></td>
+			</tr>
+			
 			
 			<tr><td><s:submit value="OK" /></td></tr>
 			

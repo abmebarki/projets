@@ -1,5 +1,7 @@
 package com.openclassrooms.escalade.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,10 @@ public class SiteServiceImpl implements SiteService{
 	private TopoService topoService;
 	
 	@Autowired
-	private CommentaireService commentaireService;
+	private CommentaireSiteService commentaireService;
+	
+	@Autowired
+	private TopoSiteDescripteurService topoSiteDescripteurService ;
 
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.SiteService#findById(int)
@@ -79,7 +84,7 @@ public class SiteServiceImpl implements SiteService{
 	 */
 	@Override
 	@Transactional
-	public int create(Site site) {
+	public int create(Site site, String selectedTopos) {
 		
 		// Création du créateur
 		int createurId = grimpeurService.create(site.getCreateur());
@@ -96,6 +101,12 @@ public class SiteServiceImpl implements SiteService{
 		// Création des secteurs
 		for(int i = 0; i < site.getSecteurs().size(); i++) {
 			secteurService.create(site.getSecteurs().get(i), siteId);
+		}
+		
+		// Ajout des topos
+		List<String> topos = Arrays.asList(selectedTopos.split(","));
+		for(int i = 0; i < topos.size(); i++) {
+			topoSiteDescripteurService.create(site.getId(),Integer.valueOf(topos.get(i).trim()));
 		}
 		
 		return siteId;

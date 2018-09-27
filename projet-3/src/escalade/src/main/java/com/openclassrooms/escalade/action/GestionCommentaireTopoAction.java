@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Commentaire;
-import com.openclassrooms.escalade.service.CommentaireService;
+import com.openclassrooms.escalade.service.CommentaireTopoService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
@@ -31,7 +31,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
     private Commentaire commentaire;
     
     @Autowired
-	private CommentaireService commentaireService;
+	private CommentaireTopoService commentaireTopoService;
 
 
     // ==================== Getters/Setters ====================
@@ -67,7 +67,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
             this.addActionError("Vous devez indiquer un id de commentaire");
         } else {
             try {
-                id = commentaireService.deleteByTopo(id);
+                id = commentaireTopoService.delete(id);
             } catch (Exception sE) {
                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));
             }
@@ -93,7 +93,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = commentaireService.createByTopo(this.commentaire, topoId);
+                	 id = commentaireTopoService.create(this.commentaire, topoId);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Commentaire ajouté avec succés");
@@ -125,7 +125,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
        		 // Si pas d'erreur, mise à jour du commentaire...
                 if (!this.hasErrors()) {
                     try {
-                    	commentaireService.updateByTopo(this.commentaire);
+                    	commentaireTopoService.update(this.commentaire);
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Commentaire mis à jour avec succés");
@@ -140,7 +140,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
 
          } else {
         	 	 try {
-	                 commentaire = commentaireService.findByIdForTopo(id);
+	                 commentaire = commentaireTopoService.findById(id);
 	             } catch (Exception sE) {
 	            	 vResult = ActionSupport.ERROR;
 	                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));

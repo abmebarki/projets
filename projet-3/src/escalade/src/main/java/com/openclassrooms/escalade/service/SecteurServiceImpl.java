@@ -10,7 +10,7 @@ import com.openclassrooms.escalade.dao.SecteurDao;
 import com.openclassrooms.escalade.dao.VoieDao;
 import com.openclassrooms.escalade.dao.LongueurDao;
 import com.openclassrooms.escalade.dao.GrimpeurDao;
-import com.openclassrooms.escalade.dao.CommentaireDao;
+import com.openclassrooms.escalade.dao.CommentaireSiteDao;
 import com.openclassrooms.escalade.model.Commentaire;
 import com.openclassrooms.escalade.model.Grimpeur;
 import com.openclassrooms.escalade.model.Longueur;
