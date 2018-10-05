@@ -18,10 +18,11 @@
 
 		<table>
 			<tr><td>Prêt</td></tr>
-			<tr><td><s:textfield name="pret.nom" label="Nom" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="pret.nbPages" label="Nb Pages" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="pret.auteur" label="Auteur"	requiredLabel="true"/></td></tr>
-			<tr><td><s:textfield name="pret.date" label="Date"	requiredLabel="true"/></td></tr>
+			<tr><td><s:textfield name="pret.id" label="Id" requiredLabel="true" /></td></tr>
+			<tr><td><s:textfield name="pret.topoEmprunte.id" label="Topo emprunté" requiredLabel="true" /></td></tr>
+			<tr><td><s:textfield name="pret.emrunteur.id" label="Emprunteur"	requiredLabel="true"/></td></tr>
+			<tr><td><s:textfield name="pret.dateDebut" label="Date début"	requiredLabel="true"/></td></tr>
+			<tr><td><s:textfield name="pret.dateFin" label="Date fin"	requiredLabel="true"/></td></tr>
 			
 			<tr><td><s:submit value="OK" /></td></tr>
 			

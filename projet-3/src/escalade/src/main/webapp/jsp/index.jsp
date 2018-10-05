@@ -8,9 +8,9 @@
 </head>
 <body>
 
-<%@ include file="_include/menu.jsp"%>
 <div class="container">
-     <h1><s:text name="home.welcome" /></h1>
 </div><!-- /.container -->
+<%@ include file="_include/menu.jsp"%>
+
 </body>
 </html>

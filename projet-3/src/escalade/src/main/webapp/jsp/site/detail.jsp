@@ -19,8 +19,18 @@
 	<s:property value="site.nom" />
 	<br /> Description :
 	<s:property value="site.description" />
-	<br /> Nb Secteurs :
-	<s:property value="site.nbSecteurs" />
+	<br /> Exposition :
+	
+	<s:iterator value="site.expositions" status="loop">
+		<s:property value="value()"/>
+	</s:iterator>
+	
+	<br /> Temps d'approche :
+	<s:property value="site.tempsApproche" />
+	<br /> Saisons :
+	<s:iterator value="site.saisons" status="loop">
+		<s:property value="value()"/>
+	</s:iterator>
 	<br /> Ville :
 	<s:property value="site.ville" />
 	<br /> Créateur :
@@ -38,8 +48,8 @@
 					<th>ID</th>
 					<th>Nom</th>
 					<th>Description</th>
-					<th>Nb Voies</th>
-					<th>Orientation</th>
+					<th>Type</th>
+					<th>Difficulté</th>
 					<th>Coordonnees</th>
 					<th>Hauteur Max</th>
 				</tr>
@@ -49,28 +59,27 @@
 					<td><s:property value="id" /></td>
 					<td><s:property value="nom" /></td>
 					<td><s:property value="description" /></td>
-					<td><s:property value="nbVoies" /></td>
-					<td><s:property value="orientation" /></td>
+					<td><s:property value="type" /></td>
+					<td><s:property value="difficulte" /></td>
 					<td><s:property value="coordonnees" /></td>
 					<td><s:property value="hauteurMax" /></td>
 				</tr>
 				<tr>
 					<td colspan="7">
-						<h4>Liste des voies</h4> <s:iterator value="voies" status="loop">
+						<h4>Liste des voies</h4> 
+						<s:iterator value="voies" status="loop">
 							<h4>Voie ${loop.index + 1}</h4>
 							<table cellpadding="5" cellspacing="5">
 								<thead>
 									<tr>
 										<th>ID</th>
 										<th>Nom</th>
-										<th>Nb Longueurs</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td><s:property value="id" /></td>
 										<td><s:property value="nom" /></td>
-										<td><s:property value="nbLongueurs" /></td>
 									</tr>
 									<tr>
 										<td colspan="3">
@@ -109,7 +118,7 @@
 		</table>
 	</s:iterator>
 
-	<h4>Liste des Topos&nbsp;<s:a action="topo_new">Ajouter topo</s:a></h4>
+	<h4>Liste des Topos</h4>
 	<s:iterator value="site.descripteurs" status="loop">
 		<h4>Topo ${loop.index + 1}</h4>
 		<table cellpadding="5" cellspacing="5">
@@ -156,10 +165,14 @@
 					<td><s:date name="date" /></td>
 					<td><s:property value="auteur.nom" /></td>
 					<td><s:property value="auteur.email" /></td>
+					<s:if test="#session.user">
+								<s:if test="#session.user.role == 'ADMIN'">
 					<td>
 					<s:a action="commentaire_site_update"><s:param name="id" value="id" /><s:param name="siteId" value="site.id" />Mettre à jour</s:a>&nbsp;
 					<s:a action="commentaire_site_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" /><s:param name="siteId" value="site.id" />Supprimer</s:a>&nbsp;
 					</td>
+					</s:if>
+					</s:if>
 				</tr>
 			</tbody>
 		</table>

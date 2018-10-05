@@ -16,7 +16,9 @@ public class SiteRowMapper implements RowMapper<Site> {
 		Site site = new Site();
 		site.setId(rs.getInt("id"));
 		site.setDescription(rs.getString("description"));
-		site.setNbSecteurs(rs.getInt("nb_secteurs"));
+		//site.setExposition(rs.getString("exposition"));
+		site.setTempsApproche(rs.getInt("temps_approche"));
+		//site.setSaison(rs.getString("saison"));
 		site.setVille(rs.getString("ville"));
 		site.setNom(rs.getString("nom"));
 		site.setCreateur(new Grimpeur( rs.getInt("createur_id"))); // A VERIFIER

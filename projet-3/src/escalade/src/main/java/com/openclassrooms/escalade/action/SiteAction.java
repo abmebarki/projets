@@ -1,40 +1,63 @@
 package com.openclassrooms.escalade.action;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.escalade.exceptions.FunctionalException;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.exceptions.TechnicalException;
+import com.openclassrooms.escalade.model.Difficulte;
+import com.openclassrooms.escalade.model.Exposition;
+import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Saison;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
+import com.openclassrooms.escalade.model.Type;
 import com.openclassrooms.escalade.service.SiteService;
 import com.openclassrooms.escalade.service.TopoService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
-public class GestionSiteAction extends ActionSupport {
+public class SiteAction extends ActionSupport implements SessionAware {
 	
 	 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// ----- Eléments Struts
+    private Map<String, Object> session;
+    
+    public Map<String, Object> getSession() {
+		return session;
+	}
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+
 	// ==================== Attributs ====================
     // ----- Paramètres en entrée
     private Integer id;
-
-    // ----- Eléments en sortie
+    private Integer createurId;
+    private List<Exposition> expositiontList = Arrays.asList(Exposition.values());
+    private List<Saison> saisonList = Arrays.asList(Saison.values());
+    private List<Type> typeList = Arrays.asList(Type.values());
+    private List<Difficulte> difficulteList = Arrays.asList(Difficulte.values());
+    
+   	// ----- Eléments en sortie
     private List<Site> listSite;
     private Site site;
     
     private List<Topo> listTopo;
     private Topo topo;
     
-    private String selectedTopos;
+    private Boolean nouveauTopo;
     
     @Autowired
 	private SiteService siteService;
@@ -49,11 +72,44 @@ public class GestionSiteAction extends ActionSupport {
     public void setId(Integer sId) {
         id = sId;
     }
-    public List<Site> getListSite() {
+   
+    public Integer getCreateurId() {
+		return createurId;
+	}
+	public void setCreateurId(Integer createurId) {
+		this.createurId = createurId;
+	}
+	public List<Exposition> getExpositiontList() {
+		return expositiontList;
+	}
+	public void setExpositiontList(List<Exposition> expositiontList) {
+		this.expositiontList = expositiontList;
+	}
+
+	public List<Saison> getSaisonList() {
+		return saisonList;
+	}
+	public void setSaisonList(List<Saison> saisonList) {
+		this.saisonList = saisonList;
+	}
+    
+	public List<Type> getTypeList() {
+		return typeList;
+	}
+	public void setTypeList(List<Type> typeList) {
+		this.typeList = typeList;
+	}
+	public List<Site> getListSite() {
         return listSite;
     }
-    
-    public Site getSite() {
+	
+	public List<Difficulte> getDifficulteList() {
+		return difficulteList;
+	}
+	public void setDifficulteList(List<Difficulte> difficulteList) {
+		this.difficulteList = difficulteList;
+	}
+	public Site getSite() {
         return site;
     }
     
@@ -74,20 +130,43 @@ public class GestionSiteAction extends ActionSupport {
 		this.topo = topo;
 	}
 	
-	public String getSelectedTopos() {
-		return selectedTopos;
+	public Boolean getNouveauTopo() {
+		return nouveauTopo;
 	}
-	public void setSelectedTopos(String selectedTopos) {
-		this.selectedTopos = selectedTopos;
+	public void setNouveauTopo(Boolean nouveauTopo) {
+		this.nouveauTopo = nouveauTopo;
 	}
 	// ==================== Méthodes ====================
+	
+	 /**
+     * Action listant les {@link Site}
+     * @return success
+     */
+    public String doMyList() {
+    	String vResult = ActionSupport.SUCCESS;
+    	
+    	Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
+    	listSite = siteService.findAll(createurId);
+    	
+    	return vResult;
+    }
+	
     /**
      * Action listant les {@link Site}
      * @return success
      */
     public String doList() {
-        listSite = siteService.findAll();
-        return ActionSupport.SUCCESS;
+    	String vResult = ActionSupport.INPUT;
+    	if (this.site != null) {
+    		listSite = siteService.findAll(this.site);
+    		vResult = ActionSupport.SUCCESS;
+    	}
+        
+        return vResult;
     }
 
 
@@ -114,18 +193,37 @@ public class GestionSiteAction extends ActionSupport {
      * @return success / error
      */
     public String doDelete() {
-        if (id == null) {
+    	
+    	String vResult = null;
+    	
+    	Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	} else {
+        
+      	if (id == null) {
             this.addActionError("Vous devez indiquer un id de site");
         } else {
             try {
                 id = siteService.delete(id);
-                listSite = siteService.findAll();
+                
+                if(utilisateur.getRole().equals("USER")) {
+                	listSite = siteService.findAll(createurId);
+                	vResult = "successUser";
+                }else {
+                	listSite = siteService.findAll();
+                	vResult = "successAdmin";
+                }
+                
+                
             } catch (Exception sE) {
                 this.addActionError(getText("error.site.notfound", Collections.singletonList(id)));
+                vResult = ActionSupport.ERROR;
             }
         }
-
-        return (this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS;
+      	}
+      	
+        return vResult;
     }
     
     /**
@@ -136,9 +234,15 @@ public class GestionSiteAction extends ActionSupport {
         // Si (this.site == null) c'est que l'on entre dans l'ajout de site
         // Sinon, c'est que l'on vient de valider le formulaire d'ajout
 
-        // Par défaut, le result est "input"
+    	// Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
-        listTopo = topoService.findAll();
+    	
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
+    	listTopo = topoService.findAll();
 
         // ===== Validation de l'ajout de site (site != null)
         if (this.site != null) {
@@ -146,9 +250,15 @@ public class GestionSiteAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = siteService.create(this.site, selectedTopos);
-                	 // Si ajout avec succés -> Result "success"
-                    vResult = ActionSupport.SUCCESS;
+                	 id = siteService.create(this.site);
+                	 
+                	 if(nouveauTopo == true) {
+                		vResult = "newTopo"; 
+                	 }else {
+                		 // Si ajout avec succés -> Result "success"
+                         vResult = ActionSupport.SUCCESS;
+                	 }
+                	 
                     this.addActionMessage("Site ajouté avec succés");
 
                 } catch (Exception sEx) {
@@ -171,6 +281,12 @@ public class GestionSiteAction extends ActionSupport {
     	
     	// Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+        
         if (id == null) {
         	if (this.site == null) {
         		this.addActionError("Vous devez indiquer un id de site");

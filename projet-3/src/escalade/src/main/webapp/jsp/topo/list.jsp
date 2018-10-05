@@ -25,6 +25,7 @@
 						<th>Nb Pages</th>
 						<th>Auteur</th>
 						<th>Date</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,10 +38,14 @@
 							<td><s:date name="date" /></td>
 							
 							
-								<td>
+						<td>
 						<s:a action="topo_detail"><s:param name="id" value="id" />Détail</s:a>&nbsp;
+						<s:if test="#session.user">
+								<s:if test="#session.user.role == 'ADMIN'">
 						<s:a action="topo_update"><s:param name="id" value="id" />Mettre à jour</s:a>&nbsp;
 						<s:a action="topo_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" />Supprimer</s:a>&nbsp;
+						</s:if>
+						</s:if>
 						
 					</td>
 						</tr>

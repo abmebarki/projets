@@ -20,23 +20,38 @@
 			<tr><td>Site</td></tr>
 			<tr><td><s:textfield name="site.nom" label="Nom" requiredLabel="true" /></td></tr>
 			<tr><td><s:textfield name="site.description" label="Description" requiredLabel="true" /></td></tr>
+			
+			<tr>
+			<td>
+				<s:checkboxlist label="Expositions" list="expositiontList" name="site.expositions" value="site.expositions" />
+			</td>
+			</tr>
+			<tr><td><s:textfield name="site.tempsApproche" label="Temps d'approche" requiredLabel="true" /></td></tr>
+			
+			<tr>
+				<td>
+					<s:checkboxlist label="Saisons" list="saisonList" name="site.saisons" value="site.saisons" />
+				</td>
+			</tr>
+			
 			<tr><td><s:textfield name="site.ville" label="Ville" requiredLabel="true" /></td></tr>
 			
-			<s:iterator status="secteurStatus" begin="1" end="2">
+			<s:iterator status="secteurStatus" begin="1" end="1">
 				<s:hidden name="site.secteurs[%{#secteurStatus.index}].id"></s:hidden>
 				<tr><td> Secteur <s:property value="%{#secteurStatus.index + 1}"/></td></tr>
 				<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].nom" label="Nom" requiredLabel="true" /></td></tr>
 				<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].description" label="Description" requiredLabel="true" /></td></tr>
-				<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].orientation" label="Orientation" requiredLabel="true" /></td></tr>
+				<tr><td><s:select name="site.secteurs[%{#secteurStatus.index}].type" list="typeList" label="Type" emptyOption="true" requiredLabel="true"/></td></tr>
+				<tr><td><s:select name="site.secteurs[%{#secteurStatus.index}].difficulte" list="difficulteList" label="Difficulté" emptyOption="true" requiredLabel="true"/></td></tr>
 				<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].coordonnees" label="Coordonnees" requiredLabel="true" /></td></tr>
 				<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].hauteurMax" label="Hauteur Max" requiredLabel="true" /></td></tr>
 				
-				<s:iterator status="voiesStatus" begin="1" end="2" >
+				<s:iterator status="voiesStatus" begin="1" end="1" >
 					<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].id"></s:hidden>
 					<tr><td> Voie <s:property value="%{#voiesStatus.index + 1}"/></td></tr>
 					<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].nom" label="Nom" requiredLabel="true" /></td></tr>
 					
-					<s:iterator status="longueursStatus" begin="1" end="2" >
+					<s:iterator status="longueursStatus" begin="1" end="1" >
 						<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].id"></s:hidden>
 						<tr><td> Longueur <s:property value="%{#LongueurStatus.index + 1}"/></td></tr>
 						<tr><td><s:textfield name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].hauteur" label="hauteur" requiredLabel="true" /></td></tr>
@@ -46,11 +61,6 @@
 					</s:iterator>
 				</s:iterator>
 			</s:iterator>
-			
-			<tr><td> Créateur</td></tr>
-			<tr><td><s:textfield name="site.createur.nom" label="Nom" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="site.createur.email" label="Email" requiredLabel="true" /></td></tr>
-			
 			
 			<tr><td><s:submit value="OK" /></td></tr>
 			

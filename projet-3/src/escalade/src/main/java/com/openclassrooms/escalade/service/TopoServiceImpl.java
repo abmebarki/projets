@@ -1,14 +1,11 @@
 package com.openclassrooms.escalade.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openclassrooms.escalade.dao.CommentaireSiteDao;
-import com.openclassrooms.escalade.dao.SiteDao;
 import com.openclassrooms.escalade.dao.TopoDao;
 import com.openclassrooms.escalade.model.Commentaire;
 import com.openclassrooms.escalade.model.Site;
@@ -27,12 +24,6 @@ public class TopoServiceImpl implements TopoService {
 	private CommentaireTopoService commentaireTopoService;
 	
 	@Autowired
-	private GrimpeurService grimpeurService;
-	
-	@Autowired
-	private GrimpeurTopoProprietaireService grimpeurTopoProprietaireService;
-	
-	@Autowired
 	private TopoSiteDescripteurService topoSiteDescripteurService ;
 
 	/* (non-Javadoc)
@@ -42,11 +33,11 @@ public class TopoServiceImpl implements TopoService {
 	@Transactional
 	public Topo findById(int topoId) {
 		Topo topo = topoDao.findById(topoId);
-		// List des sites décrits par le topo
+		// Liste des sites décrits par le topo
 		List<Site> descriptibles = siteService.findByTopoId(topoId);
 		topo.setDescriptibles(descriptibles);
 		
-		// List des commentaires
+		// Liste des commentaires
 		List<Commentaire> commentaires = commentaireTopoService.findByTopoId(topoId);
 		topo.setCommentaires(commentaires);
 		return topo;
@@ -60,7 +51,15 @@ public class TopoServiceImpl implements TopoService {
 	public List<Topo> findAll() {
 		return topoDao.findAll();
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.service.topoService#findAll()
+	 */
+	@Override
+	@Transactional
+	public List<Topo> findAll(int proprietaireId) {
+		return topoDao.findAll(proprietaireId);
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.topoService#findBySiteId(int)
@@ -76,22 +75,12 @@ public class TopoServiceImpl implements TopoService {
 	 */
 	@Override
 	@Transactional
-	public int create(Topo topo, String selectedSites) {
-		
-		// Création du créateur
-		int createurId = grimpeurService.create(topo.getCreateur());
-		
-		// Mettre à jour le topo par le créateur Id
-		topo.getCreateur().setId(createurId);
+	public int create(Topo topo) {
 		
 		// Mettre à jour le topo par le propriétaire Id
-		if(topo.getProprietaire() != null) {
-			
-			// Création du propriétaire
-			int proprietaireId = grimpeurService.create(topo.getProprietaire());
-			topo.getProprietaire().setId(proprietaireId);
-			
-		}
+		// Création du propriétaire
+		//int proprietaireId = grimpeurService.create(topo.getProprietaire());
+		//topo.getProprietaire().setId(proprietaireId);
 		
 		// Création du topo
 		int topoId = topoDao.create(topo);
@@ -99,15 +88,9 @@ public class TopoServiceImpl implements TopoService {
 		// Mettre à jour le topo par son id
 		topo.setId(topoId);
 		
-		// Création du topo proprietaire
-		if(topo.getProprietaire() != null) {
-			grimpeurTopoProprietaireService.create(topo);
-		}
-		
-		// Ajout des topos
-		List<String> sites = Arrays.asList(selectedSites.split(","));
-		for(int i = 0; i < sites.size(); i++) {
-			topoSiteDescripteurService.create(Integer.valueOf(sites.get(i).trim()), topo.getId());
+		// Ajout des topo_site_descripteur
+		for(Site site : topo.getDescriptibles()) {
+			topoSiteDescripteurService.create(Integer.valueOf(site.getId()), topo.getId());
 		}
 		
 		return topoId;

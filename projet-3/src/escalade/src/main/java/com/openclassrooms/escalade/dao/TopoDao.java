@@ -10,6 +10,7 @@ public interface TopoDao {
 
 	public Topo findById(int id);
 	public List<Topo> findAll();
+	public List<Topo> findAll(int proprietaireId);
 	public List<Topo> findBySiteId(int siteId);
 	public int create(Topo topo);
 	public int update(Topo topo);

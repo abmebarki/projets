@@ -8,8 +8,10 @@ public interface SiteService {
 
 	public Site findById(int id);
 	public List<Site> findAll();
+	public List<Site> findAll(int createurId);
+	public List<Site> findAll(Site site);
 	public List<Site> findByTopoId(int topoId);
-	public int create(Site site, String selectedTopos);
+	public int create(Site site);
 	public int update(Site site);
 	public int delete(int id);
 

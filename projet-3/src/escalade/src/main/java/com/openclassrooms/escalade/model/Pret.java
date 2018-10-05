@@ -11,6 +11,7 @@ import java.util.Date;
 public class Pret {
 	
 	// ==================== Attributs ====================
+	private Integer id;
 	private Grimpeur emprunteur;
 	private Topo topoEmprunte;
 	private Date dateDebut;
@@ -24,10 +25,25 @@ public class Pret {
 	public Pret() {
 	}
 
+	public Pret(Integer id) {
+		super();
+		this.id = id;
+	}
 	
 	// ==================== Getters/Setters ====================
+	
 	public Grimpeur getEmprunteur() {
 		return emprunteur;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

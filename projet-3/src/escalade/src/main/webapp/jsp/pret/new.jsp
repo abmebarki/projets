@@ -18,14 +18,25 @@
 
 		<table>
 			<tr><td>Prêt</td></tr>
-			<tr><td><s:textfield name="pret.topoEmprunte.id" label="Topo Id" requiredLabel="true" /></td></tr>
+			
+			<tr>
+				<td><s:if test="%{listTopo != null}">
+						<table cellpadding="5" cellspacing="5">
+								<tr>
+									<td>
+									 	<s:select name="pret.topoEmprunte.id" list="listTopo" listKey="id"  listValue="nom" label="Selectionner un topo" emptyOption="false" requiredLabel="true"/>
+									</td>
+								</tr>
+						</table>
+					</s:if></td>
+			</tr>
 			<tr><td><s:textfield name="pret.dateDebut" label="Date début" requiredLabel="true" /></td></tr>
 			<tr><td><s:textfield name="pret.dateFin" label="Date fin"	requiredLabel="true"/></td></tr>
-			
-			<tr><td> Emprunteur</td></tr>
-			<tr><td><s:textfield name="pret.emprunteur.nom" label="Nom" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="pret.emprunteur.email" label="Email" requiredLabel="true" /></td></tr>
-			
+			<s:if test="#session.user">					
+				<tr>
+					<td><s:hidden name="pret.emprunteur.id" value="%{session.user.id}"></s:hidden></td>
+				</tr>
+			</s:if>
 			<tr><td><s:submit value="OK" /></td></tr>
 			
 		</table>

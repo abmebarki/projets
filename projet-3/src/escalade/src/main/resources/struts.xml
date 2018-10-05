@@ -15,13 +15,35 @@
 			<result>/jsp/index.jsp</result>
 		</action>
 		
+		<!-- Action "login" -->
+		<action name="login">
+			<result>/jsp/login.jsp</result>
+		</action>
+		
+		<!-- Actions Login/Logout -->
+		<action name="login" class="com.openclassrooms.escalade.action.LoginAction" method="doLogin">
+		    <result name="input">/jsp/login.jsp</result>
+		    <result name="success" type="redirectAction">index</result>
+		</action>
+		<action name="logout" class="com.openclassrooms.escalade.action.LoginAction" method="doLogout">
+		    <result type="redirectAction">index</result>
+		</action>
+		
 		<!-- L E S  S I T E S -->
 		<!-- Action listant les sites d'escalade -->
-		<action name="site_list" class="com.openclassrooms.escalade.action.GestionSiteAction" method="doList">
-			<result>/jsp/site/list.jsp</result>
+		<action name="site_list" class="com.openclassrooms.escalade.action.SiteAction" method="doList">
+			<result name="input">/jsp/site/list.jsp</result>
+			<result name="success">/jsp/site/list.jsp</result>
+		</action>
+		<!-- Action listant les sites d'escalade -->
+		<action name="mes_site_list" class="com.openclassrooms.escalade.action.SiteAction" method="doMyList">
+			<result name="success">/jsp/site/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		<!-- Action affichant le détail d'un site -->
-		<action name="site_detail" class="com.openclassrooms.escalade.action.GestionSiteAction" method="doDetail">
+		<action name="site_detail" class="com.openclassrooms.escalade.action.SiteAction" method="doDetail">
 			<interceptor-ref name="store">
 				<param name="operationMode">RETRIEVE</param>
 			</interceptor-ref>
@@ -29,7 +51,7 @@
 			<result name="success">/jsp/site/detail.jsp</result>
 		</action>
 		<!-- Actions permettant de créer un site d'escalade -->
-		<action name="site_new" class="com.openclassrooms.escalade.action.GestionSiteAction" method="doCreate">
+		<action name="site_new" class="com.openclassrooms.escalade.action.SiteAction" method="doCreate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -39,9 +61,16 @@
 				<param name="actionName">site_detail</param>
 				<param name="id">${site.id}</param>
 			</result>
+			<result name="newTopo" type="redirectAction">
+				<param name="actionName">topo_new</param>
+				<param name="site.id"> ${site.id}</param>
+			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		<!-- Actions permettant de mettre à jour un site d'escalade -->
-		<action name="site_update" class="com.openclassrooms.escalade.action.GestionSiteAction" method="doUpdate">
+		<action name="site_update" class="com.openclassrooms.escalade.action.SiteAction" method="doUpdate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -51,25 +80,46 @@
 				<param name="actionName">site_detail</param>
 				<param name="id">${site.id}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		<!-- Action supprimant un site -->
-		<action name="site_delete" class="com.openclassrooms.escalade.action.GestionSiteAction" method="doDelete">
-			<result name="success">/jsp/site/list.jsp</result>
+		<action name="site_delete" class="com.openclassrooms.escalade.action.SiteAction" method="doDelete">
+			<result name="successAdmin">/jsp/site/list.jsp</result>
+			<result name="successUser">/jsp/site/myList.jsp</result>
+			
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		
 		<!-- L E S  T O P O S -->
 		<!-- Action listant les topos d'escalade -->
-		<action name="topo_list" class="com.openclassrooms.escalade.action.GestionTopoAction" method="doList">
+		<action name="topo_list" class="com.openclassrooms.escalade.action.TopoAction" method="doList">
 			<result>/jsp/topo/list.jsp</result>
 		</action>
+		
+		<!-- Action listant les topos d'escalade -->
+		<action name="mes_topo_list" class="com.openclassrooms.escalade.action.TopoAction" method="doMyList">
+			<result name="success">/jsp/topo/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
+		</action>
+		
 		<!-- Action affichant le détail d'un topo d'escalade -->
-		<action name="topo_detail" class="com.openclassrooms.escalade.action.GestionTopoAction" method="doDetail">
+		<action name="topo_detail" class="com.openclassrooms.escalade.action.TopoAction" method="doDetail">
+			<interceptor-ref name="store">
+				<param name="operationMode">RETRIEVE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
 			<result name="success">/jsp/topo/detail.jsp</result>
 		</action>
 		
 		<!-- Actions permettant de créer un topo d'escalade -->
-		<action name="topo_new" class="com.openclassrooms.escalade.action.GestionTopoAction" method="doCreate">
+		<action name="topo_new" class="com.openclassrooms.escalade.action.TopoAction" method="doCreate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -79,10 +129,13 @@
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topo.id}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Actions permettant de mettre à jour un topo d'escalade -->
-		<action name="topo_update" class="com.openclassrooms.escalade.action.GestionTopoAction" method="doUpdate">
+		<action name="topo_update" class="com.openclassrooms.escalade.action.TopoAction" method="doUpdate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -92,33 +145,41 @@
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topo.id}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Action supprimant un topo -->
-		<action name="topo_delete" class="com.openclassrooms.escalade.action.GestionTopoAction" method="doDelete">
-			<result name="success">/jsp/topo/list.jsp</result>
+		<action name="topo_delete" class="com.openclassrooms.escalade.action.TopoAction" method="doDelete">
+			<result name="successAdmin">/jsp/topo/list.jsp</result>
+			<result name="successUser">/jsp/topo/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		
 		<!-- L E S  C O M M E N T A I R E S -->
 		
 		<!-- Actions permettant de créer un commentaire sur un site -->
-		<action name="commentaire_site_new" class="com.openclassrooms.escalade.action.GestionCommentaireSiteAction" method="doCreate">
+		<action name="commentaire_site_new" class="com.openclassrooms.escalade.action.CommentaireSiteAction" method="doCreate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
-			
 			<result name="input">/jsp/commentaire_site/new.jsp</result>
-			
 			<result name="success" type="redirectAction">
 				<param name="actionName">site_detail</param>
 				<param name="id">${siteId}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Actions permettant de mettre à jour un commentaire sur un site -->
-		<action name="commentaire_site_update" class="com.openclassrooms.escalade.action.GestionCommentaireSiteAction" method="doUpdate">
+		<action name="commentaire_site_update" class="com.openclassrooms.escalade.action.CommentaireSiteAction" method="doUpdate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -128,41 +189,47 @@
 				<param name="actionName">site_detail</param>
 				<param name="id">${siteId}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Action supprimant un commentaire sur un site-->
-		<action name="commentaire_site_delete" class="com.openclassrooms.escalade.action.GestionCommentaireSiteAction" method="doDelete">
+		<action name="commentaire_site_delete" class="com.openclassrooms.escalade.action.CommentaireSiteAction" method="doDelete">
 		
 		   <interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
-			
 			<result name="success" type="redirectAction">
 				<param name="actionName">site_detail</param>
 				<param name="id">${siteId}</param>
+			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
 			</result>
 			
 		</action>
 		
 		
 		<!-- Actions permettant de créer un commentaire sur un topo -->
-		<action name="commentaire_topo_new" class="com.openclassrooms.escalade.action.GestionCommentaireTopoAction" method="doCreate">
+		<action name="commentaire_topo_new" class="com.openclassrooms.escalade.action.CommentaireTopoAction" method="doCreate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
-			
 			<result name="input">/jsp/commentaire_topo/new.jsp</result>
-			
 			<result name="success" type="redirectAction">
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topoId}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Actions permettant de mettre à jour un commentaire sur un topo -->
-		<action name="commentaire_topo_update" class="com.openclassrooms.escalade.action.GestionCommentaireTopoAction" method="doUpdate">
+		<action name="commentaire_topo_update" class="com.openclassrooms.escalade.action.CommentaireTopoAction" method="doUpdate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -172,10 +239,13 @@
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topoId}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		<!-- Action supprimant un commentaire sur un topo-->
-		<action name="commentaire_topo_delete" class="com.openclassrooms.escalade.action.GestionCommentaireTopoAction" method="doDelete">
+		<action name="commentaire_topo_delete" class="com.openclassrooms.escalade.action.CommentaireTopoAction" method="doDelete">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -184,21 +254,33 @@
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topoId}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 		
 		<!-- L E S  P R E T S -->
 		<!-- Action listant les prets d'escalade -->
-		<action name="pret_list" class="com.openclassrooms.escalade.action.GestionPretAction" method="doList">
+		<action name="pret_list" class="com.openclassrooms.escalade.action.PretAction" method="doList">
 			<result>/jsp/pret/list.jsp</result>
 		</action>
+		
+		<!-- Action listant les prêts d'escalade -->
+		<action name="mes_pret_list" class="com.openclassrooms.escalade.action.PretAction" method="doMyList">
+			<result name="success">/jsp/pret/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
+		</action>
+		
 		<!-- Action affichant le détail d'un pret d'escalade -->
-		<action name="pret_detail" class="com.openclassrooms.escalade.action.GestionPretAction" method="doDetail">
+		<action name="pret_detail" class="com.openclassrooms.escalade.action.PretAction" method="doDetail">
 			<result name="success">/jsp/pret/detail.jsp</result>
 		</action>
 		
 		<!-- Actions permettant de créer un pret d'escalade -->
-		<action name="pret_new" class="com.openclassrooms.escalade.action.GestionPretAction" method="doCreate">
+		<action name="pret_new" class="com.openclassrooms.escalade.action.PretAction" method="doCreate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -208,9 +290,12 @@
 				<param name="actionName">pret_detail</param>
 				<param name="id">${pret.id}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		<!-- Actions permettant de mettre à jour un pret d'escalade -->
-		<action name="pret_update" class="com.openclassrooms.escalade.action.GestionPretAction" method="doUpdate">
+		<action name="pret_update" class="com.openclassrooms.escalade.action.PretAction" method="doUpdate">
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 			</interceptor-ref>
@@ -220,10 +305,17 @@
 				<param name="actionName">pret_detail</param>
 				<param name="id">${pret.id}</param>
 			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		<!-- Action supprimant un pret -->
-		<action name="pret_delete" class="com.openclassrooms.escalade.action.GestionPretAction" method="doDelete">
-			<result name="success">/jsp/pret/list.jsp</result>
+		<action name="pret_delete" class="com.openclassrooms.escalade.action.PretAction" method="doDelete">
+			<result name="successAdmin">/jsp/pret/list.jsp</result>
+			<result name="successUser">/jsp/pret/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
 		</action>
 		
 	</package>

@@ -1,7 +1,5 @@
 package com.openclassrooms.escalade.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.SiteDao;
 import com.openclassrooms.escalade.model.Commentaire;
+import com.openclassrooms.escalade.model.Exposition;
 import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Saison;
 import com.openclassrooms.escalade.model.Secteur;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
@@ -35,6 +35,13 @@ public class SiteServiceImpl implements SiteService{
 	
 	@Autowired
 	private TopoSiteDescripteurService topoSiteDescripteurService ;
+	
+	@Autowired
+	private SiteExpositionService siteExpositionService;
+	
+	@Autowired
+	private SiteSaisonService siteSaisonService;
+	
 
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.SiteService#findById(int)
@@ -48,17 +55,25 @@ public class SiteServiceImpl implements SiteService{
 		List<Secteur> secteurs = secteurService.findBySiteId(siteId);
 		site.setSecteurs(secteurs);
 		
-		// List des topos descripteurs
+		//Liste expositions
+		List<Exposition> expositions = siteExpositionService.findBySiteId(siteId);
+		site.setExpositions(expositions);
+		
+		//Liste saisons
+		List<Saison> saisons = siteSaisonService.findBySiteId(siteId);
+		site.setSaisons(saisons);
+		
+		// Liste des topos descripteurs
 		List<Topo> descripteurs = topoService.findBySiteId(siteId);
 		site.setDescripteurs(descripteurs);
 		
-		// List des commentaires
+		// Liste des commentaires
 		List<Commentaire> commentaires = commentaireService.findBySiteId(siteId);
 		site.setCommentaires(commentaires);
 		
 		return site;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.openclassrooms.escalade.service.SiteService#findAll()
 	 */
@@ -66,6 +81,26 @@ public class SiteServiceImpl implements SiteService{
 	@Transactional
 	public List<Site> findAll() {
 		List<Site> sites = siteDao.findAll();
+		return sites;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.service.SiteService#findAll()
+	 */
+	@Override
+	@Transactional
+	public List<Site> findAll(int createurId) {
+		List<Site> sites = siteDao.findAll(createurId);
+		return sites;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.service.SiteService#findAll()
+	 */
+	@Override
+	@Transactional
+	public List<Site> findAll(Site site) {
+		List<Site> sites = siteDao.findAll(site);
 		return sites;
 	}
 	
@@ -84,13 +119,13 @@ public class SiteServiceImpl implements SiteService{
 	 */
 	@Override
 	@Transactional
-	public int create(Site site, String selectedTopos) {
+	public int create(Site site) {
 		
 		// Création du créateur
-		int createurId = grimpeurService.create(site.getCreateur());
+		//int createurId = grimpeurService.create(site.getCreateur());
 		
 		// Mettre à jour le site par le créateur Id
-		site.getCreateur().setId(createurId);
+		//site.getCreateur().setId(utilisateur.getId());
 		
 		// Création du site
 		int siteId = siteDao.create(site);
@@ -98,15 +133,24 @@ public class SiteServiceImpl implements SiteService{
 		// Mettre à jour le site par son identifiant id
 		site.setId(siteId);
 		
+		// Expositions
+		for(int i = 0; i < site.getExpositions().size(); i++) {
+			siteExpositionService.create(site.getId(), site.getExpositions().get(i));
+		}
+		
+		// Saisons préférées
+		for(int i = 0; i < site.getSaisons().size(); i++) {
+			siteSaisonService.create(site.getId(), site.getSaisons().get(i));
+		}
+		
 		// Création des secteurs
 		for(int i = 0; i < site.getSecteurs().size(); i++) {
 			secteurService.create(site.getSecteurs().get(i), siteId);
 		}
 		
-		// Ajout des topos
-		List<String> topos = Arrays.asList(selectedTopos.split(","));
-		for(int i = 0; i < topos.size(); i++) {
-			topoSiteDescripteurService.create(site.getId(),Integer.valueOf(topos.get(i).trim()));
+		// Ajout des topo_site_descripteur
+		for(Topo topo : site.getDescripteurs()) {
+			topoSiteDescripteurService.create(site.getId(), Integer.valueOf(topo.getId()));
 		}
 		
 		return siteId;
@@ -118,7 +162,23 @@ public class SiteServiceImpl implements SiteService{
 	@Override
 	@Transactional
 	public int update(Site site) {
+		
 		int id = siteDao.update(site);
+		
+		// Suppression avant l'insertion
+		siteExpositionService.delete(site.getId());
+		siteSaisonService.delete(site.getId());
+		
+		// Expositions
+		for(int i = 0; i < site.getExpositions().size(); i++) {
+			siteExpositionService.create(site.getId(), site.getExpositions().get(i));
+		}
+		
+		// Saisons préférées
+		for(int i = 0; i < site.getSaisons().size(); i++) {
+			siteSaisonService.create(site.getId(), site.getSaisons().get(i));
+		}
+		
 		
 		// mise jour des secteurs
 		for(int i = 0; i < site.getSecteurs().size(); i++) {

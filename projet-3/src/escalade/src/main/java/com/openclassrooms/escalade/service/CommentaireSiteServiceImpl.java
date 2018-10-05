@@ -34,10 +34,10 @@ public class CommentaireSiteServiceImpl implements CommentaireSiteService {
 	@Transactional
 	public int create(Commentaire commentaire, int siteId) {
 		// Création de l'auteur du commentaire
-		int auteurId = grimpeurService.create(commentaire.getAuteur());
+		//int auteurId = grimpeurService.create(commentaire.getAuteur());
 		
 		// Mettre à jour le commentaire par l'auteur Id
-		commentaire.getAuteur().setId(auteurId);
+		//commentaire.getAuteur().setId(auteurId);
 		
 		return CommentaireSiteDao.create(commentaire, siteId);
 	}

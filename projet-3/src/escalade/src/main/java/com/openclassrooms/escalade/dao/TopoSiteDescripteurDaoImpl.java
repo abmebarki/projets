@@ -23,7 +23,7 @@ public class TopoSiteDescripteurDaoImpl implements TopoSiteDescripteurDao {
 	@Transactional
 	public int create(Integer siteId, Integer topoId) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-		simpleJdbcInsert.withTableName("topo_site_descipteur");
+		simpleJdbcInsert.withTableName("topo_site_descripteur");
 		Map<String, Object> parameters = new HashMap<String, Object>(2);
 		parameters.put("site_id", siteId);
 		parameters.put("topo_id", topoId);

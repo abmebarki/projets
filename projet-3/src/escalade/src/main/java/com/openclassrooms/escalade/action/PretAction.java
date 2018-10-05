@@ -2,52 +2,94 @@ package com.openclassrooms.escalade.action;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Site;
+import com.openclassrooms.escalade.model.Topo;
+import com.openclassrooms.escalade.model.Grimpeur;
 import com.openclassrooms.escalade.model.Pret;
 import com.openclassrooms.escalade.service.PretService;
+import com.openclassrooms.escalade.service.TopoService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
-public class GestionPretAction extends ActionSupport {
+public class PretAction extends ActionSupport implements SessionAware {
 	
 	 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	// ----- Eléments Struts
+    private Map<String, Object> session;
+    
+    public Map<String, Object> getSession() {
+		return session;
+	}
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
 
 	// ==================== Attributs ====================
     // ----- Paramétres en entrée
-    private Integer id;
-
+    
+	private Integer id;
+	private Integer emprunteurId;
     // ----- Eléments en sortie
     private List<Pret> listPret;
     private Pret pret;
     
+    private List<Topo> listTopo;
+    private Topo topo;
+    
     @Autowired
 	private PretService pretService;
-
+    
+    @Autowired
+	private TopoService topoService;
 
     // ==================== Getters/Setters ====================
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer tId) {
-        id = tId;
-    }
+    
     public List<Pret> getListPret() {
         return listPret;
     }
-    public Pret getPret() {
+    public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getEmprunteurId() {
+		return emprunteurId;
+	}
+	public void setEmprunteurId(Integer emprunteurId) {
+		this.emprunteurId = emprunteurId;
+	}
+	public Pret getPret() {
         return pret;
     }
     public void setPret(Pret pret) {
 		this.pret = pret;
 	}
+    
+	public List<Topo> getListTopo() {
+		return listTopo;
+	}
+	public void setListTopo(List<Topo> listTopo) {
+		this.listTopo = listTopo;
+	}
+	public Topo getTopo() {
+		return topo;
+	}
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+	
 	// ==================== Méthodes ====================
     /**
      * Action listant les {@link Pret}
@@ -58,6 +100,22 @@ public class GestionPretAction extends ActionSupport {
         return ActionSupport.SUCCESS;
     }
 
+    /**
+     * Action listant les {@link Pret}
+     * @return success
+     */
+    public String doMyList() {
+    	String vResult = ActionSupport.SUCCESS;
+    	
+    	Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
+    	listPret = pretService.findAll(emprunteurId);
+    	
+    	return vResult;
+    }
 
     /**
      * Action affichant les détails d'un {@link Pret}
@@ -82,18 +140,38 @@ public class GestionPretAction extends ActionSupport {
      * @return success / error
      */
     public String doDelete() {
+    	
+    	String vResult = null;
+    	
+    	Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	} else {
         if (id == null) {
             this.addActionError("Vous devez indiquer un id de pret");
         } else {
             try {
                 id = pretService.delete(id);
-                listPret = pretService.findAll();
+                
+                if(utilisateur.getRole().equals("USER")) {
+                	listPret = pretService.findAll(emprunteurId);
+                	vResult = "successUser";
+                }else {
+                	listPret = pretService.findAll();
+                	vResult = "successAdmin";
+                }
+                
+                
             } catch (Exception sE) {
                 this.addActionError(getText("error.pret.notfound", Collections.singletonList(id)));
+                vResult = ActionSupport.ERROR;
             }
         }
-
-        return (this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS;
+    	
+    	}
+    	
+    	return vResult;
+    	
     }
     
     /**
@@ -106,6 +184,14 @@ public class GestionPretAction extends ActionSupport {
 
         // Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
+        listTopo = topoService.findAll();
+        
 
         // ===== Validation de l'ajout de pret (pret != null)
         if (this.pret != null) {
@@ -113,7 +199,7 @@ public class GestionPretAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = pretService.create(this.pret);
+                   id = pretService.create(this.pret);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Pret ajouté avec succés");
@@ -138,7 +224,13 @@ public class GestionPretAction extends ActionSupport {
     	
     	// Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
-        if (id == null) {
+        
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
+        if (id == null ) {
         	if (this.pret == null) {
         		this.addActionError("Vous devez indiquer un id de pret");
         	} else {

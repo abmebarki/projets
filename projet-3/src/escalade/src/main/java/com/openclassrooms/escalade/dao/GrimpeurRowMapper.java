@@ -16,6 +16,7 @@ public class GrimpeurRowMapper implements RowMapper<Grimpeur> {
 		grimpeur.setId(rs.getInt("id"));
 		grimpeur.setNom(rs.getString("nom"));
 		grimpeur.setEmail(rs.getString("email"));
+		grimpeur.setRole(rs.getString("role"));
 		
 		return grimpeur;
 	}

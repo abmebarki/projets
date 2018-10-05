@@ -51,7 +51,6 @@ public class VoieDaoImpl implements VoieDao {
 		simpleJdbcInsert.withTableName("voie").usingGeneratedKeyColumns("id");
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("nom", voie.getNom());
-		parameters.put("nb_longueurs", voie.getNbLongueurs());
 		parameters.put("secteur_id", secteurId);
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();

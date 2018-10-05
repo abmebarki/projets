@@ -1,13 +1,26 @@
-table td {
-	width: 230px;
-    overflow: hidden;
-    display: inline-block;
-    white-space: nowrap;
-}
-table th {
-    width: 230px;
-    overflow: hidden;
-    display: inline-block;
-    white-space: nowrap;
+/* table td { */
+/* 	width: 200px; */
+/*     overflow: hidden; */
+/*     display: inline-block; */
+/*     white-space: nowrap; */
+/*     text-align: left; */
+/* } */
+/* table th { */
+/*     width: 200px; */
+/*     overflow: hidden; */
+/*     display: inline-block; */
+/*     white-space: nowrap; */
+/*     text-align: left; */
+/* } */
+
+li {
+    float: left;
+    margin-right: 40px;
 }
 
+body {
+	padding: 50px;
+	/*background-image: url("../img/Visuel-Escalade-300715-1050x698.jpg");*/
+	background-color: #A1CBEA;
+	
+}

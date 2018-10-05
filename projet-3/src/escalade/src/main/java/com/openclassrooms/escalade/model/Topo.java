@@ -18,7 +18,6 @@ public class Topo {
 	private String auteur;
 	private Date date;
 	private List<Site> descriptibles;
-	private Grimpeur createur;
 	private Grimpeur proprietaire;
 	private List<Commentaire> commentaires;
 	private List<Pret> calendrierPret;
@@ -87,14 +86,6 @@ public class Topo {
 
 	public void setDescriptibles(List<Site> descriptibles) {
 		this.descriptibles = descriptibles;
-	}
-
-	public Grimpeur getCreateur() {
-		return createur;
-	}
-
-	public void setCreateur(Grimpeur createur) {
-		this.createur = createur;
 	}
 
 	public Grimpeur getProprietaire() {

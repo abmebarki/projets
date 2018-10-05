@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.escalade.dao.GrimpeurDao;
+import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Grimpeur;
 
 @Service
@@ -27,6 +28,20 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 	public List<Grimpeur> findAll() {
 		List<Grimpeur> grimpeurs = grimpeurDao.findAll();
 		return grimpeurs;
+	}
+	
+	@Override
+	@Transactional
+	public Grimpeur findByIdEmailPassword(String email, String password) throws NotFoundException {
+		
+		Grimpeur utilisateur = grimpeurDao.findByIdEmailPassword(email, password); 
+		
+		if(utilisateur == null) {
+			throw new NotFoundException();
+		}
+		
+		return utilisateur;
+		
 	}
 	
 	@Override

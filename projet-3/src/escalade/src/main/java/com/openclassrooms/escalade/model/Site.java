@@ -14,7 +14,9 @@ public class Site {
 	private Integer id;
 	private String nom;
 	private String description;
-	private Integer nbSecteurs;
+	private List<Exposition> expositions;
+	private Integer tempsApproche;
+	private List<Saison> saisons;
 	private String ville;
 	private List<Secteur> secteurs;
 	private List<Topo> descripteurs;
@@ -61,13 +63,30 @@ public class Site {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Integer getNbSecteurs() {
-		return nbSecteurs;
+	
+	
+	public List<Exposition> getExpositions() {
+		return expositions;
 	}
 
-	public void setNbSecteurs(Integer nbSecteurs) {
-		this.nbSecteurs = nbSecteurs;
+	public void setExpositions(List<Exposition> expositions) {
+		this.expositions = expositions;
+	}
+
+	public List<Saison> getSaisons() {
+		return saisons;
+	}
+
+	public void setSaisons(List<Saison> saisons) {
+		this.saisons = saisons;
+	}
+
+	public Integer getTempsApproche() {
+		return tempsApproche;
+	}
+
+	public void setTempsApproche(Integer tempsApproche) {
+		this.tempsApproche = tempsApproche;
 	}
 
 	public String getVille() {

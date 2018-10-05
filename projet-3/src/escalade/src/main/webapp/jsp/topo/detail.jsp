@@ -11,7 +11,6 @@
 	<br /> Nb Pages : <s:property value="topo.nbPages"/>
 	<br /> Auteur : <s:property value="topo.auteur"/>
 	<br /> Date : <s:date name="topo.date"/>
-	<br /> Createur : <s:property value="topo.createur.nom"/>
 	<br /> Proprietaire : <s:property value="topo.proprietaire.nom"/>
 	
 	<h4>Liste des Sites</h4>
@@ -23,7 +22,6 @@
 					<th>ID</th>
 					<th>Nom</th>
 					<th>Description</th>
-					<th>Nb Secteurs</th>
 					<th>Ville</th>
 				</tr>
 			</thead>
@@ -32,7 +30,6 @@
 					<td><s:property value="id" /></td>
 					<td><s:property value="nom" /></td>
 					<td><s:property value="description" /></td>
-					<td><s:property value="nbSecteurs" /></td>
 					<td><s:property value="ville" /></td>
 				</tr>
 			</tbody>
@@ -61,10 +58,14 @@
 					<td><s:date name="date" /></td>
 					<td><s:property value="nom" /></td>
 					<td><s:property value="auteur.email" /></td>
+					<s:if test="#session.user">
+								<s:if test="#session.user.role == 'ADMIN'">
 					<td>
 						<s:a action="commentaire_topo_update"><s:param name="id" value="id" /><s:param name="topoId" value="topo.id" />Mettre à jour</s:a>&nbsp;
 						<s:a action="commentaire_topo_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" /><s:param name="topoId" value="topo.id" />Supprimer</s:a>&nbsp;
 					</td>
+					</s:if>
+					</s:if>
 				</tr>
 			</tbody>
 		</table>

@@ -2,36 +2,50 @@ package com.openclassrooms.escalade.action;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.escalade.exceptions.NotFoundException;
+import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Commentaire;
-import com.openclassrooms.escalade.service.CommentaireTopoService;
+import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.service.CommentaireSiteService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component
-public class GestionCommentaireTopoAction extends ActionSupport {
+public class CommentaireSiteAction extends ActionSupport implements SessionAware {
 	
 	 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// ----- Eléments Struts
+    private Map<String, Object> session;
+    
+    public Map<String, Object> getSession() {
+		return session;
+	}
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+	
 	// ==================== Attributs ====================
     // ----- Paramétres en entrée
     private Integer id;
     
  // ----- Paramétres en entrée
-    private Integer topoId;
+    private Integer siteId;
 
     // ----- Eléments en sortie
     private List<Commentaire> listCommentaire;
     private Commentaire commentaire;
     
     @Autowired
-	private CommentaireTopoService commentaireTopoService;
+	private CommentaireSiteService commentaireSiteService;
 
 
     // ==================== Getters/Setters ====================
@@ -41,11 +55,11 @@ public class GestionCommentaireTopoAction extends ActionSupport {
     public void setId(Integer tId) {
         id = tId;
     }
-    public Integer getTopoId() {
-		return topoId;
+    public Integer getSiteId() {
+		return siteId;
 	}
-    public void setTopoId(Integer topoId) {
-		this.topoId = topoId;
+    public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
 	}
 	public List<Commentaire> getListCommentaire() {
         return listCommentaire;
@@ -57,23 +71,34 @@ public class GestionCommentaireTopoAction extends ActionSupport {
 		this.commentaire = commentaire;
 	}
 	// ==================== Méthodes ====================
-  
+   
     /**
      * Action supprimant {@link Commentaire}
      * @return success / error
      */
     public String doDelete() {
+    	
+    	String vResult;
+    	
+    	Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	} else {
         if (id == null) {
             this.addActionError("Vous devez indiquer un id de commentaire");
         } else {
             try {
-                id = commentaireTopoService.delete(id);
+                id = commentaireSiteService.delete(id);
+                //listCommentaire = commentaireSiteService.findAll();
             } catch (Exception sE) {
                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));
             }
         }
 
-        return (this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS;
+        vResult = (this.hasErrors()) ? ActionSupport.ERROR : ActionSupport.SUCCESS;
+      	}
+      	
+        return vResult;
     }
     
     /**
@@ -86,6 +111,11 @@ public class GestionCommentaireTopoAction extends ActionSupport {
 
         // Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
 
         // ===== Validation de l'ajout de commentaire (commentaire != null)
         if (this.commentaire != null) {
@@ -93,7 +123,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
           // Si pas d'erreur, ajout du projet...
             if (!this.hasErrors()) {
                 try {
-                	 id = commentaireTopoService.create(this.commentaire, topoId);
+                	 id = commentaireSiteService.create(this.commentaire, siteId);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
                     this.addActionMessage("Commentaire ajouté avec succés");
@@ -118,6 +148,12 @@ public class GestionCommentaireTopoAction extends ActionSupport {
     	
     	// Par défaut, le result est "input"
         String vResult = ActionSupport.INPUT;
+        
+        Grimpeur utilisateur = (Grimpeur)session.get("user");
+    	if(utilisateur == null) {
+    		vResult = "loginUser";
+    	}
+    	
         if (id == null) {
         	if (this.commentaire == null) {
         		this.addActionError("Vous devez indiquer un id de commentaire");
@@ -125,7 +161,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
        		 // Si pas d'erreur, mise à jour du commentaire...
                 if (!this.hasErrors()) {
                     try {
-                    	commentaireTopoService.update(this.commentaire);
+                    	commentaireSiteService.update(this.commentaire);
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Commentaire mis à jour avec succés");
@@ -140,7 +176,7 @@ public class GestionCommentaireTopoAction extends ActionSupport {
 
          } else {
         	 	 try {
-	                 commentaire = commentaireTopoService.findById(id);
+	                 commentaire = commentaireSiteService.findById(id);
 	             } catch (Exception sE) {
 	            	 vResult = ActionSupport.ERROR;
 	                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));

@@ -14,8 +14,8 @@ public class Secteur {
 	private Integer id;
 	private String nom;
 	private String description;
-	private Integer nbVoies;
-	private String orientation;
+	private String type;
+	private String difficulte;
 	private String coordonnees;
 	private Integer hauteurMax;
 	private List<Voie> voies;
@@ -61,21 +61,21 @@ public class Secteur {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Integer getNbVoies() {
-		return nbVoies;
+	
+	public String getType() {
+		return type;
 	}
 
-	public void setNbVoies(Integer nbVoies) {
-		this.nbVoies = nbVoies;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getOrientation() {
-		return orientation;
+	public String getDifficulte() {
+		return difficulte;
 	}
 
-	public void setOrientation(String orientation) {
-		this.orientation = orientation;
+	public void setDifficulte(String difficulte) {
+		this.difficulte = difficulte;
 	}
 
 	public String getCoordonnees() {

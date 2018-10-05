@@ -13,7 +13,7 @@
 -->    
     <br />
     <br />
-    <s:a action="pret_new">Ajouter prêt de topo</s:a>
+    <s:a action="pret_new">Emprunter un topo</s:a>
     
 	<s:if test="%{listPret != null}">
 			<h4>Liste des Prêts</h4>
@@ -24,19 +24,24 @@
 						<th>Emprunteur Id</th>
 						<th>Date début</th>
 						<th>Date fin</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<s:iterator value="listPret">
 						<tr>
-							<td><s:property value="pret.emprunteur.id" /></td>
-							<td><s:property value="pret.topoEmprunte.id" /></td>
+							<td><s:property value="topoEmprunte.id" /></td>
+							<td><s:property value="emprunteur.id" /></td>
 							<td><s:date name="dateDebut" /></td>
 							<td><s:date name="dateFin" /></td>
 							<td>
 							<s:a action="pret_detail"><s:param name="id" value="id" />Détail</s:a>&nbsp;
+							<s:if test="#session.user">
+							<s:if test="#session.user.role == 'ADMIN'">
 							<s:a action="pret_update"><s:param name="id" value="id" />Mettre à jour</s:a>&nbsp;
 							<s:a action="pret_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" />Supprimer</s:a>&nbsp;
+							</s:if>
+							</s:if>
 							</td>
 						</tr>
 					</s:iterator>

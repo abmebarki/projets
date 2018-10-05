@@ -13,7 +13,6 @@ public class Voie {
 	// ==================== Attributs ====================
 	private Integer id;
 	private String nom;
-	private Integer nbLongueurs;
 	private List<Longueur> longueurs;
 	
     // ==================== Constructeurs ====================
@@ -47,14 +46,6 @@ public class Voie {
 
 	public void setNom(String nom) {
 		this.nom = nom;
-	}
-
-	public Integer getNbLongueurs() {
-		return nbLongueurs;
-	}
-
-	public void setNbLongueurs(Integer nbLongueurs) {
-		this.nbLongueurs = nbLongueurs;
 	}
 
 	public List<Longueur> getLongueurs() {

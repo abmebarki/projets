@@ -51,10 +51,10 @@ public class SecteurDaoImpl implements SecteurDao {
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("nom", secteur.getNom());
 		parameters.put("description", secteur.getDescription());
+		parameters.put("type", secteur.getType());
+		parameters.put("difficulte", secteur.getDifficulte());
 		parameters.put("hauteur_max", secteur.getHauteurMax());
 		parameters.put("coordonnees", secteur.getCoordonnees());
-		parameters.put("nb_voies", secteur.getNbVoies());
-		parameters.put("orientation", secteur.getOrientation());
 		parameters.put("site_id", siteId);
 				
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
@@ -63,9 +63,9 @@ public class SecteurDaoImpl implements SecteurDao {
 
 	@Transactional
 	public int update(Secteur secteur) {
-		String sql = "update secteur set nom = ?, description = ?, hauteur_max = ?, coordonnees = ?, orientation = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { secteur.getNom(), secteur.getDescription(), secteur.getHauteurMax(), secteur.getCoordonnees(), 
-				secteur.getOrientation(), secteur.getId() });
+		String sql = "update secteur set nom = ?, description = ?, type = ?, difficulte = ?, hauteur_max = ?, coordonnees = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { secteur.getNom(), secteur.getDescription(),secteur.getType(), secteur.getDifficulte(), secteur.getHauteurMax(), secteur.getCoordonnees(), 
+				secteur.getId() });
 		return resp;
 	}
 

@@ -29,19 +29,29 @@ public class TopoDaoImpl implements TopoDao {
         @Override
 		@Transactional
 	public Topo findById(int id) {
-		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.createur_id, gc.nom as nom_createur, gc.email as email_createur, gp.id proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gc on t.createur_id = gc.id and t.id = ?  left join grimpeur_topo_proprietaire gtp on t.id = gtp.topo_id left join grimpeur gp on gp.id = gtp.proprietaire_id",
-				new Object[] { id }, new TopoCreateurProprietaireRowMapper());
+		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.id as proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gp on t.proprietaire_id = gp.id and t.id = ?",
+				new Object[] { id }, new TopoProprietaireRowMapper());
 		return topo;
 	}
 
-        /* (non-Javadoc)
-		 * @see com.openclassrooms.escalade.dao.TopoDao#findAll()
-		 */
-        @Override
-		@Transactional
+    /* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#findAll()
+	 */
+    @Override
+	@Transactional
 	public List<Topo> findAll() {
-		List<Topo> topo = (List<Topo>) jdbcTemplate.query("select * from topo",
-				new TopoRowMapper());
+		List<Topo> topo = (List<Topo>) jdbcTemplate.query("select * from topo", new TopoRowMapper());
+		return topo;
+	}
+    
+    /* (non-Javadoc)
+	 * @see com.openclassrooms.escalade.dao.TopoDao#findAll()
+	 */
+    @Override
+	@Transactional
+	public List<Topo> findAll(int proprietaireId) {
+		List<Topo> topo = (List<Topo>) jdbcTemplate.query("select * from topo where proprietaire_id = ?", 
+				new Object[] { proprietaireId }, new TopoRowMapper());
 		return topo;
 	}
         
@@ -51,7 +61,7 @@ public class TopoDaoImpl implements TopoDao {
     @Override
 	@Transactional
 	public List<Topo> findBySiteId(int siteId) {
-		List<Topo> topos = (List<Topo>) jdbcTemplate.query("select * from topo t join topo_site_descipteur tsd on t.id = tsd.topo_id where tsd.site_id = ?",
+		List<Topo> topos = (List<Topo>) jdbcTemplate.query("select * from topo t join topo_site_descripteur tsd on t.id = tsd.topo_id where tsd.site_id = ?",
 				new Object[] { siteId }, new TopoRowMapper());
 		return topos;
 	}        
@@ -69,7 +79,7 @@ public class TopoDaoImpl implements TopoDao {
 		parameters.put("nb_pages", topo.getNbPages());
 		parameters.put("auteur", topo.getAuteur());
 		parameters.put("date", topo.getDate());
-		parameters.put("createur_id", topo.getCreateur().getId());
+		parameters.put("proprietaire_id", topo.getProprietaire().getId());
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}

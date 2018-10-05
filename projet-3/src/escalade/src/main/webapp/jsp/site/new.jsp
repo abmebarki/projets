@@ -28,16 +28,33 @@
 				<td><s:textfield name="site.description" label="Description"
 						requiredLabel="true" /></td>
 			</tr>
+
 			<tr>
-				<td><s:textfield name="site.nbSecteurs" label="Nb Secteurs"
-						requiredLabel="true" /></td>
+				<td><s:checkboxlist label="Expositions" list="expositiontList"
+						name="site.expositions" value="site.expositions" /></td>
 			</tr>
+
+			<tr>
+				<td><s:textfield name="site.tempsApproche"
+						label="Temps d'approche en Minutes" requiredLabel="true" /></td>
+			</tr>
+
+			<tr>
+				<td><s:checkboxlist label="Saisons" list="saisonList"
+						name="site.saisons" value="site.saisons" /></td>
+			</tr>
+
 			<tr>
 				<td><s:textfield name="site.ville" label="Ville"
 						requiredLabel="true" /></td>
 			</tr>
-
+			
+			<tr>
 			<s:iterator status="secteurStatus" begin="1" end="1">
+			<td>
+			
+			<table>
+			
 				<tr>
 					<td>Secteur <s:property value="%{#secteurStatus.index + 1}" /></td>
 				</tr>
@@ -51,16 +68,23 @@
 							name="site.secteurs[%{#secteurStatus.index}].description"
 							label="Description" requiredLabel="true" /></td>
 				</tr>
+
 				<tr>
-					<td><s:textfield
-							name="site.secteurs[%{#secteurStatus.index}].nbVoies"
-							label="Nb Voies" requiredLabel="true" /></td>
+					<td><s:select
+							name="site.secteurs[%{#secteurStatus.index}].type"
+							list="typeList" label="Type" emptyOption="true"
+							requiredLabel="true" /></td>
 				</tr>
+
 				<tr>
-					<td><s:textfield
-							name="site.secteurs[%{#secteurStatus.index}].orientation"
-							label="Orientation" requiredLabel="true" /></td>
+					<td><s:select
+							name="site.secteurs[%{#secteurStatus.index}].difficulte"
+							list="difficulteList" label="Difficulté" emptyOption="true"
+							requiredLabel="true" /></td>
+
+
 				</tr>
+
 				<tr>
 					<td><s:textfield
 							name="site.secteurs[%{#secteurStatus.index}].coordonnees"
@@ -72,7 +96,7 @@
 							label="Hauteur Max" requiredLabel="true" /></td>
 				</tr>
 
-				<s:iterator status="voiesStatus" begin="1" end="2">
+				<s:iterator status="voiesStatus" begin="1" end="1">
 					<tr>
 						<td>Voie <s:property value="%{#voiesStatus.index + 1}" /></td>
 					</tr>
@@ -81,16 +105,10 @@
 								name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].nom"
 								label="Nom" requiredLabel="true" /></td>
 					</tr>
-					<tr>
-						<td><s:textfield
-								name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].nbLongueurs"
-								label="Nb Longueurs" requiredLabel="true" /></td>
-					</tr>
 
-					<s:iterator status="longueursStatus" begin="1" end="2">
+					<s:iterator status="longueursStatus" begin="1" end="1">
 						<tr>
-							<td>Longueur <s:property
-									value="%{#LongueurStatus.index + 1}" /></td>
+							<td>Longueur <s:property value="%{#longueursStatus.index + 1}" /></td>
 						</tr>
 						<tr>
 							<td><s:textfield
@@ -114,28 +132,35 @@
 						</tr>
 					</s:iterator>
 				</s:iterator>
+			
+			</table>
+			
+			 
+			</td>
 			</s:iterator>
-
-			<tr>
-				<td>Créateur</td>
+			
 			</tr>
+			
+			<s:if test="#session.user">					
+				<tr>
+					<td><s:hidden name="site.createur.id" value="%{session.user.id}"></s:hidden></td>
+				</tr>
+			</s:if>
 			<tr>
-				<td><s:textfield name="site.createur.nom" label="Nom"
-						requiredLabel="true" /></td>
-			</tr>
-			<tr>
-				<td><s:textfield name="site.createur.email" label="Email"
-						requiredLabel="true" /></td>
+			
+				<td><s:checkbox label="Créer un nouveau topo"
+						name="nouveauTopo" /></td>
 			</tr>
 
 			<tr>
 				<td><s:if test="%{listTopo != null}">
 						<table cellpadding="5" cellspacing="5">
-								<tr>
-									<td>
-									 	<s:select name="selectedTopos" multiple="true" list="listTopo" listKey="id"  listValue="nom" label="Selectionner un topo"/>
-									</td>
-								</tr>
+							<tr>
+								<td><s:select name="site.descripteurs.id" multiple="true"
+										list="listTopo" listKey="id" listValue="nom"
+										label="Selectionner un topo" emptyOption="true"
+										requiredLabel="true" /></td>
+							</tr>
 						</table>
 					</s:if></td>
 			</tr>
