@@ -16,22 +16,53 @@ public class PretServiceImpl implements PretService {
 	@Autowired
 	private PretDao pretDao;
 	
+	@Autowired
+	private TopoService topoService;
+	
+	@Autowired
+	private GrimpeurService grimpeurService;
+	
 	@Override
 	@Transactional
 	public Pret findById(int id) {
-		return pretDao.findById(id);
+		
+		Pret pret = pretDao.findById(id);
+		pret.setTopoEmprunte(topoService.findById(pret.getTopoEmprunte().getId()));
+		pret.setEmprunteur(grimpeurService.findById(pret.getEmprunteur().getId()));
+		return pret;
+		
 	}
 
 	@Override
 	@Transactional
 	public List<Pret> findAll() {
-		return pretDao.findAll();
+		
+		List<Pret> prets =  pretDao.findAll();
+		
+		// détail topo emprunté
+		for(Pret pret : prets) {
+			pret.setTopoEmprunte(topoService.findById(pret.getTopoEmprunte().getId()));
+		}
+		
+		// détail emprunteur
+		for(Pret pret : prets) {
+			pret.setEmprunteur(grimpeurService.findById(pret.getEmprunteur().getId()));
+		}
+		return prets;
+		
 	}
 
 	@Override
 	@Transactional
 	public List<Pret> findAll(int emprunteurId) {
-		return pretDao.findAll(emprunteurId);
+		
+		List<Pret> prets =  pretDao.findAll(emprunteurId);
+		// Ajout des topo_site_descripteur
+		for(Pret pret : prets) {
+			pret.setTopoEmprunte(topoService.findById(pret.getTopoEmprunte().getId()));
+		}
+		return prets;
+		
 	}
 	
 	@Override

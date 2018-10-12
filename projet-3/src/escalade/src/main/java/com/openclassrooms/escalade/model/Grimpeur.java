@@ -12,7 +12,7 @@ public class Grimpeur {
 	private Integer id;
 	private String nom;
 	private String email;
-	private String role;
+	private Role role;
 	private String motpasse;
 	
 	// ==================== Constructeurs ====================
@@ -63,11 +63,11 @@ public class Grimpeur {
 		this.email = email;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

@@ -73,6 +73,8 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("nom", grimpeur.getNom());
 		parameters.put("email", grimpeur.getEmail());
+		parameters.put("role", grimpeur.getRole().value());
+		parameters.put("mot_passe",grimpeur.getMotpasse());
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
 	}
@@ -80,8 +82,8 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 	@Override
 	@Transactional
 	public int update(Grimpeur grimpeur) {
-		String sql = "update grimpeur set nom = ?, email = ? where id = ?";
-		int resp = jdbcTemplate.update(sql, new Object[] { grimpeur.getNom(), grimpeur.getEmail(), grimpeur.getId() });
+		String sql = "update grimpeur set nom = ?, email = ?, role = ?, mot_passe = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { grimpeur.getNom(), grimpeur.getEmail(), grimpeur.getRole().value(), grimpeur.getMotpasse(), grimpeur.getId() });
 		return resp;
 	}
 

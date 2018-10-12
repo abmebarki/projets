@@ -15,9 +15,6 @@ public class CommentaireTopoServiceImpl implements CommentaireTopoService {
 	@Autowired
 	private CommentaireTopoDao CommentaireTopoDao;
 	
-	@Autowired
-	private GrimpeurService grimpeurService;
-
 	@Override
 	@Transactional
 	public Commentaire findById(int id) {

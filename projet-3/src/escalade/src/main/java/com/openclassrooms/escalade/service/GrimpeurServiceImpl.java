@@ -1,5 +1,6 @@
 package com.openclassrooms.escalade.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.openclassrooms.escalade.dao.GrimpeurDao;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Role;
+import com.openclassrooms.escalade.utils.Tools;
 
 @Service
 public class GrimpeurServiceImpl implements GrimpeurService {
@@ -32,9 +35,9 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 	
 	@Override
 	@Transactional
-	public Grimpeur findByIdEmailPassword(String email, String password) throws NotFoundException {
+	public Grimpeur findByIdEmailPassword(String email, String password) throws NotFoundException, NoSuchAlgorithmException {
 		
-		Grimpeur utilisateur = grimpeurDao.findByIdEmailPassword(email, password); 
+		Grimpeur utilisateur = grimpeurDao.findByIdEmailPassword(email, Tools.md5Hash(password)); 
 		
 		if(utilisateur == null) {
 			throw new NotFoundException();
@@ -46,7 +49,7 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 	
 	@Override
 	@Transactional
-	public int create(Grimpeur grimpeur) {
+	public int create(Grimpeur grimpeur) throws NoSuchAlgorithmException {
 		
 		Grimpeur grimpeurTmp;
 		try {
@@ -55,8 +58,19 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 		} catch (EmptyResultDataAccessException e1) {
 			// Si le grimpeur n'existe pas
 			grimpeurTmp = new Grimpeur();
+			
+			//Le role par défaut
+			if(grimpeur.getRole() != Role.ADMIN) {
+				grimpeur.setRole(Role.USER);
+			}
+			
+			// Hashage du mot de passe
+			grimpeur.setMotpasse(Tools.md5Hash(grimpeur.getMotpasse()));
 			grimpeurTmp.setId(grimpeurDao.create(grimpeur));
 		}
+		
+		// Mettre à jour le topo par son id
+		grimpeur.setId(grimpeurTmp.getId());
 		
 		return grimpeurTmp.getId();
 		
@@ -64,7 +78,9 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 
 	@Override
 	@Transactional
-	public int update(Grimpeur grimpeur) {
+	public int update(Grimpeur grimpeur) throws NoSuchAlgorithmException {
+		// Hashage du mot de passe
+		grimpeur.setMotpasse(Tools.md5Hash(grimpeur.getMotpasse()));
 		return grimpeurDao.update(grimpeur);
 	}
 

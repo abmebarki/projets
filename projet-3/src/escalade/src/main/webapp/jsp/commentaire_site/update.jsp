@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <!DOCTYPE html>
@@ -8,25 +7,34 @@
 <%@ include file="../_include/header.jsp"%>
 </head>
 
-<body><%@ include file="../_include/menu.jsp"%>
-	<s:actionerror />
-	<s:actionmessage />
+<body>
+	<div class="container"><%@ include file="../_include/menu.jsp"%>
+		<s:actionerror />
+		<s:actionmessage />
+		<s:form action="commentaire_site_update">
+			<s:hidden name="siteId" />
+			<s:hidden name="commentaire.id"></s:hidden>
+			<legend>Création d'un site d'escalade</legend>
+			<label>Commentaire</label>
+			<div class="form-group">
+				<label for="commentaire_site_new_commentaire_objet">Objet</label>
+				<s:textfield class="form-control" name="commentaire.objet" label="Objet" requiredLabel="true" />
+			</div>
+			<div class="form-group">
+				<label for="commentaire_site_new_commentaire_contenu">Contenu</label>
+				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" />
+			</div>
+			<div class="form-group">
+				<label for="commentaire_site_new_commentaire_date">Date</label>
+				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" />
+			</div>
 
-	<h2>Création d'un topo d'escalade</h2>
-	
-	<s:form action="commentaire_site_update">
-		<s:hidden name="siteId"/>
-		<s:hidden name="commentaire.id"></s:hidden>
-		<table>
-			<tr><td>Commentaire</td></tr>
-			<tr><td><s:textfield name="commentaire.objet" label="Objet" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="commentaire.contenu" label="Contenu" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="commentaire.date" label="Date"	requiredLabel="true"/></td></tr>
-		
-			<tr><td><s:submit value="OK"/></td></tr>
-			
-		</table>
-		
-	</s:form>
+			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
+
+
+
+		</s:form>
+		<%@ include file="../_include/footer.jsp"%>
+	</div>
 </body>
 </html>

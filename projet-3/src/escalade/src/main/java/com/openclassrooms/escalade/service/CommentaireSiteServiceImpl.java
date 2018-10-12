@@ -15,9 +15,6 @@ public class CommentaireSiteServiceImpl implements CommentaireSiteService {
 	@Autowired
 	private CommentaireSiteDao CommentaireSiteDao;
 	
-	@Autowired
-	private GrimpeurService grimpeurService;
-
 	@Override
 	@Transactional
 	public Commentaire findById(int id) {

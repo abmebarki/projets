@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <!DOCTYPE html>
@@ -8,52 +7,51 @@
 <%@ include file="../_include/header.jsp"%>
 </head>
 
-<body><%@ include file="../_include/menu.jsp"%>
-	<s:actionerror />
-	<s:actionmessage />
-
-	<h2>Création d'un topo d'escalade</h2>
-	
-	<s:form action="topo_new">
-
-		<table>
-			<tr><td>Topo</td></tr>
-			
-			<tr>
-				<td>
-					<s:if test="%{site == null}">
-						<s:if test="%{listSite != null}">
-								<table cellpadding="5" cellspacing="5">
-										<tr>
-											<td>
-											 	<s:select name="topo.descriptibles.id" multiple="true" list="listSite" listKey="id"  listValue="nom" label="Selectionner un site" emptyOption="false" requiredLabel="true"/>
-											</td>
-										</tr>
-								</table>
-						</s:if>
-						<s:a action="site_new"><s:label>Ou créer un nouveau site</</s:label></s:a> 
-					</s:if>
-					<s:else>
-						<s:label>Site</s:label><s:property value="%{site.nom}"/>
-						<s:hidden name="topo.descriptibles.id" value="%{site.id}"></s:hidden>
-					</s:else>	
-				</td>
-				<td>
-				</td>
-			</tr>
-			<tr><td><s:textfield name="topo.nom" label="Nom" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="topo.nbPages" label="Nb Pages" requiredLabel="true" /></td></tr>
-			<tr><td><s:textfield name="topo.auteur" label="Auteur"	requiredLabel="true"/></td></tr>
-			<tr><td><s:textfield name="topo.date" label="Date"	requiredLabel="true"/></td></tr>
-			<s:if test="#session.user">					
-				<tr>
-					<td><s:hidden name="topo.proprietaire.id" value="%{session.user.id}"></s:hidden></td>
-				</tr>
+<body>
+	<div class="container"><%@ include file="../_include/menu.jsp"%>
+		<s:actionerror />
+		<s:actionmessage />
+		<s:form action="topo_new">
+			<legend>Création d'un topo d'escalade</legend>
+			<s:if test="%{site == null}">
+				<s:if test="%{listSite != null}">
+					<div class="form-group">
+						<label for="topo_new_topo_descriptibles_id">Selectionner un site</label>&nbsp;
+						<s:a action="site_new">
+							<label>Ou créer un nouveau site</</label>
+						</s:a>
+						<s:select class="form-control" name="topo.descriptibles.id" multiple="true" list="listSite" listKey="id" listValue="nom" label="Selectionner un site" emptyOption="false" requiredLabel="true" />
+					</div>
+				</s:if>
 			</s:if>
-			<tr><td><s:submit value="OK" /></td></tr>
-			
-		</table>
-		
-	</s:form>
+			<s:else>
+				<s:label>Site</s:label>
+				<s:property value="%{site.nom}" />
+				<s:hidden name="topo.descriptibles.id" value="%{site.id}"></s:hidden>
+				<s:hidden name="site.id" value="%{site.id}"></s:hidden>
+			</s:else>
+			<div class="form-group">
+				<label for="topo_new_topo_nom">Nom</label>
+				<s:textfield class="form-control" name="topo.nom" label="Nom" requiredLabel="true" />
+			</div>
+			<div class="form-group">
+				<label for="topo_new_topo_nbPages">Nb Pages</label>
+				<s:textfield class="form-control" name="topo.nbPages" label="Nb Pages" requiredLabel="true" />
+			</div>
+			<div class="form-group">
+				<label for="topo_new_topo_auteur">Auteur</label>
+				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" />
+			</div>
+			<div class="form-group">
+				<label for="topo_new_topo_date">Date</label>
+				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" />
+			</div>
+			<s:if test="#session.user">
+				<s:hidden name="topo.proprietaire.id" value="%{session.user.id}"></s:hidden>
+			</s:if>
+			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
+		</s:form>
+		<%@ include file="../_include/footer.jsp"%>
+	</div>
 </body>
 </html>

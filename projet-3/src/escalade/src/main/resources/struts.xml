@@ -3,16 +3,17 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
+	<constant name="struts.ui.theme" value="simple" />
 	<package name="default" extends="struts-default">
 		<!-- Action par défaut -->
-		<default-action-ref name="index" />
+		<default-action-ref name="site_list" />
 		<!-- Results globaux -->
 		<global-results>
 			<result name="error">/jsp/error.jsp</result>
 		</global-results>
-		<!-- Action "index" -->
-		<action name="index">
-			<result>/jsp/index.jsp</result>
+		<!-- Action "site_list" -->
+		<action name="site_list">
+			<result>/jsp/site/list.jsp</result>
 		</action>
 		
 		<!-- Action "login" -->
@@ -23,10 +24,10 @@
 		<!-- Actions Login/Logout -->
 		<action name="login" class="com.openclassrooms.escalade.action.LoginAction" method="doLogin">
 		    <result name="input">/jsp/login.jsp</result>
-		    <result name="success" type="redirectAction">index</result>
+		    <result name="success" type="redirectAction"><param name="actionName">site_list</param></result>
 		</action>
 		<action name="logout" class="com.openclassrooms.escalade.action.LoginAction" method="doLogout">
-		    <result type="redirectAction">index</result>
+		    <result type="redirectAction">login</result>
 		</action>
 		
 		<!-- L E S  S I T E S -->
@@ -128,6 +129,10 @@
 			<result name="success" type="redirectAction">
 				<param name="actionName">topo_detail</param>
 				<param name="id">${topo.id}</param>
+			</result>
+			<result name="successSite" type="redirectAction">
+				<param name="actionName">site_detail</param>
+				<param name="id"> ${site.id}</param>
 			</result>
 			<result name="loginUser" type="redirectAction">
 				<param name="actionName">login</param>
@@ -313,6 +318,61 @@
 		<action name="pret_delete" class="com.openclassrooms.escalade.action.PretAction" method="doDelete">
 			<result name="successAdmin">/jsp/pret/list.jsp</result>
 			<result name="successUser">/jsp/pret/myList.jsp</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
+		</action>
+		
+		<!-- L E S  G R I M P E U R S -->
+		<!-- Action listant les grimpeurs d'escalade -->
+		<action name="grimpeur_list" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doList">
+			<result>/jsp/grimpeur/list.jsp</result>
+		</action>
+		
+		<!-- Action affichant le détail d'un grimpeur d'escalade -->
+		<action name="grimpeur_detail" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doDetail">
+			<interceptor-ref name="store">
+				<param name="operationMode">RETRIEVE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/jsp/grimpeur/detail.jsp</result>
+		</action>
+		
+		<!-- Actions permettant de créer un grimpeur d'escalade -->
+		<action name="grimpeur_new" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doCreate">
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/jsp/grimpeur/new.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">grimpeur_detail</param>
+				<param name="id">${grimpeur.id}</param>
+			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
+		</action>
+		
+		<!-- Actions permettant de mettre à jour un grimpeur d'escalade -->
+		<action name="grimpeur_update" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doUpdate">
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/jsp/grimpeur/update.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">grimpeur_detail</param>
+				<param name="id">${grimpeur.id}</param>
+			</result>
+			<result name="loginUser" type="redirectAction">
+				<param name="actionName">login</param>
+			</result>
+		</action>
+		
+		<!-- Action supprimant un grimpeur -->
+		<action name="grimpeur_delete" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doDelete">
+			<result name="success">/jsp/grimpeur/list.jsp</result>
 			<result name="loginUser" type="redirectAction">
 				<param name="actionName">login</param>
 			</result>

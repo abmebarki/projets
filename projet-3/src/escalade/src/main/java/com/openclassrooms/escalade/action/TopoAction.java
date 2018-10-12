@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Role;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
 import com.openclassrooms.escalade.service.SiteService;
@@ -151,7 +152,14 @@ public class TopoAction extends ActionSupport implements SessionAware {
             this.addActionError("Vous devez indiquer un id de topo");
         } else {
             try {
+            	
+            	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+            	if(!utilisateur.getRole().equals(Role.ADMIN) || topoService.findById(id).getProprietaire().getId() != utilisateur.getId()) {
+            		this.addActionError("Vous n'êtes pas le propiétaire du topo");
+            	}else {
+            	
                 id = topoService.delete(id);
+            	}
                 
                 if(utilisateur.getRole().equals("USER")) {
                 	listTopo = topoService.findAll(proprietaireId);
@@ -206,9 +214,15 @@ public class TopoAction extends ActionSupport implements SessionAware {
             if (!this.hasErrors()) {
                 try {
                 	 id = topoService.create(this.topo);
+                	
                 	// Si ajout avec succés -> Result "success"
-                    vResult = ActionSupport.SUCCESS;
-                    this.addActionMessage("Topo ajouté avec succés");
+                	 if(site != null) {
+                		 vResult = "successSite";
+                	 }else {
+                		 vResult = ActionSupport.SUCCESS;
+                	 }
+             
+                	 this.addActionMessage("Topo ajouté avec succés");
 
                 } catch (Exception sEx) {
                     // Sur erreur fonctionnelle on reste sur la page de saisie
@@ -243,7 +257,13 @@ public class TopoAction extends ActionSupport implements SessionAware {
        		 // Si pas d'erreur, mise à jour du topo...
                 if (!this.hasErrors()) {
                     try {
+                    	
+                    	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) || topoService.findById(topo.getId()).getProprietaire().getId() != utilisateur.getId()) {
+                    		this.addActionError("Vous n'êtes pas le propriétaire du topo");
+                    	}else {
                     	topoService.update(this.topo);
+                    	}
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Topo mis à jour avec succés");

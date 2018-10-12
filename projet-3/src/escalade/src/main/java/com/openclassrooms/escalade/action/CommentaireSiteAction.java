@@ -12,6 +12,7 @@ import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Commentaire;
 import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Role;
 import com.openclassrooms.escalade.service.CommentaireSiteService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -88,7 +89,12 @@ public class CommentaireSiteAction extends ActionSupport implements SessionAware
             this.addActionError("Vous devez indiquer un id de commentaire");
         } else {
             try {
+            	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+            	if(!utilisateur.getRole().equals(Role.ADMIN) || commentaireSiteService.findById(id).getAuteur().getId() != utilisateur.getId()) {
+            		this.addActionError("Vous n'êtes pas l'auteur du commentaire");
+            	}else {
                 id = commentaireSiteService.delete(id);
+            	}
                 //listCommentaire = commentaireSiteService.findAll();
             } catch (Exception sE) {
                 this.addActionError(getText("error.commentaire.notfound", Collections.singletonList(id)));
@@ -161,7 +167,12 @@ public class CommentaireSiteAction extends ActionSupport implements SessionAware
        		 // Si pas d'erreur, mise à jour du commentaire...
                 if (!this.hasErrors()) {
                     try {
+                    	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) || commentaireSiteService.findById(commentaire.getId()).getAuteur().getId() != utilisateur.getId()) {
+                    		this.addActionError("Vous n'êtes pas l'auteur du commentaire");
+                    	}else {
                     	commentaireSiteService.update(this.commentaire);
+                    	}
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Commentaire mis à jour avec succés");

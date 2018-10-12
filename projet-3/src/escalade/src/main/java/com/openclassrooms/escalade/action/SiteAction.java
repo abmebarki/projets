@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import com.openclassrooms.escalade.exceptions.TechnicalException;
 import com.openclassrooms.escalade.model.Difficulte;
 import com.openclassrooms.escalade.model.Exposition;
 import com.openclassrooms.escalade.model.Grimpeur;
+import com.openclassrooms.escalade.model.Role;
 import com.openclassrooms.escalade.model.Saison;
 import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
@@ -142,6 +144,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
      * Action listant les {@link Site}
      * @return success
      */
+	@SkipValidation
     public String doMyList() {
     	String vResult = ActionSupport.SUCCESS;
     	
@@ -159,6 +162,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
      * Action listant les {@link Site}
      * @return success
      */
+	@SkipValidation
     public String doList() {
     	String vResult = ActionSupport.INPUT;
     	if (this.site != null) {
@@ -174,6 +178,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
      * Action affichant les détails d'un {@link Site}
      * @return success / error
      */
+	@SkipValidation
     public String doDetail() {
         if (id == null) {
             this.addActionError("Vous devez indiquer un id de site");
@@ -192,6 +197,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
      * Action supprimant {@link Site}
      * @return success / error
      */
+	@SkipValidation
     public String doDelete() {
     	
     	String vResult = null;
@@ -205,7 +211,14 @@ public class SiteAction extends ActionSupport implements SessionAware {
             this.addActionError("Vous devez indiquer un id de site");
         } else {
             try {
+            	
+            	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+            	if(!utilisateur.getRole().equals(Role.ADMIN) || siteService.findById(id).getCreateur().getId() != utilisateur.getId()) {
+            		this.addActionError("Vous n'êtes pas le créateur du site");
+            	}else {
+            	
                 id = siteService.delete(id);
+            	}
                 
                 if(utilisateur.getRole().equals("USER")) {
                 	listSite = siteService.findAll(createurId);
@@ -294,10 +307,19 @@ public class SiteAction extends ActionSupport implements SessionAware {
        		 // Si pas d'erreur, mise à jour du site...
                 if (!this.hasErrors()) {
                     try {
-                    	siteService.update(this.site);
-                    	// Si mise à jour avec succés -> Result "success"
-                        vResult = ActionSupport.SUCCESS;
-                        this.addActionMessage("Site mis à jour avec succés");
+                    	
+                    	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) || siteService.findById(site.getId()).getCreateur().getId() != utilisateur.getId()) {
+                    		this.addActionError("Vous n'êtes pas le créateur du site");
+                    	}else {
+                    		siteService.update(this.site);
+                        	// Si mise à jour avec succés -> Result "success"
+                            vResult = ActionSupport.SUCCESS;
+                            this.addActionMessage("Site mis à jour avec succés");
+                    	}
+                    	
+                    	
+                    	
 
                     } catch (Exception sEx) {
                         // Sur erreur fonctionnelle on reste sur la page de saisie
@@ -318,4 +340,12 @@ public class SiteAction extends ActionSupport implements SessionAware {
 
         return vResult;
     }
+    
+    public void validate(){
+    	if(site != null) {
+    		if (site.getNom().length() == 0) {
+                addFieldError("site.nom", "Le nom du site est obligatoire.");
+            }
+    	}
+    }    
 }

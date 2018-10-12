@@ -185,7 +185,7 @@ public class SiteServiceImpl implements SiteService{
 			secteurService.update(site.getSecteurs().get(i));
 		}
 		// mise à jour du créateur
-		grimpeurService.update(site.getCreateur());
+		//grimpeurService.update(site.getCreateur());
 		return id;
 		
 	}

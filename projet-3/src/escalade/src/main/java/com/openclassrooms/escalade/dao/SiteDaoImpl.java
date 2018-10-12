@@ -97,7 +97,7 @@ public class SiteDaoImpl implements SiteDao {
 		}
 		
 		if(!site.getSecteurs().get(0).getDifficulte().isEmpty()) {
-			parameters.addValue("type", site.getSecteurs().get(0).getDifficulte());
+			parameters.addValue("difficulte", site.getSecteurs().get(0).getDifficulte());
 			sql = sql.append(" and se.difficulte = :difficulte");
 		}
 		 

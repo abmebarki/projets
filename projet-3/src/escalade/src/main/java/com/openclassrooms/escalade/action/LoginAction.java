@@ -1,5 +1,6 @@
 package com.openclassrooms.escalade.action;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +79,8 @@ public class LoginAction extends ActionSupport implements ServletRequestAware, S
                 vResult = ActionSupport.SUCCESS;
             } catch (NotFoundException pEx) {
                 this.addActionError("Identifiant ou mot de passe invalide !");
+            } catch (NoSuchAlgorithmException e) {
+            	this.addActionError("Erreur interne veuillez contacter l'administrateur !");
             }
         }
         return vResult;

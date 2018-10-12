@@ -4,71 +4,88 @@
 <head>
 <%@ include file="../_include/header.jsp"%>
 </head>
-<body><%@ include file="../_include/menu.jsp"%>
-	<h2>Topo <s:property value="topo.nom"/></h2>
-	Id : <s:property value="topo.id"/>
-	<br /> Nom : <s:property value="topo.nom"/>
-	<br /> Nb Pages : <s:property value="topo.nbPages"/>
-	<br /> Auteur : <s:property value="topo.auteur"/>
-	<br /> Date : <s:date name="topo.date"/>
-	<br /> Proprietaire : <s:property value="topo.proprietaire.nom"/>
-	
-	<h4>Liste des Sites</h4>
-	<s:iterator value="topo.descriptibles" status="loop">
-		<h4>Site <s:property value="%{#loop.index + 1}" /></h4>
-		<table cellpadding="5" cellspacing="5">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nom</th>
-					<th>Description</th>
-					<th>Ville</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><s:property value="id" /></td>
-					<td><s:property value="nom" /></td>
-					<td><s:property value="description" /></td>
-					<td><s:property value="ville" /></td>
-				</tr>
-			</tbody>
-		</table>
-	</s:iterator>
-	
-	<h4>Liste des Commentaires&nbsp;<s:a action="commentaire_topo_new"><s:param name="topoId" value="topo.id" />Ajouter commentaire</s:a></h4>
-	<s:iterator value="topo.commentaires" status="loop">
-		<h4>Commentaire <s:property value="%{#loop.index + 1}" /></h4>
-		<table cellpadding="5" cellspacing="5">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Objet</th>
-					<th>Contenu</th>
-					<th>Date</th>
-					<th>Nom Auteur</th>
-					<th>Email Auteur</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><s:property value="id" /></td>
-					<td><s:property value="objet" /></td>
-					<td><s:property value="contenu" /></td>
-					<td><s:date name="date" /></td>
-					<td><s:property value="nom" /></td>
-					<td><s:property value="auteur.email" /></td>
-					<s:if test="#session.user">
-								<s:if test="#session.user.role == 'ADMIN'">
-					<td>
-						<s:a action="commentaire_topo_update"><s:param name="id" value="id" /><s:param name="topoId" value="topo.id" />Mettre à jour</s:a>&nbsp;
-						<s:a action="commentaire_topo_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')" ><s:param name="id" value="id" /><s:param name="topoId" value="topo.id" />Supprimer</s:a>&nbsp;
-					</td>
-					</s:if>
-					</s:if>
-				</tr>
-			</tbody>
-		</table>
-	</s:iterator>
+<body>
+	<div class="container"><%@ include file="../_include/menu.jsp"%>
+		<h2>
+			Topo
+			<s:property value="topo.nom" />
+		</h2>
+		<br /> Nom :
+		<s:property value="topo.nom" />
+		<br /> Nb Pages :
+		<s:property value="topo.nbPages" />
+		<br /> Auteur :
+		<s:property value="topo.auteur" />
+		<br /> Date :
+		<s:date name="topo.date" />
+		<br /> Proprietaire :
+		<s:property value="topo.proprietaire.nom" />
+		<div class="table-responsive-sm">
+			<table class="table table-hover">
+				<caption>Liste des sites</caption>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Nom</th>
+						<th scope="col">Description</th>
+						<th scope="col">Ville</th>
+					</tr>
+				</thead>
+				<tbody>
+					<s:iterator value="topo.descriptibles" status="loop">
+						<tr>
+							<td><s:property value="nom" /></td>
+							<td><s:property value="description" /></td>
+							<td><s:property value="ville" /></td>
+						</tr>
+					</s:iterator>
+				</tbody>
+			</table>
+		</div>
+
+		<p>
+			<s:a action="commentaire_topo_new">
+				<s:param name="topoId" value="topo.id" />Ajouter commentaire</s:a>
+		</p>
+		<div class="table-responsive-sm">
+			<table class="table table-hover">
+				<caption>Liste des Commentaires</caption>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Objet</th>
+						<th scope="col">Contenu</th>
+						<th scope="col">Date</th>
+						<th scope="col">Nom Auteur</th>
+						<th scope="col">Email Auteur</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<s:iterator value="topo.commentaires" status="loop">
+
+						<tr>
+							<td><s:property value="objet" /></td>
+							<td><s:property value="contenu" /></td>
+							<td><s:date name="date" /></td>
+							<td><s:property value="nom" /></td>
+							<td><s:property value="auteur.email" /></td>
+							<s:if test="#session.user">
+								<s:if test="#session.user.role.value() == 'ADMIN'">
+									<td><s:a action="commentaire_topo_update">
+											<s:param name="id" value="id" />
+											<s:param name="topoId" value="topo.id" />Mettre à jour</s:a>&nbsp; <s:a action="commentaire_topo_delete" onclick="return confirm('Voulez-vous vraiment supprimer?')">
+											<s:param name="id" value="id" />
+											<s:param name="topoId" value="topo.id" />Supprimer</s:a>&nbsp;</td>
+								</s:if>
+							</s:if>
+						</tr>
+
+
+					</s:iterator>
+				</tbody>
+			</table>
+		</div>
+
+		<%@ include file="../_include/footer.jsp"%>
+	</div>
 </body>
 </html>

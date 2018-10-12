@@ -13,6 +13,7 @@ import com.openclassrooms.escalade.model.Site;
 import com.openclassrooms.escalade.model.Topo;
 import com.openclassrooms.escalade.model.Grimpeur;
 import com.openclassrooms.escalade.model.Pret;
+import com.openclassrooms.escalade.model.Role;
 import com.openclassrooms.escalade.service.PretService;
 import com.openclassrooms.escalade.service.TopoService;
 import com.opensymphony.xwork2.ActionSupport;
@@ -151,7 +152,14 @@ public class PretAction extends ActionSupport implements SessionAware {
             this.addActionError("Vous devez indiquer un id de pret");
         } else {
             try {
+            	
+            	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+            	if(!utilisateur.getRole().equals(Role.ADMIN) || pretService.findById(id).getEmprunteur().getId() != utilisateur.getId()) {
+            		this.addActionError("Vous n'êtes pas l'emrunteur");
+            	}else {
+            	
                 id = pretService.delete(id);
+            	}
                 
                 if(utilisateur.getRole().equals("USER")) {
                 	listPret = pretService.findAll(emprunteurId);
@@ -237,7 +245,14 @@ public class PretAction extends ActionSupport implements SessionAware {
        		 // Si pas d'erreur, mise à jour du pret...
                 if (!this.hasErrors()) {
                     try {
+                    	
+                    	// Vérifier si le grimpeur est le créateur du site sinon l'admin
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) || pretService.findById(pret.getId()).getEmprunteur().getId() != utilisateur.getId()) {
+                    		this.addActionError("Vous n'êtes pas l'emprunteur");
+                    	}else {
+                    	
                     	pretService.update(this.pret);
+                    	}
                     	// Si mise à jour avec succés -> Result "success"
                         vResult = ActionSupport.SUCCESS;
                         this.addActionMessage("Pret mis à jour avec succés");
