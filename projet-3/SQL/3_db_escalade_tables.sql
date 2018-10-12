@@ -13,6 +13,8 @@ CREATE TABLE public.grimpeur (
 
 ALTER SEQUENCE public.grimpeur_id_seq OWNED BY public.grimpeur.id;
 
+CREATE UNIQUE INDEX grimpeur_email ON grimpeur (email);
+
 CREATE SEQUENCE public.topo_id_seq;
 
 CREATE TABLE public.topo (
