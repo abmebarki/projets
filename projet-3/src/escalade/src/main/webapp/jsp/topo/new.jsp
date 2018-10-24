@@ -20,7 +20,7 @@
 						<s:a action="site_new">
 							<label>Ou créer un nouveau site</</label>
 						</s:a>
-						<s:select class="form-control" name="topo.descriptibles.id" multiple="true" list="listSite" listKey="id" listValue="nom" label="Selectionner un site" emptyOption="false" requiredLabel="true" />
+						<s:select class="form-control" name="topo.descriptibles.id" multiple="true" list="listSite" listKey="id" listValue="nom" label="Selectionner un site" emptyOption="false" requiredLabel="true" required="true"/>
 					</div>
 				</s:if>
 			</s:if>
@@ -32,19 +32,19 @@
 			</s:else>
 			<div class="form-group">
 				<label for="topo_new_topo_nom">Nom</label>
-				<s:textfield class="form-control" name="topo.nom" label="Nom" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.nom" label="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="topo_new_topo_nbPages">Nb Pages</label>
-				<s:textfield class="form-control" name="topo.nbPages" label="Nb Pages" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.nbPages" label="Nb Pages" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="topo_new_topo_auteur">Auteur</label>
-				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="topo_new_topo_date">Date</label>
-				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" />
+				<label for="topo_new_topo_date">Date (AAA-MM-JJ)</label>
+				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 			<s:if test="#session.user">
 				<s:hidden name="topo.proprietaire.id" value="%{session.user.id}"></s:hidden>

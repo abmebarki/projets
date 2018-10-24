@@ -3,6 +3,8 @@ package com.openclassrooms.escalade.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import com.openclassrooms.escalade.dao.GrimpeurDao;
 import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Grimpeur;
 import com.openclassrooms.escalade.model.Role;
+import com.openclassrooms.escalade.utils.Encrypter;
+import com.openclassrooms.escalade.utils.GmailSender;
 import com.openclassrooms.escalade.utils.Tools;
 
 @Service
@@ -45,6 +49,37 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 		
 		return utilisateur;
 		
+	}
+	
+	@Override
+	@Transactional
+	public Grimpeur findByNameEmail(String name, String email) throws NotFoundException {
+		
+		Grimpeur utilisateur;
+		try {
+		
+			utilisateur = grimpeurDao.findByNameEmail(name, email);
+		
+		} catch (EmptyResultDataAccessException e1) {
+			throw new NotFoundException();
+		}
+		
+		
+		return utilisateur;
+		
+	}
+	
+	@Override
+	@Transactional
+	public void sendEmailInitPassword(Grimpeur grimpeur) throws MessagingException {
+
+		GmailSender sender = new GmailSender();
+		sender.setSender("escalade.p3@gmail.com", "Escalade2018");
+		sender.addRecipient(grimpeur.getEmail());
+		sender.setSubject("Escalade : Initialisation du mot de passe");
+		sender.setBody("Pour initialiser votre mot de passe, cliquez sur le lien suivant : http://localhost:8080/escalade/grimpeur_init_password.action?data=" + Encrypter.encryptBF("email=" + grimpeur.getEmail() + " nom="+grimpeur.getNom()));
+		//sender.addAttachment("TestFile.txt");
+		sender.send();
 	}
 	
 	@Override

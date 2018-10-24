@@ -5,23 +5,22 @@
 <html>
 <head>
 <%@ include file="../_include/header.jsp"%>
+<link href="css/login.css" rel="stylesheet">
 </head>
 
 <body>
 	<div class="container"><%@ include file="../_include/menu.jsp"%>
 		<s:actionerror />
 		<s:actionmessage />
-		<s:form action="pret_update">
-			<s:hidden name="pret.id"></s:hidden>
-			<legend>Mise à jour d'un prêt de topo</legend>
-			<label>Prêt</label>
+		<s:form class="form-signin" action="grimpeur_init_password">
+			<legend>Initialisation du mot de passe d'un grimpeur</legend>
 			<div class="form-group">
-				<label for="pret_update_pret_dateDebut">Date début (AAA-MM-JJ)</label>
-				<s:textfield class="form-control" name="pret.dateDebut" label="Date début" requiredLabel="true" required="true"/>
+				<label for="grimpeur_new_grimpeur_email">Nom</label>
+				<s:textfield class="form-control" name="grimpeur.nom" label="Nom" placeholder="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="pret_update_pret_dateFin">Date début (AAA-MM-JJ)</label>
-				<s:textfield class="form-control" name="pret.dateFin" label="Date fin" requiredLabel="true" required="true"/>
+				<label for="grimpeur_new_grimpeur_email">Email</label>
+				<s:textfield class="form-control" name="grimpeur.email" label="Email" placeholder="Email" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 		</s:form>

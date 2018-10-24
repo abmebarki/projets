@@ -6,7 +6,7 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<package name="default" extends="struts-default">
 		<!-- Action par défaut -->
-		<default-action-ref name="site_list" />
+		<default-action-ref name="index" />
 		<!-- Results globaux -->
 		<global-results>
 			<result name="error">/jsp/error.jsp</result>
@@ -19,6 +19,11 @@
 		<!-- Action "login" -->
 		<action name="login">
 			<result>/jsp/login.jsp</result>
+		</action>
+		
+		<!-- Action "index" -->
+		<action name="index">
+			<result>/jsp/index.jsp</result>
 		</action>
 		
 		<!-- Actions Login/Logout -->
@@ -351,6 +356,19 @@
 			</result>
 			<result name="loginUser" type="redirectAction">
 				<param name="actionName">login</param>
+			</result>
+		</action>
+		
+		<!-- Actions permettant d'initialiser le mot de passe d'un grimpeur d'escalade -->
+		<action name="grimpeur_init_password" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doInitPassword">
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/jsp/grimpeur/init_password.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">grimpeur_detail</param>
+				<param name="id">${grimpeur.id}</param>
 			</result>
 		</action>
 		

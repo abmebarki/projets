@@ -18,11 +18,11 @@
 			<label>Site</label>
 			<div class="form-group">
 				<label for="site_update_site_nom">Nom</label>
-				<s:textfield class="form-control" name="site.nom" label="Nom" requiredLabel="true" />
+				<s:textfield class="form-control" name="site.nom" label="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="site_update_site_description">Description</label>
-				<s:textfield class="form-control" name="site.description" label="Description" requiredLabel="true" />
+				<s:textfield class="form-control" name="site.description" label="Description" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="site_update_site_expositions">Expositions</label>
@@ -30,7 +30,7 @@
 			</div>
 			<div class="form-group">
 				<label for="site_update_site_tampsApproche">Temps d'approche</label>
-				<s:textfield class="form-control" name="site.tempsApproche" label="Temps d'approche" requiredLabel="true" />
+				<s:textfield class="form-control" name="site.tempsApproche" label="Temps d'approche" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="site_update_site_saisons">Saisons</label>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="form-group">
 				<label for="site_update_site_ville">Ville</label>
-				<s:textfield class="form-control" name="site.ville" label="Ville" requiredLabel="true" />
+				<s:textfield class="form-control" name="site.ville" label="Ville" requiredLabel="true" required="true"/>
 			</div>
 
 			<s:iterator status="secteurStatus" begin="1" end="1">
@@ -47,27 +47,27 @@
 				<s:property value="%{#secteurStatus.index + 1}" />
 				<div class="form-group">
 					<label>Nom</label>
-					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].nom" label="Nom" requiredLabel="true" />
+					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].nom" label="Nom" requiredLabel="true" required="true"/>
 				</div>
 				<div class="form-group">
 					<label>Description</label>
-					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].description" label="Description" requiredLabel="true" />
+					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].description" label="Description" requiredLabel="true" required="true"/>
 				</div>
 				<div class="form-group">
 					<label>Type</label>
-					<s:select name="site.secteurs[%{#secteurStatus.index}].type" list="typeList" label="Type" emptyOption="true" requiredLabel="true" />
+					<s:select name="site.secteurs[%{#secteurStatus.index}].type" list="typeList" label="Type" emptyOption="true" requiredLabel="true" required="true"/>
 				</div>
 				<div class="form-group">
 					<label>Difficulté</label>
-					<s:select name="site.secteurs[%{#secteurStatus.index}].difficulte" list="difficulteList" label="Difficulté" emptyOption="true" requiredLabel="true" />
+					<s:select name="site.secteurs[%{#secteurStatus.index}].difficulte" list="difficulteList" label="Difficulté" emptyOption="true" requiredLabel="true" required="true"/>
 				</div>
 				<div class="form-group">
 					<label>Coordonnees</label>
-					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].coordonnees" label="Coordonnees" requiredLabel="true" />
+					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].coordonnees" label="Coordonnees" requiredLabel="true" required="true"/>
 				</div>
 				<div class="form-group">
 					<label>Hauteur Max</label>
-					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].hauteurMax" label="Hauteur Max" requiredLabel="true" />
+					<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].hauteurMax" label="Hauteur Max" requiredLabel="true" required="true"/>
 				</div>
 				<s:iterator status="voiesStatus" begin="1" end="1">
 					<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].id"></s:hidden>
@@ -75,7 +75,7 @@
 					<s:property value="%{#voiesStatus.index + 1}" />
 					<div class="form-group">
 						<label>Nom</label>
-						<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].nom" label="Nom" requiredLabel="true" />
+						<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].nom" label="Nom" requiredLabel="true" required="true"/>
 					</div>
 					<s:iterator status="longueursStatus" begin="1" end="1">
 						<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].id"></s:hidden>
@@ -83,15 +83,15 @@
 						<s:property value="%{#LongueurStatus.index + 1}" />
 						<div class="form-group">
 							<label>Hauteur</label>
-							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].hauteur" label="Hauteur" requiredLabel="true" />
+							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].hauteur" label="Hauteur" requiredLabel="true" required="true"/>
 						</div>
 						<div class="form-group">
 							<label>Cotation</label>
-							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].cotation" label="Cotation" requiredLabel="true" />
+							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].cotation" label="Cotation" requiredLabel="true" required="true"/>
 						</div>
 						<div class="form-group">
 							<label>Nb Points</label>
-							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].nbPoints" label="Nb Points" requiredLabel="true" />
+							<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voiesStatus.index}].longueurs[%{#longueursStatus.index}].nbPoints" label="Nb Points" requiredLabel="true" required="true"/>
 						</div>
 						<div class="form-group">
 							<label>Nb Points</label>

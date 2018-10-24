@@ -17,16 +17,16 @@
 		<s:form class="form-signin" action="login">
 			<div class="form-group">
 				<label for="login_email">Adresse email</label>
-				<s:textfield name="email" label="Adresse email" class="form-control" placeholder="Adresse email" requiredLabel="true" />
+				<s:textfield name="email" label="Adresse email" class="form-control" placeholder="Adresse email" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="login_motpass">Mot de passe</label>
-				<s:password name="motpasse" label="Mot de passe" class="form-control" placeholder="Mot de passe" requiredLabel="true" />
+				<s:password name="motpasse" label="Mot de passe" class="form-control" placeholder="Mot de passe" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="Connexion" />
 			
-			<s:a action="grimpeur_new">Créer un compte</s:a>
-			
+			<s:a action="grimpeur_new">Créer un compte</s:a><br>
+			<s:a action="grimpeur_init_password">Mot de passe oublié ?</s:a>
 			
 		</s:form>
 		<%@ include file="_include/footer.jsp"%>

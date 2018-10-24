@@ -19,15 +19,15 @@
 			<label>Commentaire</label>
 			<div class="form-group">
 				<label for="commentaire_site_new_commentaire_objet">Objet</label>
-				<s:textfield class="form-control" name="commentaire.objet" label="Objet" requiredLabel="true" />
+				<s:textfield class="form-control" name="commentaire.objet" label="Objet" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="commentaire_site_new_commentaire_contenu">Contenu</label>
-				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" />
+				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="commentaire_site_new_commentaire_date">Date</label>
-				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" />
+				<label for="commentaire_site_new_commentaire_date">Date (AAA-MM-JJ)</label>
+				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 
 

@@ -45,6 +45,7 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
     // ----- Eléments en sortie
     private List<Grimpeur> listGrimpeur;
     private Grimpeur grimpeur;
+    private String data;
     
     @Autowired
 	private GrimpeurService grimpeurService;
@@ -70,12 +71,19 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
 		this.grimpeur = grimpeur;
 	}
 	
-	
 	public List<Role> getRoleList() {
 		return roleList;
 	}
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
+	}
+	
+	
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
 	}
 	// ==================== Méthodes ====================
     /**
@@ -125,7 +133,7 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
             try {
             	
             	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-            	if(!utilisateur.getRole().equals(Role.ADMIN) || grimpeurService.findById(id).getId() != utilisateur.getId()) {
+            	if(!utilisateur.getRole().equals(Role.ADMIN) && grimpeurService.findById(id).getId() != utilisateur.getId()) {
             		this.addActionError("Vous n'êtes pas le propriétaire du profile");
             	}else {
             	
@@ -181,6 +189,48 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
         return vResult;
     }
     
+    
+    /**
+     * Action permettant de créer un nouveau {@link Grimpeur}
+     * @return input / success / error
+     */
+    public String doInitPassword() {
+        // Si (this.grimpeur == null) c'est que l'on entre dans l'ajout de grimpeur
+        // Sinon, c'est que l'on vient de valider le formulaire d'ajout
+
+        // Par défaut, le result est "input"
+        String vResult = ActionSupport.INPUT;
+        
+        if(this.data != null) {
+        	
+        	// decrypt
+        }
+        
+        // ===== Validation de l'ajout de grimpeur (grimpeur != null)
+        if (this.grimpeur != null) {
+         
+        	// Si pas d'erreur, ajout du projet...
+            if (!this.hasErrors()) {
+                try {
+                	grimpeur = grimpeurService.findByNameEmail(this.grimpeur.getNom(), this.grimpeur.getEmail());
+                	
+                	grimpeurService.sendEmailInitPassword(this.grimpeur);
+                	// Si ajout avec succés -> Result "success"
+                    vResult = ActionSupport.SUCCESS;
+                    this.addActionMessage("Un email vous a été envoyé pour reinitialiser votre mot de passe");
+
+                } catch (Exception sEx) {
+                    // Sur erreur fonctionnelle on reste sur la page de saisie
+                    // et on affiche un message d'erreur
+                    this.addActionError("Grimpeur non trouvé");
+
+                } 
+            }
+        }
+        
+        return vResult;
+    }
+    
     /**
      * Action permettant de mettre à jour un {@link Grimpeur}
      * @return input / success / error
@@ -203,7 +253,7 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
                 if (!this.hasErrors()) {
                     try {
                     	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-                    	if(!utilisateur.getRole().equals(Role.ADMIN) || grimpeurService.findById(grimpeur.getId()).getId() != utilisateur.getId()) {
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) && grimpeurService.findById(grimpeur.getId()).getId() != utilisateur.getId()) {
                     		this.addActionError("Vous n'êtes pas le propriétaire du profile");
                     	}else {
                     	grimpeurService.update(this.grimpeur);

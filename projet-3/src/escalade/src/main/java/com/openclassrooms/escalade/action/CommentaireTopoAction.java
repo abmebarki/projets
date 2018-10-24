@@ -89,7 +89,7 @@ public class CommentaireTopoAction extends ActionSupport implements SessionAware
             try {
             	
             	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-            	if(!utilisateur.getRole().equals(Role.ADMIN) || commentaireTopoService.findById(id).getAuteur().getId() != utilisateur.getId()) {
+            	if(!utilisateur.getRole().equals(Role.ADMIN) && commentaireTopoService.findById(id).getAuteur().getId() != utilisateur.getId()) {
             		this.addActionError("Vous n'êtes pas l'auteur du commentaire");
             	}else {
             	
@@ -167,7 +167,7 @@ public class CommentaireTopoAction extends ActionSupport implements SessionAware
                 if (!this.hasErrors()) {
                     try {
                     	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-                    	if(!utilisateur.getRole().equals(Role.ADMIN) || commentaireTopoService.findById(commentaire.getId()).getAuteur().getId() != utilisateur.getId()) {
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) && commentaireTopoService.findById(commentaire.getId()).getAuteur().getId() != utilisateur.getId()) {
                     		this.addActionError("Vous n'êtes pas l'auteur du commentaire");
                     	}else {
                     		commentaireTopoService.update(this.commentaire);

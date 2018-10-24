@@ -16,11 +16,11 @@
 			<legend>Mise à jour d'un grimpeur</legend>
 			<div class="form-group">
 				<label for="grimpeur_update_grimpeur_nom">Nom</label>
-				<s:textfield class="form-control" name="grimpeur.nom" label="Nom" requiredLabel="true" />
+				<s:textfield class="form-control" name="grimpeur.nom" label="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="grimpeur_update_grimpeur_email">Email</label>
-				<s:textfield class="form-control" name="grimpeur.email" label="Email" requiredLabel="true" />
+				<s:textfield class="form-control" name="grimpeur.email" label="Email" requiredLabel="true" required="true"/>
 			</div>
 			
 			<s:if test="#session.user and #session.user.role.value() == 'ADMIN'">
@@ -32,7 +32,7 @@
 			
 			<div class="form-group">
 				<label for="grimpeur_update_grimpeur_motpasse">Mot de passe</label>
-				<s:textfield class="form-control" name="grimpeur.motpasse" label="Mot de passe" requiredLabel="true" />
+				<s:textfield class="form-control" name="grimpeur.motpasse" label="Mot de passe" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 		</s:form>

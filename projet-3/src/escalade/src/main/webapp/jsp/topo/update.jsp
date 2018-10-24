@@ -16,19 +16,19 @@
 			<legend>Mise à jour d'un topo d'escalade</legend>
 			<div class="form-group">
 				<label for="topo_update_topo_nom">Nom</label>
-				<s:textfield class="form-control" name="topo.nom" label="Nom" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.nom" label="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="topo_update_topo_nbPages">Nb Pages</label>
-				<s:textfield class="form-control" name="topo.nbPages" label="Nb Pages" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.nbPages" label="Nb Pages" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
 				<label for="topo_update_topo_auteur">Auteur</label>
-				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" />
+				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="topo_update_topo_date">Date</label>
-				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" />
+				<label for="topo_update_topo_date">Date (AAA-MM-JJ)</label>
+				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 		</s:form>

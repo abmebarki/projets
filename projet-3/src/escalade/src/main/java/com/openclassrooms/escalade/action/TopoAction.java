@@ -154,7 +154,7 @@ public class TopoAction extends ActionSupport implements SessionAware {
             try {
             	
             	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-            	if(!utilisateur.getRole().equals(Role.ADMIN) || topoService.findById(id).getProprietaire().getId() != utilisateur.getId()) {
+            	if(!utilisateur.getRole().equals(Role.ADMIN) && topoService.findById(id).getProprietaire().getId() != utilisateur.getId()) {
             		this.addActionError("Vous n'êtes pas le propiétaire du topo");
             	}else {
             	
@@ -259,7 +259,7 @@ public class TopoAction extends ActionSupport implements SessionAware {
                     try {
                     	
                     	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-                    	if(!utilisateur.getRole().equals(Role.ADMIN) || topoService.findById(topo.getId()).getProprietaire().getId() != utilisateur.getId()) {
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) && topoService.findById(topo.getId()).getProprietaire().getId() != utilisateur.getId()) {
                     		this.addActionError("Vous n'êtes pas le propriétaire du topo");
                     	}else {
                     	topoService.update(this.topo);

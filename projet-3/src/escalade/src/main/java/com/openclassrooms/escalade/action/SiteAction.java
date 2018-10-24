@@ -213,7 +213,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
             try {
             	
             	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-            	if(!utilisateur.getRole().equals(Role.ADMIN) || siteService.findById(id).getCreateur().getId() != utilisateur.getId()) {
+            	if(!utilisateur.getRole().equals(Role.ADMIN) && siteService.findById(id).getCreateur().getId() != utilisateur.getId()) {
             		this.addActionError("Vous n'êtes pas le créateur du site");
             	}else {
             	
@@ -309,7 +309,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
                     try {
                     	
                     	// Vérifier si le grimpeur est le créateur du site sinon l'admin
-                    	if(!utilisateur.getRole().equals(Role.ADMIN) || siteService.findById(site.getId()).getCreateur().getId() != utilisateur.getId()) {
+                    	if(!utilisateur.getRole().equals(Role.ADMIN) && siteService.findById(site.getId()).getCreateur().getId() != utilisateur.getId()) {
                     		this.addActionError("Vous n'êtes pas le créateur du site");
                     	}else {
                     		siteService.update(this.site);
