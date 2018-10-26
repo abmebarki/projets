@@ -93,4 +93,14 @@ public class GrimpeurDaoImpl implements GrimpeurDao {
 		int resp = jdbcTemplate.update("delete from grimpeur where id = ?", id);
 		return resp;
 	}
+	
+	@Override
+	@Transactional
+	public int initPassword(Grimpeur grimpeur) {
+		String sql = "update grimpeur set mot_passe = ? where id = ?";
+		int resp = jdbcTemplate.update(sql, new Object[] { grimpeur.getMotpasse(), grimpeur.getId() });
+		return resp;
+	}
+	
+	
 }

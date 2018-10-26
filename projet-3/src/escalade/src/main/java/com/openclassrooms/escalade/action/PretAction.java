@@ -276,4 +276,18 @@ public class PretAction extends ActionSupport implements SessionAware {
 
         return vResult;
     }
+    
+    public void validate(){
+    	if(pret != null) {
+    		// Format de la date
+    		if (pret.getDateDebut() == null) {
+                this.addActionError("La date de début n'est pas valide");
+            }
+    		
+    		if (pret.getDateFin() == null) {
+                this.addActionError("La date de fin n'est pas valide");
+            }
+    		
+    	}
+    }    
 }

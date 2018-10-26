@@ -202,9 +202,50 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
         String vResult = ActionSupport.INPUT;
         
         if(this.data != null) {
+        	try {
+        		// decrypt
+             	grimpeur = grimpeurService.findByDataNameEmail(data);
+             } catch (Exception sE) {
+                 this.addActionError("error interne");
+             }
         	
-        	// decrypt
+        }else {
+        
+	        // ===== Initialisation du mot de passe (grimpeur != null)
+	        if (this.grimpeur != null) {
+	         
+	        	// Si pas d'erreur, ajout du projet...
+	            if (!this.hasErrors()) {
+	                try {
+	                	grimpeurService.initPassword(this.grimpeur);
+	                	// Si ajout avec succés -> Result "success"
+	                    vResult = ActionSupport.SUCCESS;
+	                    this.addActionMessage("Un email vous a été envoyé pour reinitialiser votre mot de passe");
+	
+	                } catch (Exception sEx) {
+	                    // Sur erreur fonctionnelle on reste sur la page de saisie
+	                    // et on affiche un message d'erreur
+	                    this.addActionError("Grimpeur non trouvé");
+	
+	                } 
+	            }
+	        }
         }
+        
+        return vResult;
+    }
+    
+    
+    /**
+     * Actions permettant d'envoyer un lien pour initialiser le mot de passe d'un grimpeur d'escalade 
+     * @return input / success / error
+     */
+    public String doForgotPassword() {
+        // Si (this.grimpeur == null) c'est que l'on entre dans l'ajout de grimpeur
+        // Sinon, c'est que l'on vient de valider le formulaire d'ajout
+
+        // Par défaut, le result est "input"
+        String vResult = ActionSupport.INPUT;
         
         // ===== Validation de l'ajout de grimpeur (grimpeur != null)
         if (this.grimpeur != null) {

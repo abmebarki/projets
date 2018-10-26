@@ -1,6 +1,7 @@
 package com.openclassrooms.escalade.action;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -287,4 +288,16 @@ public class TopoAction extends ActionSupport implements SessionAware {
 
         return vResult;
     }
+    
+    public void validate(){
+    	if(topo != null) {
+    		// Format de la date
+    		if (topo.getDate() == null) {
+                this.addActionError("La date n'est pas valide");
+            }
+    		
+    		
+    	}
+    }    
+    
 }

@@ -343,8 +343,14 @@ public class SiteAction extends ActionSupport implements SessionAware {
     
     public void validate(){
     	if(site != null) {
-    		if (site.getNom().length() == 0) {
-                addFieldError("site.nom", "Le nom du site est obligatoire.");
+    		// Expositions
+    		if (site.getExpositions().isEmpty()) {
+                this.addActionError("L'exposition est obligatoire.");
+            }
+    		
+    		// Saisons
+    		if (site.getSaisons().isEmpty()) {
+    			this.addActionError("La saison est obligatoire.");
             }
     	}
     }    

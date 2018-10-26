@@ -14,13 +14,16 @@
 		<s:actionmessage />
 		<s:form class="form-signin" action="grimpeur_init_password">
 			<legend>Initialisation du mot de passe d'un grimpeur</legend>
+			<s:hidden name="grimpeur.id"></s:hidden>
 			<div class="form-group">
-				<label for="grimpeur_new_grimpeur_email">Nom</label>
-				<s:textfield class="form-control" name="grimpeur.nom" label="Nom" placeholder="Nom" requiredLabel="true" required="true"/>
+				Nom : <s:property value="grimpeur.nom" />
 			</div>
 			<div class="form-group">
-				<label for="grimpeur_new_grimpeur_email">Email</label>
-				<s:textfield class="form-control" name="grimpeur.email" label="Email" placeholder="Email" requiredLabel="true" required="true"/>
+				Email :<s:property value="grimpeur.email" />
+			</div>
+			<div class="form-group">
+				<label for="grimpeur_new_grimpeur_password">Mot de passe</label>
+				<s:password class="form-control" name="grimpeur.motpasse" label="Mot de passe" placeholder="Mot de passe" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 		</s:form>

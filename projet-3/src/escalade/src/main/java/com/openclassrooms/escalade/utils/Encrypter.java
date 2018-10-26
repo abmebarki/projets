@@ -130,7 +130,7 @@ public class Encrypter {
     public static String encryptBF(String cardNumber) {
     	
     	 String desEncrypted ="";
-    	 String encryptKey = "1234567890123456";
+    	 String encryptKey = "3456789012345678";
     	
         try {
 
@@ -161,7 +161,7 @@ public class Encrypter {
     public static String decryptBF(String cardNumberEncrypted) {
     	
     	 String desDecrypted ="";
-    	 String encryptKey = "1234567890123456";
+    	 String encryptKey = "3456789012345678";
         try {
 
             

@@ -195,4 +195,15 @@ public class CommentaireTopoAction extends ActionSupport implements SessionAware
 
         return vResult;
     }
+    
+    public void validate(){
+    	if(commentaire != null) {
+    		// Format de la date
+    		if (commentaire.getDate() == null) {
+                this.addActionError("La date n'est pas valide");
+            }
+    		
+    		
+    	}
+    }    
 }

@@ -359,6 +359,22 @@
 			</result>
 		</action>
 		
+		
+		
+		
+		<!-- Actions permettant d'envoyer un lien pour initialiser le mot de passe d'un grimpeur d'escalade -->
+		<action name="grimpeur_forgot_password" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doForgotPassword">
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/jsp/grimpeur/forgot_password.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">grimpeur_detail</param>
+				<param name="id">${grimpeur.id}</param>
+			</result>
+		</action>
+		
 		<!-- Actions permettant d'initialiser le mot de passe d'un grimpeur d'escalade -->
 		<action name="grimpeur_init_password" class="com.openclassrooms.escalade.action.GrimpeurAction" method="doInitPassword">
 			<interceptor-ref name="store">

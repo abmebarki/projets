@@ -71,15 +71,67 @@ public class GrimpeurServiceImpl implements GrimpeurService {
 	
 	@Override
 	@Transactional
+	public Grimpeur findByDataNameEmail(String data) throws NotFoundException {
+		
+		Grimpeur utilisateur;
+		
+		// Décrypt
+		
+		String dataDecrypted =   Encrypter.decryptBF(data);
+		String name = null;
+		String email = null;
+		
+		String paramsValuePair[] = dataDecrypted.split("&");
+		
+		for (int i=0;i<paramsValuePair.length;i++) {
+			
+			String param[] = paramsValuePair[i].split("=");
+			
+			//Nom
+			if(param[0].equals("NOM")) if(param.length ==2) name= param[1]; else name= "";
+			
+			//Email
+			if(param[0].equals("EMAIL")) if(param.length ==2) email= param[1]; else email= "";
+		}
+		
+		
+		
+		try {
+		
+			utilisateur = grimpeurDao.findByNameEmail(name, email);
+		
+		} catch (EmptyResultDataAccessException e1) {
+			throw new NotFoundException();
+		}
+		
+		
+		return utilisateur;
+		
+	}
+	
+	@Override
+	@Transactional
 	public void sendEmailInitPassword(Grimpeur grimpeur) throws MessagingException {
 
 		GmailSender sender = new GmailSender();
+		StringBuilder sb = new StringBuilder();
+		sb.append("email=").append(grimpeur.getEmail()).append("&nom=").append(grimpeur.getNom());
 		sender.setSender("escalade.p3@gmail.com", "Escalade2018");
 		sender.addRecipient(grimpeur.getEmail());
 		sender.setSubject("Escalade : Initialisation du mot de passe");
-		sender.setBody("Pour initialiser votre mot de passe, cliquez sur le lien suivant : http://localhost:8080/escalade/grimpeur_init_password.action?data=" + Encrypter.encryptBF("email=" + grimpeur.getEmail() + " nom="+grimpeur.getNom()));
+		sender.setBody("Pour initialiser votre mot de passe, cliquez sur le lien suivant : http://localhost:8080/escalade/grimpeur_init_password.action?data=" + Encrypter.encryptBF(sb.toString().toUpperCase()));
 		//sender.addAttachment("TestFile.txt");
 		sender.send();
+	}
+	
+	@Override
+	@Transactional
+	public int initPassword(Grimpeur grimpeur) throws NoSuchAlgorithmException {
+		
+		// Cryptage du mot de passe
+		// Hashage du mot de passe
+		grimpeur.setMotpasse(Tools.md5Hash(grimpeur.getMotpasse()));
+		return grimpeurDao.initPassword(grimpeur);
 	}
 	
 	@Override

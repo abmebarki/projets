@@ -1,0 +1,7 @@
+<Context docBase="escalade" path="/escalade" reloadable="true" source="org.eclipse.jst.jee.server:escalade">
+<Resource name="jdbc/pgescalade" auth="Container" autoReconnect="true" driverClassName="org.postgresql.Driver"
+  maxActive="60" maxIdle="1" maxWait="-1" removeAbandoned="true"
+  type="javax.sql.DataSource"
+  url="jdbc:postgresql://127.0.0.1:5432/db_escalade"
+  username="admin_escalade" password="escalade" />
+</Context>

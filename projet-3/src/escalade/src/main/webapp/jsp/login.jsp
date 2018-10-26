@@ -26,7 +26,7 @@
 			<s:submit class="btn btn-lg btn-primary btn-block" value="Connexion" />
 			
 			<s:a action="grimpeur_new">Créer un compte</s:a><br>
-			<s:a action="grimpeur_init_password">Mot de passe oublié ?</s:a>
+			<s:a action="grimpeur_forgot_password">Mot de passe oublié ?</s:a>
 			
 		</s:form>
 		<%@ include file="_include/footer.jsp"%>

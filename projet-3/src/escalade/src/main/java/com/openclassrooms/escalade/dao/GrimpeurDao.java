@@ -2,7 +2,6 @@ package com.openclassrooms.escalade.dao;
 
 import java.util.List;
 
-import com.openclassrooms.escalade.exceptions.NotFoundException;
 import com.openclassrooms.escalade.model.Grimpeur;
 
 /**
@@ -18,5 +17,6 @@ public interface GrimpeurDao {
 	public int create(Grimpeur grimpeur);
 	public int update(Grimpeur grimpeur);
 	public int delete(int id);
+	public int initPassword(Grimpeur grimpeur);
 	
 }
