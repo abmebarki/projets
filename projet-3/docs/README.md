@@ -35,6 +35,7 @@ Déploiement
       Chemin de context (requis):	
       URL du fichier XML de configuration (context.xml):	
       URL vers WAR ou répertoire:
+-     Déployer l'application      
 
 
 
