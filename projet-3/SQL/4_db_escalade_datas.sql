@@ -15,7 +15,7 @@ insert into voie(nom, secteur_id) values('Zoot allure',(select last_value from s
 insert into voie(nom, secteur_id) values('Zoot allure 2',(select last_value from secteur_id_seq));
 
 
-insert into longueur(hauteur, cotation, nb_points, equipee, voie_id) values(20, '6c+', 20, true,(select last_value from voie_id_seq) - 1));
+insert into longueur(hauteur, cotation, nb_points, equipee, voie_id) values(20, '6c+', 20, true,(select last_value from voie_id_seq) - 1);
 insert into longueur(hauteur, cotation, nb_points, equipee, voie_id) values(20, '6c+', 20, false,(select last_value from voie_id_seq));
 
 
@@ -24,8 +24,8 @@ insert into topo(nom, nb_pages, auteur, date, proprietaire_id) values('Topo esca
 insert into topo(nom, nb_pages, auteur, date, proprietaire_id) values('Topo escalade 4', 50, 'Auteur 5', '25-02-2018',(select last_value from grimpeur_id_seq));
 
 /* Sites décrits par les topos */
-insert into topo_site_descripteur values((select last_value from site_id_seq),(select last_value from topo_id_seq - 1));
-insert into topo_site_descripteur values((select last_value from site_id_seq),(select last_value from site_id_seq));
+insert into topo_site_descripteur values((select last_value from site_id_seq),(select last_value from topo_id_seq) - 1);
+insert into topo_site_descripteur values((select last_value from site_id_seq),(select last_value from topo_id_seq));
 
 
 /* Création des commentaires sites */
@@ -33,10 +33,10 @@ insert into commentaire_site(objet, contenu, date, auteur_id, site_commente_id) 
 insert into commentaire_site(objet, contenu, date, auteur_id, site_commente_id) values('Site falaise','Excelent','22-04-2019',(select last_value from grimpeur_id_seq),(select last_value from site_id_seq));
 
 /* Création des commentaires topos */
-insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2018',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq - 1));
-insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2019',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq - 1));
+insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2018',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq) - 1);
+insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2019',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq) - 1);
 insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2018',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq));
 insert into commentaire_topo(objet, contenu, date, auteur_id, topo_commente_id) values('Site falaise','Excelent','22-04-2019',(select last_value from grimpeur_id_seq),(select last_value from topo_id_seq));
 
 /* Creation d'un prêt */
-insert into pret(topo_id, emprunteur_id, date_debut, date_fin) values((select last_value from topo_id_seq),(select last_value from grimpeur_id_seq),'25-02-2017','28-02-2017');		
+insert into pret(topo_id, emprunteur_id, date_debut, date_fin) values((select last_value from topo_id_seq),(select last_value from grimpeur_id_seq),'25-02-2017','28-02-2017'); 

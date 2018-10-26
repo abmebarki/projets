@@ -27,7 +27,7 @@
 				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="topo_update_topo_date">Date (AAA-MM-JJ)</label>
+				<label for="topo_update_topo_date">Date (AAAA-MM-JJ)</label>
 				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />

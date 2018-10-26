@@ -276,6 +276,15 @@
 												//html = html.replace(regex2,'site_new_site_secteurs_'+i);
 												$(this).parent().append(html);
 						});
+							 
+							 ////
+							 
+// 							 $(document).on('mouseup', '.add_longueur', function () {
+// 								 alert("test");
+// 								 $(window).scrollTop(400);	 
+// 							});	 
+							 
+							 ////
 							
 							 $(document).on('click', '.remove', function () {
 								 $(this).parent().remove();

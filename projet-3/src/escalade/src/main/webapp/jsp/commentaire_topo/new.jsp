@@ -26,7 +26,7 @@
 				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="commentaire_topo_new_commentaire_date">Date (AAA-MM-JJ)</label>
+				<label for="commentaire_topo_new_commentaire_date">Date (AAAA-MM-JJ)</label>
 				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 
