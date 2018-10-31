@@ -22,7 +22,7 @@
 				Email :<s:property value="grimpeur.email" />
 			</div>
 			<div class="form-group">
-				<label for="grimpeur_new_grimpeur_password">Mot de passe</label>
+				<label for="grimpeur_grimpeur_init_password_password">Mot de passe</label>
 				<s:password class="form-control" name="grimpeur.motpasse" label="Mot de passe" placeholder="Mot de passe" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />

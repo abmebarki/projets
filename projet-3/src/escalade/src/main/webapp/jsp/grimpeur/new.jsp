@@ -32,7 +32,7 @@
 			
 			<div class="form-group">
 				<label for="grimpeur_new_grimpeur_motpasse">Mot de passe</label>
-				<s:textfield class="form-control" name="grimpeur.motpasse" label="Mot de passe" requiredLabel="true" required="true"/>
+				<s:password class="form-control" name="grimpeur.motpasse" label="Mot de passe" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 		</s:form>

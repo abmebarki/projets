@@ -220,7 +220,7 @@ public class SiteAction extends ActionSupport implements SessionAware {
                 id = siteService.delete(id);
             	}
                 
-                if(utilisateur.getRole().equals("USER")) {
+                if(utilisateur.getRole().equals(Role.USER)) {
                 	listSite = siteService.findAll(createurId);
                 	vResult = "successUser";
                 }else {

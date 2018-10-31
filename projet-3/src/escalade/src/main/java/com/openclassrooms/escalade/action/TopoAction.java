@@ -162,7 +162,7 @@ public class TopoAction extends ActionSupport implements SessionAware {
                 id = topoService.delete(id);
             	}
                 
-                if(utilisateur.getRole().equals("USER")) {
+                if(utilisateur.getRole().equals(Role.USER)) {
                 	listTopo = topoService.findAll(proprietaireId);
                 	vResult = "successUser";
                 }else {

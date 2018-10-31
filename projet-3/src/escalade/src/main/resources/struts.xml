@@ -369,10 +369,7 @@
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
 			<result name="input">/jsp/grimpeur/forgot_password.jsp</result>
-			<result name="success" type="redirectAction">
-				<param name="actionName">grimpeur_detail</param>
-				<param name="id">${grimpeur.id}</param>
-			</result>
+			<result name="success">/jsp/grimpeur/send_password.jsp</result>
 		</action>
 		
 		<!-- Actions permettant d'initialiser le mot de passe d'un grimpeur d'escalade -->
@@ -382,10 +379,7 @@
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
 			<result name="input">/jsp/grimpeur/init_password.jsp</result>
-			<result name="success" type="redirectAction">
-				<param name="actionName">grimpeur_detail</param>
-				<param name="id">${grimpeur.id}</param>
-			</result>
+			<result name="success">/jsp/grimpeur/update_password.jsp</result>
 		</action>
 		
 		<!-- Actions permettant de mettre à jour un grimpeur d'escalade -->

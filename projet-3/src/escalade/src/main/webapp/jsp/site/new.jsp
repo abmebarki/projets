@@ -64,14 +64,14 @@
 			
 			<div class="row">
 				<div class="col-12">
-					<div class="clearfix">
-						<a class="add_secteur" href="#">Ajouter un secteur</a>
-						<div class="p-2 border border-primary secteur mr-1">
+					<div id="secteurs" class="clearfix">
+						<a class="add_secteur" href="#">Ajouter une secteur<input type="hidden" class="nbSecteurs" value="1"></a>
+						<div class="p-2 border border-primary secteur mr-1"><a class='remove float-right' href='#'>X</a>
 							<div class="row">
 								<div class="col-12">
 									<div class="row">
 										<div class="col-12">
-											<label class="font-weight-bold">Secteur <s:property value="1" /></label>
+											<label class="font-weight-bold">Secteur&nbsp;<span class="secteur_index">1</span></label>
 										</div>
 									</div>
 									<div class="row">
@@ -127,11 +127,11 @@
 										<div class="col">
 											<div id="voies" class="clearfix">
 											<a class="add_voie" href="#">Ajouter une voie<input type="hidden" class="nbVoies" value="1"></a>
-												<div class="p-2 border border-success voie mr-1">
+												<div class="p-2 border border-success voie mr-1"><a class='remove float-right' href='#'>X</a>
 													
 													<div class="row">
 														<div class="col">
-															<label class="font-weight-bold">Voie <s:property value="1" /></label>
+															<label class="font-weight-bold">Voie&nbsp;<span class="voie_index">1</span></label>
 															<div class="form-group">
 																<label>Nom</label>
 																<s:textfield class="form-control" name="site.secteurs[0].voies[0].nom" label="Nom" requiredLabel="true" required="true"/>
@@ -139,8 +139,8 @@
 															
 															<div id="longueurs" class="clearfix">
 															<a class="add_longueur clearfix" href="#">Ajouter une longueur<input type="hidden" class="nbLongueurs" value="1"></a>
-																<div class="float-left p-2 border border-danger mr-1 longueur">
-																	<label class="font-weight-bold">Longueur <s:property value="1" /></label>
+																<div class="float-left p-2 border border-danger mr-1 longueur"> <a class='remove float-right' href='#'>X</a>
+																	<label class="font-weight-bold">Longueur&nbsp;<span class="longueur_index">1</span></label>
 																	
 																	<div class="form-group">
 																		<label>Hauteur</label>
@@ -201,7 +201,7 @@
 				<s:if test="%{listTopo != null}">
 					<div class="form-group">
 						<label>Selectionner un topo</label>
-						<s:select class="form-control" name="site.descripteurs.id" multiple="true" list="listTopo" listKey="id" listValue="nom" label="Selectionner un topo" emptyOption="true" requiredLabel="true" required="true"/>
+						<s:select class="form-control" name="site.descripteurs.id" multiple="true" list="listTopo" listKey="id" listValue="nom" label="Selectionner un topo" emptyOption="true"/>
 					</div>
 				</s:if>
 				<s:submit class="btn btn btn-primary btn-block" value="OK" />
@@ -220,14 +220,22 @@
 							var i = 0;
 							var j = 0;
 							var k = 0;
-						$(document).on('click', '.add_secteur', function () {
-												i++;
+							
+							$(document).on('click', '.add_secteur', function () {
+												
+												i = parseFloat($(this).find('.nbSecteurs').first().val());
+												$(this).find('.nbSecteurs').first().val( i + 1 );
+												
+												// Dérnier secteur
+												i = parseFloat($(this).parent().find('.secteur').last().find('.secteur_index').text());
+								
+								
 												var regex = /secteurs\[0\]/g;
 												var regex2 = /site_new_site_secteurs_0/g;
-												var regex3 = '<label class="font-weight-bold">Secteur 1</label>';
-
+												var regex3 = '<span class="secteur_index">1</span>';
+												
 												var html = $(".secteur").html();
-												html = "<div class='p-2 border border-primary secteur mr-1'> <a class='remove float-right' href='#'>X</a>"
+												html = "<div class='p-2 border border-primary secteur mr-1'>"
 														+ html + "</div>";
 												html = html.replace(regex,
 														'secteurs[' + i
@@ -235,8 +243,10 @@
 												html = html.replace(regex2,
 														'site_new_site_secteurs_'
 																+ i);
-												html = html.replace(regex3,'<label class="font-weight-bold">Secteur '+ (i+1)+ '</label>');
+												html = html.replace(regex3,'<span class="secteur_index">'+(i+1)+'</span>');
 												$(this).parent().append(html);
+												$('html, body').animate({scrollTop: $( this ).parent().find('.secteur').last().offset().top - 300}, 500);
+												
 											});
 
 							 $(document).on('click', '.add_voie', function () {
@@ -244,58 +254,99 @@
 								 		j = parseFloat($(this).find('.nbVoies').first().val());
 										$(this).find('.nbVoies').first().val( j + 1 );
 										
+										// Dérnière voie
+										j = parseFloat($(this).parent().find('.voie').last().find('.voie_index').text());
+										
 										var regex = /secteurs\[0\].voies\[0\]/g;
 										var regex2 = /site_new_site_secteurs_0/g;
-										var regex3 = '<label class="font-weight-bold">Voie 1</label>';
+										var regex3 = '<span class="voie_index">1</span>';
 
 										var html = $(".voie").html();
-										html = "<div class='p-2 border border-success voie mr-1'> <a class='remove float-right' href='#'>X</a>"
+										html = "<div class='p-2 border border-success voie mr-1'>"
 												+ html + "</div>";
 										html = html.replace(regex,'secteurs[' + i + '].voies[' + j + ']');
-										html = html.replace(regex3,'<label class="font-weight-bold">Voie '+ (j+1)+ '</label>');
+										html = html.replace(regex3,'<span class="voie_index">'+(j+1)+'</span>');
 										//html = html.replace(regex2,'site_new_site_secteurs_'+i);
 										$(this).parent().append(html);
+										$('html, body').animate({scrollTop: $( this ).parent().find('.voie').last().offset().top}, 500);
 							});
 
 							 $(document).on('click', '.add_longueur', function () {
 								 
-												k = parseFloat($(this).find('.nbLongueurs').first().val());
+								 				// Nombre de longueurs
+								                k = parseFloat($(this).find('.nbLongueurs').first().val());
 												$(this).find('.nbLongueurs').first().val( k + 1 );
+												
+												// Dérnière longueur
+												k = parseFloat($(this).parent().find('.longueur').last().find('.longueur_index').text());
 								 				
-												//k++;
 												var regex = /voies\[0\].longueurs\[0\]/g;
 												var regex2 = /site_new_site_secteurs_0/g;
-												var regex3 = '<label class="font-weight-bold">Longueur 1</label>';
+												var regex3 = '<span class="longueur_index">1</span>';
 
 												var html = $(".longueur").html();
-												html = "<div class='float-left p-2 border border-danger longueur mr-1'> <a class='remove float-right' href='#'>X</a>"
+												html = "<div class='float-left p-2 border border-danger longueur mr-1'>"
 														+ html + "</div>";
-												
+														
 												html = html.replace(regex,'voies[' + j + '].longueurs[' + k + ']');
-												html = html.replace(regex3,'<label class="font-weight-bold">Longueur '+ (k+1)+ '</label>');
+												html = html.replace(regex3,'<span class="longueur_index">'+(k+1)+'</span>');
 												//html = html.replace(regex2,'site_new_site_secteurs_'+i);
 												$(this).parent().append(html);
+												$('html, body').animate({scrollTop: $( this ).offset().top}, 500);
+												
+												
 						});
 							 
-							 ////
-							 
-// 							 $(document).on('mouseup', '.add_longueur', function () {
-// 								 alert("test");
-// 								 $(window).scrollTop(400);	 
-// 							});	 
-							 
-							 ////
+						$(document).on('click', '.remove', function () {
 							
-							 $(document).on('click', '.remove', function () {
-								 $(this).parent().remove();
-							     return false;
-							    });
+							//longueur
+							if ($(this).parent().hasClass( 'longueur')) {
+															
+								var k = parseFloat($(this).parent().parent().find('.add_longueur').find('.nbLongueurs').first().val());
+								
+								if( k != 1) {
+									$(this).parent().parent().find('.add_longueur').find('.nbLongueurs').first().val( k - 1 );	
+								}else {
+									alert("Suppression impossible");
+									return;
+								}
+								
+							}
+							
+							//voie
+							if ($(this).parent().hasClass( 'voie' )) {
+								
+								var k = parseFloat($(this).parent().parent().find('.add_voie').find('.nbVoies').first().val());
+								
+								if( k != 1) {
+									$(this).parent().parent().find('.add_voie').find('.nbVoies').first().val( k - 1 );	
+								}else {
+									alert("Suppression impossible");
+									return;
+								}
+							}
+							
+							//secteur
+							if ($(this).parent().hasClass( 'secteur' )) {
+								
+								var k = parseFloat($(this).parent().parent().find('.add_secteur').find('.nbSecteurs').first().val());
+								
+								if( k != 1) {
+									$(this).parent().parent().find('.add_secteur').find('.nbSecteurs').first().val( k - 1 );	
+								}else {
+									alert("Suppression impossible");
+									return;
+								}
+								
+							}
+								
+							 $(this).parent().remove();
+						     return false;
+						     
+						});
 							
 						})
-
-		function remove(object) {
-			(object).parents('div').remove();
-		}
+						
 	</script>
 
 </body>

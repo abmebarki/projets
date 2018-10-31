@@ -1,128 +1,196 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+
+<!DOCTYPE html>
 <html>
 <head>
 <%@ include file="../_include/header.jsp"%>
 </head>
+
 <body>
 	<div class="container">
 		<%@ include file="../_include/menu.jsp"%>
+		<s:actionerror />
 		<s:actionmessage />
-		<h2>
-			Site
-			<s:property value="site.nom" />
-		</h2>
-		<br /> Nom :
-		<s:property value="site.nom" />
-		<br /> Description :
-		<s:property value="site.description" />
-		<br /> Exposition :
-
-		<s:iterator value="site.expositions" status="loop">
-			<s:property value="value()" />
-		</s:iterator>
-
-		<br /> Temps d'approche :
-		<s:property value="site.tempsApproche" />
-		<br /> Saisons :
-		<s:iterator value="site.saisons" status="loop">
-			<s:property value="value()" />
-		</s:iterator>
-		<br /> Ville :
-		<s:property value="site.ville" />
-		<br /> Créateur :
-		<s:property value="site.createur.nom" />
-		<p>Liste des Secteurs</p>
-		<s:iterator value="site.secteurs" status="loop">
-			<div class="table-responsive-sm">
-				<table class="table table-hover">
-					<caption>
-						Secteur
-						<s:property value="%{#loop.index + 1}" />
-					</caption>
-					<thead class="thead-light">
-						<tr>
-							<th scope="col">Nom</th>
-							<th scope="col">Description</th>
-							<th scope="col">Type</th>
-							<th scope="col">Difficulté</th>
-							<th scope="col">Coordonnees</th>
-							<th scope="col">Hauteur Max</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><s:property value="nom" /></td>
-							<td><s:property value="description" /></td>
-							<td><s:property value="type" /></td>
-							<td><s:property value="difficulte" /></td>
-							<td><s:property value="coordonnees" /></td>
-							<td><s:property value="hauteurMax" /></td>
-						</tr>
-						<tr>
-							<td colspan="7">
-								<h4>Liste des voies</h4> <s:iterator value="voies" status="loop">
-									<div class="table-responsive-sm">
-										<table class="table table-hover">
-											<caption>
-												Voie
-												<s:property value="%{#loop.index + 1}" />
-											</caption>
-											<thead class="thead-light">
-												<tr>
-													<th scope="col">Nom</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><s:property value="nom" /></td>
-												</tr>
-												<tr>
-													<td colspan="3">
-														<h4>Liste des Longueurs</h4> <s:iterator value="longueurs" status="loop">
-															<div class="table-responsive-sm">
-																<table class="table table-hover">
-																	<caption>
-																		Longueur
-																		<s:property value="%{#loop.index + 1}" />
-																	</caption>
-																	<thead class="thead-light">
-																		<tr>
-																			<th scope="col">Hauteur</th>
-																			<th scope="col">Cotation</th>
-																			<th scope="col">Nb Points</th>
-																			<th scope="col">Equipée</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td><s:property value="hauteur" /></td>
-																			<td><s:property value="cotation" /></td>
-																			<td><s:property value="nbPoints" /></td>
-																			<td><s:if test="equipee == true">
-																Oui
-															</s:if> <s:else>
-																Non
-															</s:else></td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</s:iterator>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</s:iterator>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<s:form action="site_update">
+			<s:hidden name="site.id"></s:hidden>
+			<div class="row">
+				<div class="col-6">
+					<h3>Détail d'un site d'escalade</h3>
+				</div>
 			</div>
-		</s:iterator>
-		<div class="table-responsive-sm">
+
+			<div class="row">
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site_nom">Nom</label>
+						<s:textfield class="form-control" name="site.nom" label="Nom" requiredLabel="true" required="true" disabled="true"/>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site_description">Description</label>
+						<s:textfield class="form-control" name="site.description" label="Description" requiredLabel="true" required="true" disabled="true"/>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site_expositions" class="d-block">Expositions</label>
+						<s:checkboxlist class="checkbox-inline" label="Expositions" list="expositiontList" name="site.expositions" value="site.expositions" disabled="true"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site.tempsApproche">Temps d'approche en Minutes</label>
+						<s:textfield class="form-control" name="site.tempsApproche" label="Temps d'approche en Minutes" requiredLabel="true" required="true" disabled="true"/>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site_saisons" class="d-block">Saisons</label>
+						<s:checkboxlist class="checkbox-inline" label="Saisons" list="saisonList" name="site.saisons" value="site.saisons" disabled="true"/>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="site_update_site_ville">Ville</label>
+						<s:textfield class="form-control" name="site.ville" label="Ville" requiredLabel="true" required="true" disabled="true"/>
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-12">
+					<div id="secteurs" class="clearfix">
+						<s:iterator status="secteurStatus" value="site.secteurs">
+						<div class="p-2 border border-primary secteur mr-1">
+							<div class="row">
+								<div class="col-12">
+									<div class="row">
+										<div class="col-12">
+											<label class="font-weight-bold">Secteur <s:property value="%{#secteurStatus.index} + 1}" /></label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="form-group">
+												<label>Nom</label>
+												<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].nom" label="Nom" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Description</label>
+												<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].description" label="Description" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Type</label>
+												<s:select class="form-control" name="site.secteurs[%{#secteurStatus.index}].type" list="typeList" label="Type" emptyOption="true" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="form-group">
+												<label>Difficulté</label>
+												<s:select class="form-control" name="site.secteurs[%{#secteurStatus.index}].difficulte" list="difficulteList" label="Difficulté" emptyOption="true" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Coordonnees</label>
+												<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].coordonnees" label="Coordonnees" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Hauteur Max</label>
+												<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].hauteurMax" label="Hauteur Max" requiredLabel="true" required="true" disabled="true"/>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+
+
+
+							<div class="row">
+								<div class="col">
+									<div class="row">
+										<div class="col">
+											<div id="voies" class="clearfix">
+											<s:iterator status="voieStatus" value="voies">
+												<div class="p-2 border border-success voie mr-1">
+													
+													<div class="row">
+														<div class="col">
+															<label class="font-weight-bold">Voie <s:property value="%{#voieStatus.index} + 1}" /></label>
+															<div class="form-group">
+																<label>Nom</label>
+																<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].nom" label="Nom" requiredLabel="true" required="true" disabled="true"/>
+															</div>
+															
+															<div id="longueurs" class="clearfix">
+																<s:iterator status="longueurStatus" value="longueurs">
+																<div class="float-left p-2 border border-danger mr-1 longueur">
+																	<label class="font-weight-bold">Longueur <s:property value="%{#longueurStatus.index} + 1}" /></label>
+																	
+																	<div class="form-group">
+																		<label>Hauteur</label>
+																		<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].hauteur" label="Hauteur" requiredLabel="true" required="true" disabled="true"/>
+																	</div>
+																	<div class="form-group">
+																		<label>Cotation</label>
+																		<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].cotation" label="Cotation" requiredLabel="true" required="true" disabled="true"/>
+																	</div>
+																	<div class="form-group">
+																		<label>Nb Points</label>
+																		<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].nbPoints" label="Nb Points" requiredLabel="true" required="true" disabled="true"/>
+																	</div>
+																	<div class="form-group">
+																		<label>Equipée</label>
+																		<s:checkbox name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].equipee" label="Equipée" disabled="true" />
+																	</div>
+																</div>
+																</s:iterator>
+																</div>
+														</div>
+														
+														
+														
+													</div>
+
+
+
+												</div>
+											</s:iterator>
+
+
+											</div>
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+						</s:iterator>	
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			</div>
+			
+			<div class="table-responsive-sm">
 			<table class="table table-hover">
 				<caption>Liste des Topos</caption>
 				<thead class="thead-light">
@@ -183,6 +251,8 @@
 				</tbody>
 			</table>
 		</div>
+
+		</s:form>
 		<%@ include file="../_include/footer.jsp"%>
 	</div>
 </body>

@@ -220,7 +220,7 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
 	                	grimpeurService.initPassword(this.grimpeur);
 	                	// Si ajout avec succés -> Result "success"
 	                    vResult = ActionSupport.SUCCESS;
-	                    this.addActionMessage("Un email vous a été envoyé pour reinitialiser votre mot de passe");
+	                    this.addActionMessage("Votre mot de passe a été mis à jour.");
 	
 	                } catch (Exception sEx) {
 	                    // Sur erreur fonctionnelle on reste sur la page de saisie
@@ -258,7 +258,7 @@ public class GrimpeurAction extends ActionSupport implements SessionAware {
                 	grimpeurService.sendEmailInitPassword(this.grimpeur);
                 	// Si ajout avec succés -> Result "success"
                     vResult = ActionSupport.SUCCESS;
-                    this.addActionMessage("Un email vous a été envoyé pour reinitialiser votre mot de passe");
+                    this.addActionMessage("Un email vous a été envoyé pour reinitialiser votre mot de passe.");
 
                 } catch (Exception sEx) {
                     // Sur erreur fonctionnelle on reste sur la page de saisie

@@ -15,11 +15,11 @@
 		<s:form class="form-signin" action="grimpeur_forgot_password">
 			<legend>Initialisation du mot de passe d'un grimpeur</legend>
 			<div class="form-group">
-				<label for="grimpeur_new_grimpeur_email">Nom</label>
+				<label for="grimpeur_grimpeur_forgot_password_email">Nom</label>
 				<s:textfield class="form-control" name="grimpeur.nom" label="Nom" placeholder="Nom" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="grimpeur_new_grimpeur_email">Email</label>
+				<label for="grimpeur_grimpeur_forgot_password_email">Email</label>
 				<s:textfield class="form-control" name="grimpeur.email" label="Email" placeholder="Email" requiredLabel="true" required="true"/>
 			</div>
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />

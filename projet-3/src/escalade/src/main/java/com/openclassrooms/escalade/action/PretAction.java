@@ -161,7 +161,7 @@ public class PretAction extends ActionSupport implements SessionAware {
                 id = pretService.delete(id);
             	}
                 
-                if(utilisateur.getRole().equals("USER")) {
+                if(utilisateur.getRole().equals(Role.USER)) {
                 	listPret = pretService.findAll(emprunteurId);
                 	vResult = "successUser";
                 }else {
