@@ -25,12 +25,6 @@
 				<label for="commentaire_topo_new_commentaire_contenu">Contenu</label>
 				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" required="true"/>
 			</div>
-			<div class="form-group">
-				<label for="commentaire_topo_new_commentaire_date">Date (AAAA-MM-JJ)</label>
-				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" required="true"/>
-			</div>
-
-
 			<s:if test="#session.user">
 				<tr>
 					<td><s:hidden name="commentaire.auteur.id" value="%{session.user.id}"></s:hidden>

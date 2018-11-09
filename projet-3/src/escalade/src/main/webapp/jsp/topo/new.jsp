@@ -43,7 +43,7 @@
 				<s:textfield class="form-control" name="topo.auteur" label="Auteur" requiredLabel="true" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="topo_new_topo_date">Date (AAAA-MM-JJ)</label>
+				<label for="topo_new_topo_date">Date de publication (AAAA-MM-JJ)</label>
 				<s:textfield class="form-control" name="topo.date" label="Date" requiredLabel="true" required="true"/>
 			</div>
 			<s:if test="#session.user">

@@ -1,6 +1,7 @@
 package com.openclassrooms.escalade.dao;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class CommentaireTopoDaoImpl implements CommentaireTopoDao {
 		Map<String, Object> parameters = new HashMap<String, Object>(4);
 		parameters.put("objet", commentaire.getObjet());
 		parameters.put("contenu", commentaire.getContenu());
-		parameters.put("date", commentaire.getDate());
+		parameters.put("date", new Date());
 		parameters.put("auteur_id", commentaire.getAuteur().getId());
 		parameters.put("topo_commente_id", topoId);
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);

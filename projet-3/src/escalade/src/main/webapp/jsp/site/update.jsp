@@ -16,7 +16,7 @@
 			<s:hidden name="site.id"></s:hidden>
 			<div class="row">
 				<div class="col-6">
-					<h3>Mis à jour d'un site d'escalade</h3>
+					<h3>Mise à jour d'un site d'escalade</h3>
 				</div>
 			</div>
 

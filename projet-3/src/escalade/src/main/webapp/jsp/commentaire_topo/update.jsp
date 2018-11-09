@@ -24,11 +24,6 @@
 				<label for="commentaire_topo_new_commentaire_contenu">Contenu</label>
 				<s:textfield class="form-control" name="commentaire.contenu" label="Contenu" requiredLabel="true" required="true"/>
 			</div>
-			<div class="form-group">
-				<label for="commentaire_topo_new_commentaire_date">Date (AAAA-MM-JJ)</label>
-				<s:textfield class="form-control" name="commentaire.date" label="Date" requiredLabel="true" required="true"/>
-			</div>
-
 			<s:submit class="btn btn-lg btn-primary btn-block" value="OK" />
 
 

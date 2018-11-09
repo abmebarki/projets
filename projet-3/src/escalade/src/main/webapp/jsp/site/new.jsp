@@ -228,22 +228,16 @@
 												
 												// Dérnier secteur
 												i = parseFloat($(this).parent().find('.secteur').last().find('.secteur_index').text());
-								
-								
-												var regex = /secteurs\[0\]/g;
-												var regex2 = /site_new_site_secteurs_0/g;
-												var regex3 = '<span class="secteur_index">1</span>';
+												
+												var regex = new RegExp('secteurs\\['+(i-1)+'\\]', 'g');
+												var regex2 = '<span class="secteur_index">'+i+'</span>';
+												
 												
 												var html = $(".secteur").html();
 												html = "<div class='p-2 border border-primary secteur mr-1'>"
 														+ html + "</div>";
-												html = html.replace(regex,
-														'secteurs[' + i
-																+ ']');
-												html = html.replace(regex2,
-														'site_new_site_secteurs_'
-																+ i);
-												html = html.replace(regex3,'<span class="secteur_index">'+(i+1)+'</span>');
+												html = html.replace(regex,'secteurs[' + i + ']');
+												html = html.replace(regex2,'<span class="secteur_index">'+(i+1)+'</span>');
 												$(this).parent().append(html);
 												$('html, body').animate({scrollTop: $( this ).parent().find('.secteur').last().offset().top - 300}, 500);
 												
@@ -257,16 +251,16 @@
 										// Dérnière voie
 										j = parseFloat($(this).parent().find('.voie').last().find('.voie_index').text());
 										
-										var regex = /secteurs\[0\].voies\[0\]/g;
-										var regex2 = /site_new_site_secteurs_0/g;
-										var regex3 = '<span class="voie_index">1</span>';
+										var regex = new RegExp('secteurs\\['+i+'\\].voies\\['+(j-1)+'\\]', 'g');
+										var regex2 = '<span class="voie_index">'+j+'</span>';
+										
 
 										var html = $(".voie").html();
 										html = "<div class='p-2 border border-success voie mr-1'>"
 												+ html + "</div>";
 										html = html.replace(regex,'secteurs[' + i + '].voies[' + j + ']');
-										html = html.replace(regex3,'<span class="voie_index">'+(j+1)+'</span>');
-										//html = html.replace(regex2,'site_new_site_secteurs_'+i);
+										html = html.replace(regex2,'<span class="voie_index">'+(j+1)+'</span>');
+										
 										$(this).parent().append(html);
 										$('html, body').animate({scrollTop: $( this ).parent().find('.voie').last().offset().top}, 500);
 							});
@@ -279,18 +273,17 @@
 												
 												// Dérnière longueur
 												k = parseFloat($(this).parent().find('.longueur').last().find('.longueur_index').text());
-								 				
-												var regex = /voies\[0\].longueurs\[0\]/g;
-												var regex2 = /site_new_site_secteurs_0/g;
-												var regex3 = '<span class="longueur_index">1</span>';
+												
+												var regex = new RegExp('voies\\['+j+'\\].longueurs\\['+(k-1)+'\\]', 'g');
+												var regex2 = '<span class="longueur_index">'+k+'</span>';
 
-												var html = $(".longueur").html();
+												var html = $(this).parent().find('.longueur').last().html();
 												html = "<div class='float-left p-2 border border-danger longueur mr-1'>"
 														+ html + "</div>";
 														
 												html = html.replace(regex,'voies[' + j + '].longueurs[' + k + ']');
-												html = html.replace(regex3,'<span class="longueur_index">'+(k+1)+'</span>');
-												//html = html.replace(regex2,'site_new_site_secteurs_'+i);
+												html = html.replace(regex2,'<span class="longueur_index">'+(k+1)+'</span>');
+												
 												$(this).parent().append(html);
 												$('html, body').animate({scrollTop: $( this ).offset().top}, 500);
 												
@@ -307,7 +300,7 @@
 								if( k != 1) {
 									$(this).parent().parent().find('.add_longueur').find('.nbLongueurs').first().val( k - 1 );	
 								}else {
-									alert("Suppression impossible");
+									alert("Suppression impossible, la voie doit être composée d'au moins une longueur");
 									return;
 								}
 								
@@ -321,7 +314,7 @@
 								if( k != 1) {
 									$(this).parent().parent().find('.add_voie').find('.nbVoies').first().val( k - 1 );	
 								}else {
-									alert("Suppression impossible");
+									alert("Suppression impossible, le secteur doit être composé d'au moins une voie");
 									return;
 								}
 							}
@@ -334,7 +327,7 @@
 								if( k != 1) {
 									$(this).parent().parent().find('.add_secteur').find('.nbSecteurs').first().val( k - 1 );	
 								}else {
-									alert("Suppression impossible");
+									alert("Suppression impossible, le site doit être composé d'au moins un secteur");
 									return;
 								}
 								

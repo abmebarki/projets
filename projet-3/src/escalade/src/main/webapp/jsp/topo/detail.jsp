@@ -55,7 +55,6 @@
 						<th scope="col">Contenu</th>
 						<th scope="col">Date</th>
 						<th scope="col">Nom Auteur</th>
-						<th scope="col">Email Auteur</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -67,7 +66,6 @@
 							<td><s:property value="contenu" /></td>
 							<td><s:date name="date" /></td>
 							<td><s:property value="nom" /></td>
-							<td><s:property value="auteur.email" /></td>
 							<s:if test="#session.user">
 								<s:if test="#session.user.role.value() == 'ADMIN'">
 									<td><s:a action="commentaire_topo_update">
