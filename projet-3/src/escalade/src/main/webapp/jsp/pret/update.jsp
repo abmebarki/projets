@@ -13,6 +13,8 @@
 		<s:actionmessage />
 		<s:form action="pret_update">
 			<s:hidden name="pret.id"></s:hidden>
+			<s:hidden name="pret.topoEmprunte.id"></s:hidden>
+			<s:hidden name="pret.emprunteur.id"></s:hidden>
 			<legend>Mise à jour d'un prêt de topo</legend>
 			<label>Prêt</label>
 			<div class="form-group">

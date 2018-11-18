@@ -73,6 +73,7 @@
 									<div class="row">
 										<div class="col-12">
 											<label class="font-weight-bold">Secteur <s:property value="%{#secteurStatus.index} + 1}" /></label>
+											<s:hidden name="site.secteurs[%{#secteurStatus.index}].id"></s:hidden>
 										</div>
 									</div>
 									<div class="row">
@@ -133,6 +134,7 @@
 													<div class="row">
 														<div class="col">
 															<label class="font-weight-bold">Voie <s:property value="%{#voieStatus.index} + 1}" /></label>
+															<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].id"></s:hidden>
 															<div class="form-group">
 																<label>Nom</label>
 																<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].nom" label="Nom" requiredLabel="true" required="true"/>
@@ -142,6 +144,7 @@
 																<s:iterator status="longueurStatus" value="longueurs">
 																<div class="float-left p-2 border border-danger mr-1 longueur">
 																	<label class="font-weight-bold">Longueur <s:property value="%{#longueurStatus.index} + 1}" /></label>
+																	<s:hidden name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].id"></s:hidden>
 																	
 																	<div class="form-group">
 																		<label>Hauteur</label>

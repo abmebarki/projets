@@ -91,7 +91,15 @@ public class PretServiceImpl implements PretService {
 
 	@Override
 	@Transactional
-	public int update(Pret pret) {
+	public int update(Pret pret) throws Exception {
+		
+		// Vérifier la disponibilité du topo
+		List<Pret> pretList = pretDao.findByTopoIdEmprunteurIdDates(pret);
+		
+		if(!pretList.isEmpty()) {
+			throw new Exception("Topo non disponible");
+		}
+		
 		return pretDao.update(pret);
 	}
 

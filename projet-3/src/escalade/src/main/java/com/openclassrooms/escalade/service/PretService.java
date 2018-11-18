@@ -9,7 +9,7 @@ public interface PretService {
 	public List<Pret> findAll();
 	public List<Pret> findAll(int emprunteurId);
 	public int create(Pret pret) throws Exception;
-	public int update(Pret pret);
+	public int update(Pret pret) throws Exception;
 	public int delete(int id);
 	
 }

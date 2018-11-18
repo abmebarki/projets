@@ -6,7 +6,7 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<package name="default" extends="struts-default">
 		<!-- Action par défaut -->
-		<default-action-ref name="index" />
+		<default-action-ref name="site_list" />
 		<!-- Results globaux -->
 		<global-results>
 			<result name="error">/jsp/error.jsp</result>

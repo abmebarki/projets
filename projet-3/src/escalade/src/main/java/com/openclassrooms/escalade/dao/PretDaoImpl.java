@@ -48,8 +48,16 @@ public class PretDaoImpl implements PretDao {
 	@Override
 	@Transactional
     public List<Pret> findByTopoIdDates(Pret pret) {
-		List<Pret> rpret = (List<Pret>) jdbcTemplate.query("select * from pret where topo_id = ? and (date_debut, date_fin) overlaps (?, ?)", 
+		List<Pret> rpret = (List<Pret>) jdbcTemplate.query("select * from pret where topo_id = ? and (date_debut, date_fin + 1) overlaps (?, ?)", 
 				new Object[] {pret.getTopoEmprunte().getId(), pret.getDateDebut(), pret.getDateFin()} ,new PretRowMapper());
+		return rpret;
+	}
+	
+	@Override
+	@Transactional
+    public List<Pret> findByTopoIdEmprunteurIdDates(Pret pret) {
+		List<Pret> rpret = (List<Pret>) jdbcTemplate.query("select * from pret where topo_id = ? and emprunteur_id !=? and (date_debut, date_fin + 1) overlaps (?, ?)", 
+				new Object[] {pret.getTopoEmprunte().getId(), pret.getEmprunteur().getId(), pret.getDateDebut(), pret.getDateFin()} ,new PretRowMapper());
 		return rpret;
 	}
 

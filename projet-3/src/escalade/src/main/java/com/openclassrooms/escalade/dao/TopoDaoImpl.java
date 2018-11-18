@@ -29,7 +29,7 @@ public class TopoDaoImpl implements TopoDao {
         @Override
 		@Transactional
 	public Topo findById(int id) {
-		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.id as proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gp on t.proprietaire_id = gp.id and t.id = ?",
+		Topo topo = (Topo) jdbcTemplate.queryForObject("select t.id, t.nom as nom_topo, t.nb_pages, t.date, t.auteur, t.proprietaire_id as proprietaire_id, gp.nom as nom_proprietaire, gp.email as email_proprietaire from topo t join grimpeur gp on t.proprietaire_id = gp.id and t.id = ?",
 				new Object[] { id }, new TopoProprietaireRowMapper());
 		return topo;
 	}
