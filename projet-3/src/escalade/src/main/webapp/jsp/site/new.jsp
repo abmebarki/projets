@@ -150,13 +150,13 @@
 																		<label>Cotation</label>
 																		<s:textfield class="form-control" name="site.secteurs[0].voies[0].longueurs[0].cotation" label="Cotation" requiredLabel="true" required="true"/>
 																	</div>
-																	<div class="form-group">
+																	<div class="form-group divNbPoints">
 																		<label>Nb Points</label>
-																		<s:textfield class="form-control" name="site.secteurs[0].voies[0].longueurs[0].nbPoints" label="Nb Points" requiredLabel="true" required="true"/>
+																		<s:textfield class="form-control nbPoints" name="site.secteurs[0].voies[0].longueurs[0].nbPoints" label="Nb Points" requiredLabel="true" required="true"/>
 																	</div>
 																	<div class="form-group">
 																		<label>Equipée</label>
-																		<s:checkbox name="site.secteurs[0].voies[0].longueurs[0].equipee" label="Equipée" />
+																		<s:checkbox class="equipee" name="site.secteurs[0].voies[0].longueurs[0].equipee" label="Equipée" />
 																	</div>
 																</div>
 															</div>
@@ -220,6 +220,16 @@
 							var i = 0;
 							var j = 0;
 							var k = 0;
+							
+							$(document).on('click', '.equipee', function () {
+								
+								if(!$(this).prop( "checked" )) {
+									$(this).parent().parent().find('.divNbPoints').find('.nbPoints').val(0);
+								} else {
+									$(this).parent().parent().find('.divNbPoints').find('.nbPoints').val(1);
+								}
+								
+							});
 							
 							$(document).on('click', '.add_secteur', function () {
 												

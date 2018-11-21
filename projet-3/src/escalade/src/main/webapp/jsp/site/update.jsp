@@ -154,13 +154,13 @@
 																		<label>Cotation</label>
 																		<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].cotation" label="Cotation" requiredLabel="true" required="true"/>
 																	</div>
-																	<div class="form-group">
+																	<div class="form-group divNbPoints">
 																		<label>Nb Points</label>
-																		<s:textfield class="form-control" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].nbPoints" label="Nb Points" requiredLabel="true" required="true"/>
+																		<s:textfield class="form-control nbPoints" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].nbPoints" label="Nb Points" requiredLabel="true" required="true"/>
 																	</div>
 																	<div class="form-group">
 																		<label>Equipée</label>
-																		<s:checkbox name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].equipee" label="Equipée" />
+																		<s:checkbox class="equipee" name="site.secteurs[%{#secteurStatus.index}].voies[%{#voieStatus.index}].longueurs[%{#longueurStatus.index}].equipee" label="Equipée" />
 																	</div>
 																</div>
 																</s:iterator>
@@ -212,6 +212,15 @@
 							var j = 0;
 							var k = 0;
 							
+							$(document).on('click', '.equipee', function () {
+								
+								if(!$(this).prop( "checked" )) {
+									$(this).parent().parent().find('.divNbPoints').find('.nbPoints').val(0);
+								} else {
+									$(this).parent().parent().find('.divNbPoints').find('.nbPoints').val(1);
+								}
+								
+							});
 							$(document).on('click', '.add_secteur', function () {
 												i++;
 												var regex = /secteurs\[0\]/g;
